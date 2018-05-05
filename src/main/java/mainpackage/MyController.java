@@ -1,13 +1,16 @@
-package ua.kiev.prog;
+package mainpackage;
 
+import mainpackage.entities.CustomUser;
+import mainpackage.entities.UserRole;
+import mainpackage.entities.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller

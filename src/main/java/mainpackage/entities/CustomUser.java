@@ -1,4 +1,4 @@
-package ua.kiev.prog;
+package mainpackage.entities;
 
 import javax.persistence.*;
 
@@ -16,6 +16,9 @@ public class CustomUser {
 
     private String email;
     private String phone;
+
+    //private Double income;
+    //private
 
     public CustomUser(String login, String password, UserRole role) {
         this.login = login;

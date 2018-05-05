@@ -1,4 +1,4 @@
-package ua.kiev.prog;
+package mainpackage.entities;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
