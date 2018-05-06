@@ -1,7 +1,7 @@
 package mainpackage;
 
-import mainpackage.entities.CustomUser;
-import mainpackage.entities.UserService;
+import mainpackage.entities.users.CustomUser;
+import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

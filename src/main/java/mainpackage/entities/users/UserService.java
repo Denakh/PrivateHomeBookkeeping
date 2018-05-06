@@ -1,4 +1,4 @@
-package mainpackage.entities;
+package mainpackage.entities.users;
 
 public interface UserService {
     CustomUser getUserByLogin(String login);

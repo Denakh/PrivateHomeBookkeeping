@@ -1,4 +1,4 @@
-package mainpackage.entities;
+package mainpackage.entities.users;
 
 public enum UserRole {
     ADMIN, USER;

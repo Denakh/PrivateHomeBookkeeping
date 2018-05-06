@@ -1,8 +1,8 @@
 package mainpackage;
 
-import mainpackage.entities.CustomUser;
-import mainpackage.entities.UserRole;
-import mainpackage.entities.UserService;
+import mainpackage.entities.users.CustomUser;
+import mainpackage.entities.users.UserRole;
+import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
