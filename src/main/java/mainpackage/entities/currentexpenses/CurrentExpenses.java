@@ -1,10 +1,12 @@
 package mainpackage.entities.currentexpenses;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class CurrentExpenses {
+public class CurrentExpenses extends ItemOfExpenses {
 
     private double estimatedAmount;
 

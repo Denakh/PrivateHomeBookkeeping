@@ -11,6 +11,10 @@ public class Debt {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    boolean percentForInitialAm
+    boolean percentForInitialAm;
+
+    double percent;
+
+    double totalAmount;
 
 }

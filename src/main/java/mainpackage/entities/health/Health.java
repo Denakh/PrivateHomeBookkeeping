@@ -1,10 +1,12 @@
 package mainpackage.entities.health;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class Health {
+public class Health extends ItemOfExpenses {
 
     private double change;
 

@@ -1,10 +1,12 @@
 package mainpackage.entities.kidsandpets;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class KidsAndPets {
+public class KidsAndPets extends ItemOfExpenses {
 
     private double change;
 

@@ -1,11 +1,13 @@
 package mainpackage.entities.charity;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class Charity {
+public class Charity extends ItemOfExpenses {
 
     private double change;
 

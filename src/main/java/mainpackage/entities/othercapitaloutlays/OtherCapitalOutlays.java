@@ -1,10 +1,12 @@
 package mainpackage.entities.othercapitaloutlays;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class OtherCapitalOutlays {
+public class OtherCapitalOutlays extends ItemOfExpenses {
 
     private double change;
 

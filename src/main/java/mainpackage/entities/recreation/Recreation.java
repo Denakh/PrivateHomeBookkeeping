@@ -1,10 +1,12 @@
 package mainpackage.entities.recreation;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class Recreation {
+public class Recreation extends ItemOfExpenses {
 
     private double change;
 

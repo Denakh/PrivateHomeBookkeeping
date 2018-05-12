@@ -1,5 +1,7 @@
 package mainpackage.entities.income;
 
+import mainpackage.entities.ItemOfExpenses;
+
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
@@ -14,7 +16,7 @@ public class Income {
 
     private String description;
 
-    private IncPurpose purpose;
+    private ItemOfExpenses purpose;
 
 
 

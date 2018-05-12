@@ -1,6 +1,6 @@
-package mainpackage.entities.income;
+package mainpackage.entities;
 
-public enum IncPurpose {
+public enum ExpenseType {
     CHARITY, HEALTH, KIDSANDPATS, OTHERCAPOUTLAYS, RECREATION, RESERVE;
 
     //@Override

@@ -1,4 +1,6 @@
 package mainpackage.entities.reserve;
 
-public class Reserve {
+import mainpackage.entities.ItemOfExpenses;
+
+public class Reserve extends ItemOfExpenses {
 }
