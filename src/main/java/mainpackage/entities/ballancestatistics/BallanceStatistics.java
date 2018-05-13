@@ -1,24 +1,35 @@
 package mainpackage.entities.ballancestatistics;
 
+import mainpackage.entities.users.CustomUser;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class BallanceStatistics {
 
-private Date period;
+    @Id
+    @GeneratedValue
+    private long id;
 
-private double currrentBalance;
+    private CustomUser user;
 
-private double outlaysPerIncome;
+    private Date period;
 
-private double outlaysMinIncome;
+    private double currrentBalance;
 
-private double averageOPIlast3months;
+    private double outlaysPerIncome;
 
-private double averageOPIlast6months;
+    private double outlaysMinIncome;
 
-private double averageOPIlast12months;
+    private double averageOPIlast3months;
 
-private FinancialConditionBal finConditionBal;
+    private double averageOPIlast6months;
+
+    private double averageOPIlast12months;
+
+    @Enumerated(EnumType.STRING)
+    private FinancialConditionBal finConditionBal;
 
 
 }

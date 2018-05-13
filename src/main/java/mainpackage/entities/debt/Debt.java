@@ -1,20 +1,28 @@
 package mainpackage.entities.debt;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import mainpackage.entities.users.CustomUser;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Debt {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private CustomUser user;
 
     private double amount;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    boolean percentForInitialAm;
+    private boolean percentForInitialAm;
 
-    double percent;
+    private double percent;
 
-    double totalAmount;
+    private double totalAmount;
 
 }

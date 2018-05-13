@@ -17,8 +17,7 @@ public class CustomUser {
     private String email;
     private String phone;
 
-    //private Double income;
-    //private
+
 
     public CustomUser(String login, String password, UserRole role) {
         this.login = login;
@@ -34,7 +33,8 @@ public class CustomUser {
         this.phone = phone;
     }
 
-    public CustomUser() {}
+    public CustomUser() {
+    }
 
     public String getLogin() {
         return login;

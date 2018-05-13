@@ -1,17 +1,29 @@
 package mainpackage.entities.exchangetransactions;
 
 import mainpackage.entities.foreigncurrencies.Currencies;
+import mainpackage.entities.users.CustomUser;
 
+import javax.persistence.*;
+
+@Entity
 public class ExchangeTransactions {
 
-private CurrencyOperationType currencyOperationType;
+    @Id
+    @GeneratedValue
+    private long id;
 
-private Currencies currency;
+    private CustomUser user;
 
-private double amount;
+    @Enumerated(EnumType.STRING)
+    private CurrencyOperationType currencyOperationType;
 
-private double exchangerate;
+    @Enumerated(EnumType.STRING)
+    private Currencies currency;
 
-private double exchangeprofit;
+    private double amount;
+
+    private double exchangerate;
+
+    private double exchangeprofit;
 
 }

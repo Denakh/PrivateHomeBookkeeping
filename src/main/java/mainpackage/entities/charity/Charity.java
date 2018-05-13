@@ -1,13 +1,19 @@
 package mainpackage.entities.charity;
 
 import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.users.CustomUser;
 
-import javax.persistence.Column;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class Charity extends ItemOfExpenses {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private CustomUser user;
 
     private double change;
 

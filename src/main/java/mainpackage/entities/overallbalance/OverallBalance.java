@@ -1,10 +1,18 @@
 package mainpackage.entities.overallbalance;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import mainpackage.entities.users.CustomUser;
+
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
 public class OverallBalance {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private CustomUser user;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -13,7 +21,6 @@ public class OverallBalance {
     private double factualBalance;
 
     private double intriesBalance;
-
 
 
 }

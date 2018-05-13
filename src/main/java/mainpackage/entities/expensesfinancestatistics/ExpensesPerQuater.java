@@ -1,15 +1,22 @@
 package mainpackage.entities.expensesfinancestatistics;
 
 import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.users.CustomUser;
 
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Entity
 public class ExpensesPerQuater {
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private CustomUser user;
 
     private List<ItemOfExpenses> expensesByTypes = new ArrayList<>();
 
