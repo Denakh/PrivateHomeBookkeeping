@@ -13,6 +13,8 @@ public class OtherCapitalOutlays extends ItemOfExpenses {
     @GeneratedValue
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private CustomUser user;
 
     private double change;

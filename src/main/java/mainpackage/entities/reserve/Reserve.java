@@ -13,6 +13,8 @@ public class Reserve extends ItemOfExpenses {
     @GeneratedValue
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private CustomUser user;
 
     //@Column(name = "msg_date")

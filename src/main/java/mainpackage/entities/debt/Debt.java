@@ -12,6 +12,8 @@ public class Debt {
     @GeneratedValue
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private CustomUser user;
 
     private double amount;

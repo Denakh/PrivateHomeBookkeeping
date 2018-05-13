@@ -11,6 +11,8 @@ public class CurrentExpensesRate {
     @GeneratedValue
     private long id;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
     private CustomUser user;
 
     @Enumerated(EnumType.STRING)
