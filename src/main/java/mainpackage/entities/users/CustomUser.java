@@ -122,6 +122,14 @@ public class CustomUser {
     public CustomUser() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -136,14 +144,6 @@ public class CustomUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public UserRole getRole() {
@@ -169,4 +169,173 @@ public class CustomUser {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public List<AllocationOfProfits> getAllocationOfProfits() {
+        return allocationOfProfits;
+    }
+
+    public void setAllocationOfProfits(List<AllocationOfProfits> allocationOfProfits) {
+        this.allocationOfProfits = allocationOfProfits;
+    }
+
+    public List<BallanceStatistics> getBallanceStatistics() {
+        return ballanceStatistics;
+    }
+
+    public void setBallanceStatistics(List<BallanceStatistics> ballanceStatistics) {
+        this.ballanceStatistics = ballanceStatistics;
+    }
+
+    public List<Charity> getCharity() {
+        return charity;
+    }
+
+    public void setCharity(List<Charity> charity) {
+        this.charity = charity;
+    }
+
+    public List<CommunalPayStatistics> getCommunalPayStatistics() {
+        return communalPayStatistics;
+    }
+
+    public void setCommunalPayStatistics(List<CommunalPayStatistics> communalPayStatistics) {
+        this.communalPayStatistics = communalPayStatistics;
+    }
+
+    public List<CurrentExpenses> getCurrentExpenses() {
+        return currentExpenses;
+    }
+
+    public void setCurrentExpenses(List<CurrentExpenses> currentExpenses) {
+        this.currentExpenses = currentExpenses;
+    }
+
+    public List<CurrentExpensesRate> getCurrentExpensesRate() {
+        return currentExpensesRate;
+    }
+
+    public void setCurrentExpensesRate(List<CurrentExpensesRate> currentExpensesRate) {
+        this.currentExpensesRate = currentExpensesRate;
+    }
+
+    public List<mainpackage.entities.debt.Debt> getDebt() {
+        return Debt;
+    }
+
+    public void setDebt(List<mainpackage.entities.debt.Debt> debt) {
+        Debt = debt;
+    }
+
+    public List<Deferrals> getDeferrals() {
+        return deferrals;
+    }
+
+    public void setDeferrals(List<Deferrals> deferrals) {
+        this.deferrals = deferrals;
+    }
+
+    public List<ExchangeTransactions> getExchangeTransactions() {
+        return exchangeTransactions;
+    }
+
+    public void setExchangeTransactions(List<ExchangeTransactions> exchangeTransactions) {
+        this.exchangeTransactions = exchangeTransactions;
+    }
+
+    public List<ExpensesFinanceStatistics> getExpensesFinanceStatistics() {
+        return expensesFinanceStatistics;
+    }
+
+    public void setExpensesFinanceStatistics(List<ExpensesFinanceStatistics> expensesFinanceStatistics) {
+        this.expensesFinanceStatistics = expensesFinanceStatistics;
+    }
+
+    public List<ExpensesPerMonth> getExpensesPerMonth() {
+        return expensesPerMonth;
+    }
+
+    public void setExpensesPerMonth(List<ExpensesPerMonth> expensesPerMonth) {
+        this.expensesPerMonth = expensesPerMonth;
+    }
+
+    public List<ExpensesPerQuater> getExpensesPerQuater() {
+        return expensesPerQuater;
+    }
+
+    public void setExpensesPerQuater(List<ExpensesPerQuater> expensesPerQuater) {
+        this.expensesPerQuater = expensesPerQuater;
+    }
+
+    public List<ForeignCurrencies> getForeignCurrencies() {
+        return foreignCurrencies;
+    }
+
+    public void setForeignCurrencies(List<ForeignCurrencies> foreignCurrencies) {
+        this.foreignCurrencies = foreignCurrencies;
+    }
+
+    public List<Health> getHealth() {
+        return health;
+    }
+
+    public void setHealth(List<Health> health) {
+        this.health = health;
+    }
+
+    public List<Income> getIncome() {
+        return income;
+    }
+
+    public void setIncome(List<Income> income) {
+        this.income = income;
+    }
+
+    public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
+        return incomeFinanceStatistics;
+    }
+
+    public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
+        this.incomeFinanceStatistics = incomeFinanceStatistics;
+    }
+
+    public List<KidsAndPets> getKidsAndPets() {
+        return kidsAndPets;
+    }
+
+    public void setKidsAndPets(List<KidsAndPets> kidsAndPets) {
+        this.kidsAndPets = kidsAndPets;
+    }
+
+    public List<OtherCapitalOutlays> getOtherCapitalOutlays() {
+        return otherCapitalOutlays;
+    }
+
+    public void setOtherCapitalOutlays(List<OtherCapitalOutlays> otherCapitalOutlays) {
+        this.otherCapitalOutlays = otherCapitalOutlays;
+    }
+
+    public List<OverallBalance> getOverallBalance() {
+        return overallBalance;
+    }
+
+    public void setOverallBalance(List<OverallBalance> overallBalance) {
+        this.overallBalance = overallBalance;
+    }
+
+    public List<Recreation> getRecreation() {
+        return recreation;
+    }
+
+    public void setRecreation(List<Recreation> recreation) {
+        this.recreation = recreation;
+    }
+
+    public List<Reserve> getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(List<Reserve> reserve) {
+        this.reserve = reserve;
+    }
+
 }

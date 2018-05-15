@@ -27,4 +27,55 @@ public class ForeignCurrencies {
 
     private double conventionalExchangeRate;
 
+    public ForeignCurrencies() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Currencies getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currencies currency) {
+        this.currency = currency;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getConventionalExchangeRate() {
+        return conventionalExchangeRate;
+    }
+
+    public void setConventionalExchangeRate(double conventionalExchangeRate) {
+        this.conventionalExchangeRate = conventionalExchangeRate;
+    }
+
 }

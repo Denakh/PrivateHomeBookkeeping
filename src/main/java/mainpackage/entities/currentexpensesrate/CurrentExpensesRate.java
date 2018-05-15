@@ -20,5 +20,39 @@ public class CurrentExpensesRate {
 
     private double amount;
 
+    public CurrentExpensesRate() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public MonthEn getMonth() {
+        return month;
+    }
+
+    public void setMonth(MonthEn month) {
+        this.month = month;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 
 }

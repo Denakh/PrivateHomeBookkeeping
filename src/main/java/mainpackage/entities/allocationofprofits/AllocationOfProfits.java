@@ -20,4 +20,39 @@ public class AllocationOfProfits {
 
     private double percent;
 
+    public AllocationOfProfits() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public ItemOfExpenses getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(ItemOfExpenses purpose) {
+        this.purpose = purpose;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
+    }
+
 }

@@ -24,5 +24,47 @@ public class OverallBalance {
 
     private double intriesBalance;
 
+    public OverallBalance() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public double getFactualBalance() {
+        return factualBalance;
+    }
+
+    public void setFactualBalance(double factualBalance) {
+        this.factualBalance = factualBalance;
+    }
+
+    public double getIntriesBalance() {
+        return intriesBalance;
+    }
+
+    public void setIntriesBalance(double intriesBalance) {
+        this.intriesBalance = intriesBalance;
+    }
 
 }

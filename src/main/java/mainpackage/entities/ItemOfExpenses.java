@@ -11,4 +11,30 @@ public class ItemOfExpenses {
 
     protected ExpensesPerQuater expensesPerQuater;
 
+    public ItemOfExpenses() {
+    }
+
+    public String getExpenseType() {
+        return expenseType;
+    }
+
+    public void setExpenseType(String expenseType) {
+        this.expenseType = expenseType;
+    }
+
+    public ExpensesPerMonth getExpensesPerMonth() {
+        return expensesPerMonth;
+    }
+
+    public void setExpensesPerMonth(ExpensesPerMonth expensesPerMonth) {
+        this.expensesPerMonth = expensesPerMonth;
+    }
+
+    public ExpensesPerQuater getExpensesPerQuater() {
+        return expensesPerQuater;
+    }
+
+    public void setExpensesPerQuater(ExpensesPerQuater expensesPerQuater) {
+        this.expensesPerQuater = expensesPerQuater;
+    }
 }

@@ -22,4 +22,39 @@ public class CurrentExpenses extends ItemOfExpenses {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
+    public CurrentExpenses() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public double getEstimatedAmount() {
+        return estimatedAmount;
+    }
+
+    public void setEstimatedAmount(double estimatedAmount) {
+        this.estimatedAmount = estimatedAmount;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
 }

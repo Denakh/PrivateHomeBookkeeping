@@ -28,4 +28,62 @@ public class ExchangeTransactions {
 
     private double exchangeprofit;
 
+    public ExchangeTransactions() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
+    }
+
+    public CurrencyOperationType getCurrencyOperationType() {
+        return currencyOperationType;
+    }
+
+    public void setCurrencyOperationType(CurrencyOperationType currencyOperationType) {
+        this.currencyOperationType = currencyOperationType;
+    }
+
+    public Currencies getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currencies currency) {
+        this.currency = currency;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getExchangerate() {
+        return exchangerate;
+    }
+
+    public void setExchangerate(double exchangerate) {
+        this.exchangerate = exchangerate;
+    }
+
+    public double getExchangeprofit() {
+        return exchangeprofit;
+    }
+
+    public void setExchangeprofit(double exchangeprofit) {
+        this.exchangeprofit = exchangeprofit;
+    }
 }
