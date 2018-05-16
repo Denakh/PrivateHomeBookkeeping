@@ -40,7 +40,7 @@ public class CustomUser {
 
     private String email;
     private String phone;
-    /*
+
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<AllocationOfProfits> allocationOfProfits = new ArrayList<>();
 
@@ -71,11 +71,11 @@ public class CustomUser {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<ExpensesFinanceStatistics> expensesFinanceStatistics = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    private List<ExpensesPerMonth> expensesPerMonth = new ArrayList<>();
+    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    //private List<ExpensesPerMonth> expensesPerMonth = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    private List<ExpensesPerQuater> expensesPerQuater = new ArrayList<>();
+    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    //private List<ExpensesPerQuater> expensesPerQuater = new ArrayList<>();
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<ForeignCurrencies> foreignCurrencies = new ArrayList<>();
@@ -86,8 +86,8 @@ public class CustomUser {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Income> income = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
+    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    //private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<KidsAndPets> kidsAndPets = new ArrayList<>();
@@ -100,7 +100,7 @@ public class CustomUser {
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Recreation> recreation = new ArrayList<>();
-    */
+
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Reserve> reserve = new ArrayList<>();
 
@@ -169,7 +169,7 @@ public class CustomUser {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-/*
+
     public List<AllocationOfProfits> getAllocationOfProfits() {
         return allocationOfProfits;
     }
@@ -250,21 +250,21 @@ public class CustomUser {
         this.expensesFinanceStatistics = expensesFinanceStatistics;
     }
 
-    public List<ExpensesPerMonth> getExpensesPerMonth() {
-        return expensesPerMonth;
-    }
+    //public List<ExpensesPerMonth> getExpensesPerMonth() {
+    //    return expensesPerMonth;
+    //}
 
-    public void setExpensesPerMonth(List<ExpensesPerMonth> expensesPerMonth) {
-        this.expensesPerMonth = expensesPerMonth;
-    }
+    //public void setExpensesPerMonth(List<ExpensesPerMonth> expensesPerMonth) {
+    //   this.expensesPerMonth = expensesPerMonth;
+    //}
 
-    public List<ExpensesPerQuater> getExpensesPerQuater() {
-        return expensesPerQuater;
-    }
+    //public List<ExpensesPerQuater> getExpensesPerQuater() {
+    //    return expensesPerQuater;
+    //}
 
-    public void setExpensesPerQuater(List<ExpensesPerQuater> expensesPerQuater) {
-        this.expensesPerQuater = expensesPerQuater;
-    }
+    //public void setExpensesPerQuater(List<ExpensesPerQuater> expensesPerQuater) {
+    //    this.expensesPerQuater = expensesPerQuater;
+    //}
 
     public List<ForeignCurrencies> getForeignCurrencies() {
         return foreignCurrencies;
@@ -290,13 +290,13 @@ public class CustomUser {
         this.income = income;
     }
 
-    public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
-        return incomeFinanceStatistics;
-    }
+    //public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
+    //    return incomeFinanceStatistics;
+    //}
 
-    public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
-        this.incomeFinanceStatistics = incomeFinanceStatistics;
-    }
+    //public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
+    //    this.incomeFinanceStatistics = incomeFinanceStatistics;
+    //}
 
     public List<KidsAndPets> getKidsAndPets() {
         return kidsAndPets;
@@ -329,7 +329,7 @@ public class CustomUser {
     public void setRecreation(List<Recreation> recreation) {
         this.recreation = recreation;
     }
-*/
+
     public List<Reserve> getReserve() {
         return reserve;
     }

@@ -6,7 +6,7 @@ import mainpackage.entities.users.CustomUser;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class Income {
 
     @Id
@@ -25,7 +25,8 @@ public class Income {
 
     private String description;
 
-    private ItemOfExpenses purpose;
+    //private ItemOfExpenses purpose;
+    private String purpose;
 
     public Income() {
     }
@@ -70,12 +71,20 @@ public class Income {
         this.description = description;
     }
 
-    public ItemOfExpenses getPurpose() {
+    //public ItemOfExpenses getPurpose() {
+    //    return purpose;
+    //}
+
+    //public void setPurpose(ItemOfExpenses purpose) {
+    //    this.purpose = purpose;
+    //}
+
+
+    public String getPurpose() {
         return purpose;
     }
 
-    public void setPurpose(ItemOfExpenses purpose) {
+    public void setPurpose(String purpose) {
         this.purpose = purpose;
     }
-
 }

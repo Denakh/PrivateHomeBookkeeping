@@ -6,7 +6,7 @@ import mainpackage.entities.users.CustomUser;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class Deferrals {
 
     @Id
@@ -23,7 +23,8 @@ public class Deferrals {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    private ItemOfExpenses source;
+    //private ItemOfExpenses source;
+    private String source;
 
     private String description;
 
@@ -64,13 +65,13 @@ public class Deferrals {
         this.date = date;
     }
 
-    public ItemOfExpenses getSource() {
-        return source;
-    }
+    //public ItemOfExpenses getSource() {
+    //    return source;
+    //}
 
-    public void setSource(ItemOfExpenses source) {
-        this.source = source;
-    }
+    //public void setSource(ItemOfExpenses source) {
+    //    this.source = source;
+    //}
 
     public String getDescription() {
         return description;
@@ -88,4 +89,7 @@ public class Deferrals {
         this.monthNumber = monthNumber;
     }
 
+    public void setSource(String source) {
+        this.source = source;
+    }
 }

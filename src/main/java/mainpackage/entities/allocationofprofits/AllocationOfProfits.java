@@ -6,7 +6,7 @@ import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 public class AllocationOfProfits {
     @Id
     @GeneratedValue
@@ -16,7 +16,8 @@ public class AllocationOfProfits {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
-    private ItemOfExpenses purpose;
+    //private ItemOfExpenses purpose;
+    private String purpose;
 
     private double percent;
 
@@ -39,13 +40,13 @@ public class AllocationOfProfits {
         this.user = user;
     }
 
-    public ItemOfExpenses getPurpose() {
-        return purpose;
-    }
+    //public ItemOfExpenses getPurpose() {
+    //    return purpose;
+    //}
 
-    public void setPurpose(ItemOfExpenses purpose) {
-        this.purpose = purpose;
-    }
+    //public void setPurpose(ItemOfExpenses purpose) {
+    //    this.purpose = purpose;
+    //}
 
     public double getPercent() {
         return percent;
@@ -55,4 +56,11 @@ public class AllocationOfProfits {
         this.percent = percent;
     }
 
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        this.purpose = purpose;
+    }
 }

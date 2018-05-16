@@ -6,7 +6,7 @@ import mainpackage.entities.users.CustomUser;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class Recreation extends ItemOfExpenses {
 
     @Id
@@ -17,7 +17,7 @@ public class Recreation extends ItemOfExpenses {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
-    private double change;
+    private double changeAmount;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -46,12 +46,12 @@ public class Recreation extends ItemOfExpenses {
         this.user = user;
     }
 
-    public double getChange() {
-        return change;
+    public double getChangeAmount() {
+        return changeAmount;
     }
 
-    public void setChange(double change) {
-        this.change = change;
+    public void setChangeAmount(double changeAmount) {
+        this.changeAmount = changeAmount;
     }
 
     public Date getDate() {

@@ -5,7 +5,7 @@ import mainpackage.entities.users.CustomUser;
 import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class OverallBalance {
 
     @Id
