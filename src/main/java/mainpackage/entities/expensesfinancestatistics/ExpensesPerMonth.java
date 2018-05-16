@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Entity
+//@Entity
 public class ExpensesPerMonth {
 
     @Id

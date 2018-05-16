@@ -40,7 +40,7 @@ public class CustomUser {
 
     private String email;
     private String phone;
-
+    /*
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<AllocationOfProfits> allocationOfProfits = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class CustomUser {
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Recreation> recreation = new ArrayList<>();
-
+    */
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Reserve> reserve = new ArrayList<>();
 
@@ -169,7 +169,7 @@ public class CustomUser {
     public void setPhone(String phone) {
         this.phone = phone;
     }
-
+/*
     public List<AllocationOfProfits> getAllocationOfProfits() {
         return allocationOfProfits;
     }
@@ -329,13 +329,13 @@ public class CustomUser {
     public void setRecreation(List<Recreation> recreation) {
         this.recreation = recreation;
     }
-
+*/
     public List<Reserve> getReserve() {
         return reserve;
     }
 
     public void setReserve(List<Reserve> reserve) {
-        this.reserve = reserve;
-    }
+       this.reserve = reserve;
+   }
 
 }

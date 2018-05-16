@@ -6,7 +6,7 @@ import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class AllocationOfProfits {
     @Id
     @GeneratedValue

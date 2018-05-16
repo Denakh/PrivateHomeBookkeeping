@@ -4,7 +4,7 @@ import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class CurrentExpensesRate {
 
     @Id
