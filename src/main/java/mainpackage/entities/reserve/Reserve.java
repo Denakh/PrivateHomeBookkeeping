@@ -1,6 +1,6 @@
 package mainpackage.entities.reserve;
 
-import mainpackage.entities.expensesfinancestatistics.KidsAndPatsExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.ReserveExpensesPerMonth;
 import mainpackage.entities.expensesfinancestatistics.ReserveExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
@@ -21,6 +21,10 @@ public class Reserve {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerQuater_id")
     private ReserveExpensesPerQuater reserveExpensesPerQuater;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerMonth_id")
+    private ReserveExpensesPerMonth reserveExpensesPerMonth;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -55,6 +59,14 @@ public class Reserve {
 
     public void setReserveExpensesPerQuater(ReserveExpensesPerQuater reserveExpensesPerQuater) {
        this.reserveExpensesPerQuater = reserveExpensesPerQuater;
+    }
+
+    public ReserveExpensesPerMonth getReserveExpensesPerMonth() {
+        return reserveExpensesPerMonth;
+    }
+
+    public void setReserveExpensesPerMonth(ReserveExpensesPerMonth reserveExpensesPerMonth) {
+        this.reserveExpensesPerMonth = reserveExpensesPerMonth;
     }
 
     public Date getDate() {

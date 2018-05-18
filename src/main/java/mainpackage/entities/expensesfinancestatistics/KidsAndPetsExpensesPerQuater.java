@@ -6,13 +6,13 @@ import mainpackage.entities.kidsandpets.KidsAndPets;
 import javax.persistence.*;
 
 @Entity
-public class KidsAndPatsExpensesPerQuater {
+public class KidsAndPetsExpensesPerQuater {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "kidsAndPatsExpensesPerQuater")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "kidsAndPetsExpensesPerQuater")
     private KidsAndPets kidsAndPets;
 
     private double totalExpenses1QuaterAgo;
@@ -23,7 +23,7 @@ public class KidsAndPatsExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public KidsAndPatsExpensesPerQuater() {
+    public KidsAndPetsExpensesPerQuater() {
     }
 
     public long getId() {

@@ -1,5 +1,6 @@
 package mainpackage.entities.charity;
 
+import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerMonth;
 import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
@@ -20,6 +21,10 @@ public class Charity {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerQuater_id")
     private CharityExpensesPerQuater charityExpensesPerQuater;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerMonth_id")
+    private CharityExpensesPerMonth charityExpensesPerMonth;
 
     private double changeAmount;
 
@@ -56,6 +61,14 @@ public class Charity {
 
     public void setCharityExpensesPerQuater(CharityExpensesPerQuater charityExpensesPerQuater) {
         this.charityExpensesPerQuater = charityExpensesPerQuater;
+    }
+
+    public CharityExpensesPerMonth getCharityExpensesPerMonth() {
+        return charityExpensesPerMonth;
+    }
+
+    public void setCharityExpensesPerMonth(CharityExpensesPerMonth charityExpensesPerMonth) {
+        this.charityExpensesPerMonth = charityExpensesPerMonth;
     }
 
     public double getChangeAmount() {

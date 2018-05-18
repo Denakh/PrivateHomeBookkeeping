@@ -1,6 +1,7 @@
 package mainpackage.entities.health;
 
 import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.HealthExpensesPerMonth;
 import mainpackage.entities.expensesfinancestatistics.HealthExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
@@ -21,6 +22,10 @@ public class Health {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerQuater_id")
     private HealthExpensesPerQuater healthExpensesPerQuater;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerMonth_id")
+    private HealthExpensesPerMonth healthExpensesPerMonth;
 
     private double changeAmount;
 
@@ -57,6 +62,14 @@ public class Health {
 
     public void setHealthExpensesPerQuater(HealthExpensesPerQuater healthExpensesPerQuater) {
         this.healthExpensesPerQuater = healthExpensesPerQuater;
+    }
+
+    public HealthExpensesPerMonth getHealthExpensesPerMonth() {
+        return healthExpensesPerMonth;
+    }
+
+    public void setHealthExpensesPerMonth(HealthExpensesPerMonth healthExpensesPerMonth) {
+        this.healthExpensesPerMonth = healthExpensesPerMonth;
     }
 
     public double getChangeAmount() {

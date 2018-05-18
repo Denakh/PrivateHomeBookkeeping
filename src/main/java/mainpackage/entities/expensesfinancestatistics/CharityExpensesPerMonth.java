@@ -1,23 +1,19 @@
 package mainpackage.entities.expensesfinancestatistics;
 
+import mainpackage.entities.charity.Charity;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
-//@Entity
-public class ExpensesPerMonth {
+@Entity
+public class CharityExpensesPerMonth {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private CustomUser user;
-
-    //private List<ItemOfExpenses> expensesByTypes = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "charityExpensesPerMonth")
+    private Charity charity;
 
     private double totalExpenses1MonthAgo;
 
@@ -43,7 +39,7 @@ public class ExpensesPerMonth {
 
     private double totalExpenses12MonthAgo;
 
-    public ExpensesPerMonth() {
+    public CharityExpensesPerMonth() {
     }
 
     public long getId() {
@@ -54,22 +50,14 @@ public class ExpensesPerMonth {
         this.id = id;
     }
 
-    public CustomUser getUser() {
-        return user;
+    public Charity getCharity() {
+        return charity;
     }
 
-    public void setUser(CustomUser user) {
-        this.user = user;
-    }
-/*
-    public List<ItemOfExpenses> getExpensesByTypes() {
-        return expensesByTypes;
+    public void setCharity(Charity charity) {
+        this.charity = charity;
     }
 
-    public void setExpensesByTypes(List<ItemOfExpenses> expensesByTypes) {
-        this.expensesByTypes = expensesByTypes;
-    }
-*/
     public double getTotalExpenses1MonthAgo() {
         return totalExpenses1MonthAgo;
     }
