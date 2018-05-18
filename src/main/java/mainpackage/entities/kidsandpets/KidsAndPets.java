@@ -1,13 +1,14 @@
 package mainpackage.entities.kidsandpets;
 
-import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.KidsAndPatsExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class KidsAndPets extends ItemOfExpenses {
+public class KidsAndPets {
 
     @Id
     @GeneratedValue
@@ -16,6 +17,10 @@ public class KidsAndPets extends ItemOfExpenses {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuater_id")
+    private KidsAndPatsExpensesPerQuater kidsAndPatsExpensesPerQuater;
 
     private double changeAmount;
 
@@ -44,6 +49,14 @@ public class KidsAndPets extends ItemOfExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public KidsAndPatsExpensesPerQuater getKidsAndPatsExpensesPerQuater() {
+        return kidsAndPatsExpensesPerQuater;
+    }
+
+    public void setKidsAndPatsExpensesPerQuater(KidsAndPatsExpensesPerQuater kidsAndPatsExpensesPerQuater) {
+        this.kidsAndPatsExpensesPerQuater = kidsAndPatsExpensesPerQuater;
     }
 
     public double getChangeAmount() {

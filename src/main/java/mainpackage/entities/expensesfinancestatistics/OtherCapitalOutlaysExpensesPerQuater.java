@@ -1,26 +1,19 @@
 package mainpackage.entities.expensesfinancestatistics;
 
-import mainpackage.entities.ItemOfExpenses;
-import mainpackage.entities.users.CustomUser;
+import mainpackage.entities.charity.Charity;
+import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-//@Entity
-public class ExpensesPerQuater {
+@Entity
+public class OtherCapitalOutlaysExpensesPerQuater {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private CustomUser user;
-
-    private List<ItemOfExpenses> expensesByTypes = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "otherCapitalOutlaysExpensesPerQuater")
+    private OtherCapitalOutlays otherCapitalOutlays;
 
     private double totalExpenses1QuaterAgo;
 
@@ -30,7 +23,7 @@ public class ExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public ExpensesPerQuater() {
+    public OtherCapitalOutlaysExpensesPerQuater() {
     }
 
     public long getId() {
@@ -41,20 +34,12 @@ public class ExpensesPerQuater {
         this.id = id;
     }
 
-    public CustomUser getUser() {
-        return user;
+    public OtherCapitalOutlays getOtherCapitalOutlays() {
+        return otherCapitalOutlays;
     }
 
-    public void setUser(CustomUser user) {
-        this.user = user;
-    }
-
-    public List<ItemOfExpenses> getExpensesByTypes() {
-        return expensesByTypes;
-    }
-
-    public void setExpensesByTypes(List<ItemOfExpenses> expensesByTypes) {
-        this.expensesByTypes = expensesByTypes;
+    public void setOtherCapitalOutlays(OtherCapitalOutlays otherCapitalOutlays) {
+        this.otherCapitalOutlays = otherCapitalOutlays;
     }
 
     public double getTotalExpenses1QuaterAgo() {

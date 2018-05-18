@@ -1,6 +1,5 @@
 package mainpackage.entities.incomefinancestatistics;
 
-import mainpackage.entities.ItemOfExpenses;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -34,11 +33,11 @@ public class IncomeFinanceStatistics {
 
     private double currentExpensesPerLastYear;
 
-    private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerMonth;
+    //private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerMonth;
 
-    private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerQuarter;
+    //private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerQuarter;
 
-    private Map<ItemOfExpenses, Double> expensesPerLastYear;
+    //private Map<ItemOfExpenses, Double> expensesPerLastYear;
 
     public IncomeFinanceStatistics() {
     }
@@ -114,7 +113,7 @@ public class IncomeFinanceStatistics {
     public void setCurrentExpensesPerLastYear(double currentExpensesPerLastYear) {
         this.currentExpensesPerLastYear = currentExpensesPerLastYear;
     }
-
+/*
     public Map<ItemOfExpenses, Map<Integer, Double>> getExpensesPerMonth() {
         return expensesPerMonth;
     }
@@ -138,4 +137,5 @@ public class IncomeFinanceStatistics {
     public void setExpensesPerLastYear(Map<ItemOfExpenses, Double> expensesPerLastYear) {
         this.expensesPerLastYear = expensesPerLastYear;
     }
+    */
 }

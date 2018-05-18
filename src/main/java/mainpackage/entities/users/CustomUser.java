@@ -10,12 +10,9 @@ import mainpackage.entities.debt.Debt;
 import mainpackage.entities.deferrals.Deferrals;
 import mainpackage.entities.exchangetransactions.ExchangeTransactions;
 import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
-import mainpackage.entities.expensesfinancestatistics.ExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.ExpensesPerQuater;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.income.Income;
-import mainpackage.entities.incomefinancestatistics.IncomeFinanceStatistics;
 import mainpackage.entities.kidsandpets.KidsAndPets;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.overallbalance.OverallBalance;
@@ -70,12 +67,6 @@ public class CustomUser {
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<ExpensesFinanceStatistics> expensesFinanceStatistics = new ArrayList<>();
-
-    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    //private List<ExpensesPerMonth> expensesPerMonth = new ArrayList<>();
-
-    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    //private List<ExpensesPerQuater> expensesPerQuater = new ArrayList<>();
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<ForeignCurrencies> foreignCurrencies = new ArrayList<>();
@@ -218,11 +209,11 @@ public class CustomUser {
         this.currentExpensesRate = currentExpensesRate;
     }
 
-    public List<mainpackage.entities.debt.Debt> getDebt() {
+    public List<Debt> getDebt() {
         return Debt;
     }
 
-    public void setDebt(List<mainpackage.entities.debt.Debt> debt) {
+    public void setDebt(List<Debt> debt) {
         Debt = debt;
     }
 
@@ -250,22 +241,6 @@ public class CustomUser {
         this.expensesFinanceStatistics = expensesFinanceStatistics;
     }
 
-    //public List<ExpensesPerMonth> getExpensesPerMonth() {
-    //    return expensesPerMonth;
-    //}
-
-    //public void setExpensesPerMonth(List<ExpensesPerMonth> expensesPerMonth) {
-    //   this.expensesPerMonth = expensesPerMonth;
-    //}
-
-    //public List<ExpensesPerQuater> getExpensesPerQuater() {
-    //    return expensesPerQuater;
-    //}
-
-    //public void setExpensesPerQuater(List<ExpensesPerQuater> expensesPerQuater) {
-    //    this.expensesPerQuater = expensesPerQuater;
-    //}
-
     public List<ForeignCurrencies> getForeignCurrencies() {
         return foreignCurrencies;
     }
@@ -289,14 +264,6 @@ public class CustomUser {
     public void setIncome(List<Income> income) {
         this.income = income;
     }
-
-    //public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
-    //    return incomeFinanceStatistics;
-    //}
-
-    //public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
-    //    this.incomeFinanceStatistics = incomeFinanceStatistics;
-    //}
 
     public List<KidsAndPets> getKidsAndPets() {
         return kidsAndPets;
@@ -335,7 +302,9 @@ public class CustomUser {
     }
 
     public void setReserve(List<Reserve> reserve) {
-       this.reserve = reserve;
-   }
+        this.reserve = reserve;
+    }
+
+
 
 }

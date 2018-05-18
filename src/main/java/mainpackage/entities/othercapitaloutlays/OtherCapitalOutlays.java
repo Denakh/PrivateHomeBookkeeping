@@ -1,13 +1,14 @@
 package mainpackage.entities.othercapitaloutlays;
 
-import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.OtherCapitalOutlaysExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class OtherCapitalOutlays extends ItemOfExpenses {
+public class OtherCapitalOutlays {
 
     @Id
     @GeneratedValue
@@ -16,6 +17,10 @@ public class OtherCapitalOutlays extends ItemOfExpenses {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuater_id")
+    private OtherCapitalOutlaysExpensesPerQuater otherCapitalOutlaysExpensesPerQuater;
 
     private double changeAmount;
 
@@ -44,6 +49,14 @@ public class OtherCapitalOutlays extends ItemOfExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public OtherCapitalOutlaysExpensesPerQuater getOtherCapitalOutlaysExpensesPerQuater() {
+        return otherCapitalOutlaysExpensesPerQuater;
+    }
+
+    public void setOtherCapitalOutlaysExpensesPerQuater(OtherCapitalOutlaysExpensesPerQuater otherCapitalOutlaysExpensesPerQuater) {
+        this.otherCapitalOutlaysExpensesPerQuater = otherCapitalOutlaysExpensesPerQuater;
     }
 
     public double getChangeAmount() {

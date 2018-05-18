@@ -1,13 +1,14 @@
 package mainpackage.entities.reserve;
 
-import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.expensesfinancestatistics.KidsAndPatsExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.ReserveExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Reserve extends ItemOfExpenses {
+public class Reserve {
 
     @Id
     @GeneratedValue
@@ -16,6 +17,10 @@ public class Reserve extends ItemOfExpenses {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuater_id")
+    private ReserveExpensesPerQuater reserveExpensesPerQuater;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -42,6 +47,14 @@ public class Reserve extends ItemOfExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public ReserveExpensesPerQuater getReserveExpensesPerQuater() {
+        return reserveExpensesPerQuater;
+    }
+
+    public void setReserveExpensesPerQuater(ReserveExpensesPerQuater reserveExpensesPerQuater) {
+       this.reserveExpensesPerQuater = reserveExpensesPerQuater;
     }
 
     public Date getDate() {

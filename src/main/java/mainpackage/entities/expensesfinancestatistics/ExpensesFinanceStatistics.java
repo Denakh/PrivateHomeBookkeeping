@@ -1,11 +1,9 @@
 package mainpackage.entities.expensesfinancestatistics;
 
-import mainpackage.entities.ItemOfExpenses;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Map;
 
 @Entity
 public class ExpensesFinanceStatistics {
@@ -128,6 +126,4 @@ public class ExpensesFinanceStatistics {
     public void setReserveExpensesPerLastYear(double reserveExpensesPerLastYear) {
         this.reserveExpensesPerLastYear = reserveExpensesPerLastYear;
     }
-
-
 }

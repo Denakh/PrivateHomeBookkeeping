@@ -1,6 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.ItemOfExpenses;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -25,7 +24,6 @@ public class Income {
 
     private String description;
 
-    //private ItemOfExpenses purpose;
     private String purpose;
 
     public Income() {
@@ -70,15 +68,6 @@ public class Income {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    //public ItemOfExpenses getPurpose() {
-    //    return purpose;
-    //}
-
-    //public void setPurpose(ItemOfExpenses purpose) {
-    //    this.purpose = purpose;
-    //}
-
 
     public String getPurpose() {
         return purpose;

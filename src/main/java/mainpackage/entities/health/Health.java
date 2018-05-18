@@ -1,13 +1,14 @@
 package mainpackage.entities.health;
 
-import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.HealthExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Health extends ItemOfExpenses {
+public class Health {
 
     @Id
     @GeneratedValue
@@ -16,6 +17,10 @@ public class Health extends ItemOfExpenses {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuater_id")
+    private HealthExpensesPerQuater healthExpensesPerQuater;
 
     private double changeAmount;
 
@@ -44,6 +49,14 @@ public class Health extends ItemOfExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public HealthExpensesPerQuater getHealthExpensesPerQuater() {
+        return healthExpensesPerQuater;
+    }
+
+    public void setHealthExpensesPerQuater(HealthExpensesPerQuater healthExpensesPerQuater) {
+        this.healthExpensesPerQuater = healthExpensesPerQuater;
     }
 
     public double getChangeAmount() {

@@ -1,13 +1,10 @@
 package mainpackage.entities.expensesfinancestatistics;
 
-import mainpackage.entities.ItemOfExpenses;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 //@Entity
 public class ExpensesPerMonth {
@@ -20,7 +17,7 @@ public class ExpensesPerMonth {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
-    private List<ItemOfExpenses> expensesByTypes = new ArrayList<>();
+    //private List<ItemOfExpenses> expensesByTypes = new ArrayList<>();
 
     private double totalExpenses1MonthAgo;
 
@@ -64,7 +61,7 @@ public class ExpensesPerMonth {
     public void setUser(CustomUser user) {
         this.user = user;
     }
-
+/*
     public List<ItemOfExpenses> getExpensesByTypes() {
         return expensesByTypes;
     }
@@ -72,7 +69,7 @@ public class ExpensesPerMonth {
     public void setExpensesByTypes(List<ItemOfExpenses> expensesByTypes) {
         this.expensesByTypes = expensesByTypes;
     }
-
+*/
     public double getTotalExpenses1MonthAgo() {
         return totalExpenses1MonthAgo;
     }

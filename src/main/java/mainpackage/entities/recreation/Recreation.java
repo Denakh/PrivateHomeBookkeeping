@@ -1,13 +1,14 @@
 package mainpackage.entities.recreation;
 
-import mainpackage.entities.ItemOfExpenses;
+import mainpackage.entities.expensesfinancestatistics.KidsAndPatsExpensesPerQuater;
+import mainpackage.entities.expensesfinancestatistics.RecreationExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Recreation extends ItemOfExpenses {
+public class Recreation {
 
     @Id
     @GeneratedValue
@@ -16,6 +17,10 @@ public class Recreation extends ItemOfExpenses {
     @ManyToOne
     @JoinColumn(name="user_id")
     private CustomUser user;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuater_id")
+    private RecreationExpensesPerQuater recreationExpensesPerQuater;
 
     private double changeAmount;
 
@@ -44,6 +49,14 @@ public class Recreation extends ItemOfExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public RecreationExpensesPerQuater getRecreationExpensesPerQuater() {
+        return recreationExpensesPerQuater;
+    }
+
+    public void setRecreationExpensesPerQuater(RecreationExpensesPerQuater recreationExpensesPerQuater) {
+        this.recreationExpensesPerQuater = recreationExpensesPerQuater;
     }
 
     public double getChangeAmount() {

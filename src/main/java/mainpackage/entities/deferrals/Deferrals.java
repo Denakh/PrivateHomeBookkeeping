@@ -1,6 +1,5 @@
 package mainpackage.entities.deferrals;
 
-import mainpackage.entities.ItemOfExpenses;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -23,7 +22,6 @@ public class Deferrals {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    //private ItemOfExpenses source;
     private String source;
 
     private String description;
@@ -65,13 +63,13 @@ public class Deferrals {
         this.date = date;
     }
 
-    //public ItemOfExpenses getSource() {
-    //    return source;
-    //}
+    public String getSource() {
+        return source;
+    }
 
-    //public void setSource(ItemOfExpenses source) {
-    //    this.source = source;
-    //}
+    public void setSource(String source) {
+        this.source = source;
+    }
 
     public String getDescription() {
         return description;
@@ -87,9 +85,5 @@ public class Deferrals {
 
     public void setMonthNumber(int monthNumber) {
         this.monthNumber = monthNumber;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
     }
 }
