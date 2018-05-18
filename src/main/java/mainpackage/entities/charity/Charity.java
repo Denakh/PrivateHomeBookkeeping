@@ -1,7 +1,5 @@
 package mainpackage.entities.charity;
 
-import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -19,8 +17,8 @@ public class Charity {
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuater_id")
-    private CharityExpensesPerQuater charityExpensesPerQuater;
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private CharityExpensesPerQuarter charityExpensesPerQuarter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerMonth_id")
@@ -55,12 +53,12 @@ public class Charity {
         this.user = user;
     }
 
-    public CharityExpensesPerQuater getCharityExpensesPerQuater() {
-        return charityExpensesPerQuater;
+    public CharityExpensesPerQuarter getCharityExpensesPerQuarter() {
+        return charityExpensesPerQuarter;
     }
 
-    public void setCharityExpensesPerQuater(CharityExpensesPerQuater charityExpensesPerQuater) {
-        this.charityExpensesPerQuater = charityExpensesPerQuater;
+    public void setCharityExpensesPerQuarter(CharityExpensesPerQuarter charityExpensesPerQuarter) {
+        this.charityExpensesPerQuarter = charityExpensesPerQuarter;
     }
 
     public CharityExpensesPerMonth getCharityExpensesPerMonth() {

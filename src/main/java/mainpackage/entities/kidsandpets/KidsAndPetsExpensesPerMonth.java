@@ -1,19 +1,19 @@
-package mainpackage.entities.expensesfinancestatistics;
+package mainpackage.entities.kidsandpets;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.users.CustomUser;
+import mainpackage.entities.kidsandpets.KidsAndPets;
 
 import javax.persistence.*;
 
 @Entity
-public class CharityExpensesPerMonth {
+public class KidsAndPetsExpensesPerMonth {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "charityExpensesPerMonth")
-    private Charity charity;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "kidsAndPetsExpensesPerMonth")
+    private KidsAndPets kidsAndPets;
 
     private double totalExpenses1MonthAgo;
 
@@ -39,7 +39,7 @@ public class CharityExpensesPerMonth {
 
     private double totalExpenses12MonthAgo;
 
-    public CharityExpensesPerMonth() {
+    public KidsAndPetsExpensesPerMonth() {
     }
 
     public long getId() {
@@ -50,12 +50,12 @@ public class CharityExpensesPerMonth {
         this.id = id;
     }
 
-    public Charity getCharity() {
-        return charity;
+    public KidsAndPets getKidsAndPets() {
+        return kidsAndPets;
     }
 
-    public void setCharity(Charity charity) {
-        this.charity = charity;
+    public void setKidsAndPets(KidsAndPets kidsAndPets) {
+        this.kidsAndPets = kidsAndPets;
     }
 
     public double getTotalExpenses1MonthAgo() {
@@ -153,4 +153,5 @@ public class CharityExpensesPerMonth {
     public void setTotalExpenses12MonthAgo(double totalExpenses12MonthAgo) {
         this.totalExpenses12MonthAgo = totalExpenses12MonthAgo;
     }
+
 }

@@ -1,7 +1,5 @@
 package mainpackage.entities.reserve;
 
-import mainpackage.entities.expensesfinancestatistics.ReserveExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.ReserveExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -19,8 +17,8 @@ public class Reserve {
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuater_id")
-    private ReserveExpensesPerQuater reserveExpensesPerQuater;
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private ReserveExpensesPerQuarter reserveExpensesPerQuarter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerMonth_id")
@@ -53,12 +51,12 @@ public class Reserve {
         this.user = user;
     }
 
-    public ReserveExpensesPerQuater getReserveExpensesPerQuater() {
-        return reserveExpensesPerQuater;
+    public ReserveExpensesPerQuarter getReserveExpensesPerQuarter() {
+        return reserveExpensesPerQuarter;
     }
 
-    public void setReserveExpensesPerQuater(ReserveExpensesPerQuater reserveExpensesPerQuater) {
-       this.reserveExpensesPerQuater = reserveExpensesPerQuater;
+    public void setReserveExpensesPerQuarter(ReserveExpensesPerQuarter reserveExpensesPerQuarter) {
+       this.reserveExpensesPerQuarter = reserveExpensesPerQuarter;
     }
 
     public ReserveExpensesPerMonth getReserveExpensesPerMonth() {

@@ -1,19 +1,19 @@
-package mainpackage.entities.expensesfinancestatistics;
+package mainpackage.entities.currentexpenses;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.health.Health;
+import mainpackage.entities.currentexpenses.CurrentExpenses;
 
 import javax.persistence.*;
 
 @Entity
-public class HealthExpensesPerMonth {
+public class CurrentExpensesPerMonth {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "healthExpensesPerMonth")
-    private Health health;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "currentExpensesPerMonth")
+    private CurrentExpenses currentExpenses;
 
     private double totalExpenses1MonthAgo;
 
@@ -39,7 +39,7 @@ public class HealthExpensesPerMonth {
 
     private double totalExpenses12MonthAgo;
 
-    public HealthExpensesPerMonth() {
+    public CurrentExpensesPerMonth() {
     }
 
     public long getId() {
@@ -50,12 +50,12 @@ public class HealthExpensesPerMonth {
         this.id = id;
     }
 
-    public Health getHealth() {
-        return health;
+    public CurrentExpenses getCurrentExpenses() {
+        return currentExpenses;
     }
 
-    public void setHealth(Health health) {
-        this.health = health;
+    public void setCurrentExpenses(CurrentExpenses currentExpenses) {
+        this.currentExpenses = currentExpenses;
     }
 
     public double getTotalExpenses1MonthAgo() {

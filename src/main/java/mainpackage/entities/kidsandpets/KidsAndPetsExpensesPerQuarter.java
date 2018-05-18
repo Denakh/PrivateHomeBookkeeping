@@ -1,19 +1,19 @@
-package mainpackage.entities.expensesfinancestatistics;
+package mainpackage.entities.kidsandpets;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
+import mainpackage.entities.kidsandpets.KidsAndPets;
 
 import javax.persistence.*;
 
 @Entity
-public class OtherCapitalOutlaysExpensesPerQuater {
+public class KidsAndPetsExpensesPerQuarter {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "otherCapitalOutlaysExpensesPerQuater")
-    private OtherCapitalOutlays otherCapitalOutlays;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "kidsAndPetsExpensesPerQuarter")
+    private KidsAndPets kidsAndPets;
 
     private double totalExpenses1QuaterAgo;
 
@@ -23,7 +23,7 @@ public class OtherCapitalOutlaysExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public OtherCapitalOutlaysExpensesPerQuater() {
+    public KidsAndPetsExpensesPerQuarter() {
     }
 
     public long getId() {
@@ -34,12 +34,12 @@ public class OtherCapitalOutlaysExpensesPerQuater {
         this.id = id;
     }
 
-    public OtherCapitalOutlays getOtherCapitalOutlays() {
-        return otherCapitalOutlays;
+    public KidsAndPets getKidsAndPets() {
+        return kidsAndPets;
     }
 
-    public void setOtherCapitalOutlays(OtherCapitalOutlays otherCapitalOutlays) {
-        this.otherCapitalOutlays = otherCapitalOutlays;
+    public void setKidsAndPets(KidsAndPets kidsAndPets) {
+        this.kidsAndPets = kidsAndPets;
     }
 
     public double getTotalExpenses1QuaterAgo() {

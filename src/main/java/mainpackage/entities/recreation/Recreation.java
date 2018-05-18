@@ -1,7 +1,5 @@
 package mainpackage.entities.recreation;
 
-import mainpackage.entities.expensesfinancestatistics.RecreationExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.RecreationExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -19,8 +17,8 @@ public class Recreation {
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuater_id")
-    private RecreationExpensesPerQuater recreationExpensesPerQuater;
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private RecreationExpensesPerQuarter recreationExpensesPerQuarter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerMonth_id")
@@ -55,12 +53,12 @@ public class Recreation {
         this.user = user;
     }
 
-    public RecreationExpensesPerQuater getRecreationExpensesPerQuater() {
-        return recreationExpensesPerQuater;
+    public RecreationExpensesPerQuarter getRecreationExpensesPerQuarter() {
+        return recreationExpensesPerQuarter;
     }
 
-    public void setRecreationExpensesPerQuater(RecreationExpensesPerQuater recreationExpensesPerQuater) {
-        this.recreationExpensesPerQuater = recreationExpensesPerQuater;
+    public void setRecreationExpensesPerQuarter(RecreationExpensesPerQuarter recreationExpensesPerQuarter) {
+        this.recreationExpensesPerQuarter = recreationExpensesPerQuarter;
     }
 
     public RecreationExpensesPerMonth getRecreationExpensesPerMonth() {

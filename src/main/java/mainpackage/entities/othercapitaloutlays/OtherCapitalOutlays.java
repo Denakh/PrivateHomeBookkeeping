@@ -1,8 +1,5 @@
 package mainpackage.entities.othercapitaloutlays;
 
-import mainpackage.entities.expensesfinancestatistics.CharityExpensesPerQuater;
-import mainpackage.entities.expensesfinancestatistics.OtherCapitalOutlaysExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.OtherCapitalOutlaysExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -20,8 +17,8 @@ public class OtherCapitalOutlays {
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuater_id")
-    private OtherCapitalOutlaysExpensesPerQuater otherCapitalOutlaysExpensesPerQuater;
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private OtherCapitalOutlaysExpensesPerQuarter otherCapitalOutlaysExpensesPerQuarter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerMonth_id")
@@ -56,12 +53,12 @@ public class OtherCapitalOutlays {
         this.user = user;
     }
 
-    public OtherCapitalOutlaysExpensesPerQuater getOtherCapitalOutlaysExpensesPerQuater() {
-        return otherCapitalOutlaysExpensesPerQuater;
+    public OtherCapitalOutlaysExpensesPerQuarter getOtherCapitalOutlaysExpensesPerQuarter() {
+        return otherCapitalOutlaysExpensesPerQuarter;
     }
 
-    public void setOtherCapitalOutlaysExpensesPerQuater(OtherCapitalOutlaysExpensesPerQuater otherCapitalOutlaysExpensesPerQuater) {
-        this.otherCapitalOutlaysExpensesPerQuater = otherCapitalOutlaysExpensesPerQuater;
+    public void setOtherCapitalOutlaysExpensesPerQuarter(OtherCapitalOutlaysExpensesPerQuarter otherCapitalOutlaysExpensesPerQuarter) {
+        this.otherCapitalOutlaysExpensesPerQuarter = otherCapitalOutlaysExpensesPerQuarter;
     }
 
     public OtherCapitalOutlaysExpensesPerMonth getOtherCapitalOutlaysExpensesPerMonth() {

@@ -5,14 +5,14 @@ import mainpackage.entities.charity.Charity;
 import javax.persistence.*;
 
 @Entity
-public class CharityExpensesPerQuater {
+public class TotalExpensesPerQuarter {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "charityExpensesPerQuater")
-    private Charity charity;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "totalExpensesPerQuarter")
+    private ExpensesFinanceStatistics expensesFinanceStatistics;
 
     private double totalExpenses1QuaterAgo;
 
@@ -22,7 +22,7 @@ public class CharityExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public CharityExpensesPerQuater() {
+    public TotalExpensesPerQuarter() {
     }
 
     public long getId() {
@@ -33,12 +33,12 @@ public class CharityExpensesPerQuater {
         this.id = id;
     }
 
-    public Charity getCharity() {
-        return charity;
+    public ExpensesFinanceStatistics getExpensesFinanceStatistics() {
+        return expensesFinanceStatistics;
     }
 
-    public void setCharity(Charity charity) {
-        this.charity = charity;
+    public void setExpensesFinanceStatistics(ExpensesFinanceStatistics expensesFinanceStatistics) {
+        this.expensesFinanceStatistics = expensesFinanceStatistics;
     }
 
     public double getTotalExpenses1QuaterAgo() {
@@ -72,5 +72,6 @@ public class CharityExpensesPerQuater {
     public void setTotalExpenses4QuaterAgo(double totalExpenses4QuaterAgo) {
         this.totalExpenses4QuaterAgo = totalExpenses4QuaterAgo;
     }
+
 
 }

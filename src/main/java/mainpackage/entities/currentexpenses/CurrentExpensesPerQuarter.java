@@ -1,19 +1,19 @@
-package mainpackage.entities.expensesfinancestatistics;
+package mainpackage.entities.currentexpenses;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.recreation.Recreation;
+import mainpackage.entities.currentexpenses.CurrentExpenses;
 
 import javax.persistence.*;
 
 @Entity
-public class RecreationExpensesPerQuater {
+public class CurrentExpensesPerQuarter {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "recreationExpensesPerQuater")
-    private Recreation recreation;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "currentExpensesPerQuarter")
+    private CurrentExpenses currentExpenses;
 
     private double totalExpenses1QuaterAgo;
 
@@ -23,7 +23,7 @@ public class RecreationExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public RecreationExpensesPerQuater() {
+    public CurrentExpensesPerQuarter() {
     }
 
     public long getId() {
@@ -34,12 +34,12 @@ public class RecreationExpensesPerQuater {
         this.id = id;
     }
 
-    public Recreation getRecreation() {
-        return recreation;
+    public CurrentExpenses getCurrentExpenses() {
+        return currentExpenses;
     }
 
-    public void setRecreation(Recreation recreation) {
-        this.recreation = recreation;
+    public void setCurrentExpenses(CurrentExpenses currentExpenses) {
+        this.currentExpenses = currentExpenses;
     }
 
     public double getTotalExpenses1QuaterAgo() {

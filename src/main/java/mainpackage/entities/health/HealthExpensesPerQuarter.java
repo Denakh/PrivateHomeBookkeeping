@@ -1,19 +1,19 @@
-package mainpackage.entities.expensesfinancestatistics;
+package mainpackage.entities.health;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.kidsandpets.KidsAndPets;
+import mainpackage.entities.health.Health;
 
 import javax.persistence.*;
 
 @Entity
-public class KidsAndPetsExpensesPerQuater {
+public class HealthExpensesPerQuarter {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "kidsAndPetsExpensesPerQuater")
-    private KidsAndPets kidsAndPets;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "healthExpensesPerQuarter")
+    private Health health;
 
     private double totalExpenses1QuaterAgo;
 
@@ -23,7 +23,7 @@ public class KidsAndPetsExpensesPerQuater {
 
     private double totalExpenses4QuaterAgo;
 
-    public KidsAndPetsExpensesPerQuater() {
+    public HealthExpensesPerQuarter() {
     }
 
     public long getId() {
@@ -34,12 +34,12 @@ public class KidsAndPetsExpensesPerQuater {
         this.id = id;
     }
 
-    public KidsAndPets getKidsAndPets() {
-        return kidsAndPets;
+    public Health getHealth() {
+        return health;
     }
 
-    public void setKidsAndPets(KidsAndPets kidsAndPets) {
-        this.kidsAndPets = kidsAndPets;
+    public void setHealth(Health health) {
+        this.health = health;
     }
 
     public double getTotalExpenses1QuaterAgo() {

@@ -1,19 +1,18 @@
 package mainpackage.entities.expensesfinancestatistics;
 
 import mainpackage.entities.charity.Charity;
-import mainpackage.entities.reserve.Reserve;
 
 import javax.persistence.*;
 
 @Entity
-public class ReserveExpensesPerMonth {
+public class TotalExpensesPerMonth {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "reserveExpensesPerMonth")
-    private Reserve reserve;
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "totalExpensesPerMonth")
+    private ExpensesFinanceStatistics expensesFinanceStatistics;
 
     private double totalExpenses1MonthAgo;
 
@@ -39,7 +38,7 @@ public class ReserveExpensesPerMonth {
 
     private double totalExpenses12MonthAgo;
 
-    public ReserveExpensesPerMonth() {
+    public TotalExpensesPerMonth() {
     }
 
     public long getId() {
@@ -50,12 +49,12 @@ public class ReserveExpensesPerMonth {
         this.id = id;
     }
 
-    public Reserve getReserve() {
-        return reserve;
+    public ExpensesFinanceStatistics getExpensesFinanceStatistics() {
+        return expensesFinanceStatistics;
     }
 
-    public void setReserve(Reserve reserve) {
-        this.reserve = reserve;
+    public void setExpensesFinanceStatistics(ExpensesFinanceStatistics expensesFinanceStatistics) {
+        this.expensesFinanceStatistics = expensesFinanceStatistics;
     }
 
     public double getTotalExpenses1MonthAgo() {

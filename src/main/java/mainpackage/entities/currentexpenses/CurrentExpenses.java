@@ -16,6 +16,14 @@ public class CurrentExpenses {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private CurrentExpensesPerQuarter currentExpensesPerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expensesPerMonth_id")
+    private CurrentExpensesPerMonth currentExpensesPerMonth;
+
     private double estimatedAmount;
 
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -38,6 +46,22 @@ public class CurrentExpenses {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public CurrentExpensesPerQuarter getCurrentExpensesPerQuarter() {
+        return currentExpensesPerQuarter;
+    }
+
+    public void setCurrentExpensesPerQuarter(CurrentExpensesPerQuarter currentExpensesPerQuarter) {
+        this.currentExpensesPerQuarter = currentExpensesPerQuarter;
+    }
+
+    public CurrentExpensesPerMonth getCurrentExpensesPerMonth() {
+        return currentExpensesPerMonth;
+    }
+
+    public void setCurrentExpensesPerMonth(CurrentExpensesPerMonth currentExpensesPerMonth) {
+        this.currentExpensesPerMonth = currentExpensesPerMonth;
     }
 
     public double getEstimatedAmount() {

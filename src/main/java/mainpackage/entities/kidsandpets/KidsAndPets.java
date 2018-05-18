@@ -1,7 +1,5 @@
 package mainpackage.entities.kidsandpets;
 
-import mainpackage.entities.expensesfinancestatistics.KidsAndPetsExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.KidsAndPetsExpensesPerQuater;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -19,8 +17,8 @@ public class KidsAndPets {
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuater_id")
-    private KidsAndPetsExpensesPerQuater kidsAndPetsExpensesPerQuater;
+    @JoinColumn(name = "expensesPerQuarter_id")
+    private KidsAndPetsExpensesPerQuarter kidsAndPetsExpensesPerQuarter;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "expensesPerMonth_id")
@@ -55,12 +53,12 @@ public class KidsAndPets {
         this.user = user;
     }
 
-    public KidsAndPetsExpensesPerQuater getKidsAndPetsExpensesPerQuater() {
-        return kidsAndPetsExpensesPerQuater;
+    public KidsAndPetsExpensesPerQuarter getKidsAndPetsExpensesPerQuarter() {
+        return kidsAndPetsExpensesPerQuarter;
     }
 
-    public void setKidsAndPetsExpensesPerQuater(KidsAndPetsExpensesPerQuater kidsAndPetsExpensesPerQuater) {
-        this.kidsAndPetsExpensesPerQuater = kidsAndPetsExpensesPerQuater;
+    public void setKidsAndPetsExpensesPerQuarter(KidsAndPetsExpensesPerQuarter kidsAndPetsExpensesPerQuarter) {
+        this.kidsAndPetsExpensesPerQuarter = kidsAndPetsExpensesPerQuarter;
     }
 
     public KidsAndPetsExpensesPerMonth getKidsAndPetsExpensesPerMonth() {
