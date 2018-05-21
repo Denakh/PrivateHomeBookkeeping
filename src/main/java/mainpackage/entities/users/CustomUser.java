@@ -78,8 +78,8 @@ public class CustomUser {
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<Income> income = new ArrayList<>();
 
-    //@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-    //private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
+    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
 
     @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
     private List<KidsAndPets> kidsAndPets = new ArrayList<>();
@@ -266,13 +266,13 @@ public class CustomUser {
         this.income = income;
     }
 
-    //public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
-    //    return incomeFinanceStatistics;
-    //}
+    public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
+        return incomeFinanceStatistics;
+    }
 
-    //public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
-    //    this.incomeFinanceStatistics = incomeFinanceStatistics;
-    //}
+    public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
+        this.incomeFinanceStatistics = incomeFinanceStatistics;
+    }
 
     public List<KidsAndPets> getKidsAndPets() {
         return kidsAndPets;

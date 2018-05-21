@@ -4,7 +4,7 @@ import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 public class TotalIncomePerQuarter {
 
     @Id

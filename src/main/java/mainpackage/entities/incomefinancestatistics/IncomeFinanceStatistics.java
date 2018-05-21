@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Map;
 
-//@Entity
+@Entity
 public class IncomeFinanceStatistics {
 
     @Id
