@@ -1,5 +1,7 @@
 package mainpackage.entities.incomefinancestatistics;
 
+import mainpackage.entities.expensesfinancestatistics.TotalExpensesPerMonth;
+import mainpackage.entities.expensesfinancestatistics.TotalExpensesPerQuarter;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -17,27 +19,33 @@ public class IncomeFinanceStatistics {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private TotalIncomePerQuarter totalIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private TotalIncomePerMonth totalIncomePerMonth;
+
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    private Map<Integer, Double> totalExpensesPerMonth;
+    private double totalIncomePerLastYear;
 
-    private Map<Integer, Double> totalExpensesPerQuarter;
+    private double currentIncomePerLastYear;
 
-    private double totalExpensesPerLastYear;
+    private double charityIncomePerLastYear;
 
-    private Map<Integer, Double> currentExpensesPerMonth;
+    private double healthIncomePerLastYear;
 
-    private Map<Integer, Double> currentExpensesPerQuarter;
+    private double kidsandpatsIncomePerLastYear;
 
-    private double currentExpensesPerLastYear;
+    private double othercapoutlaysIncomePerLastYear;
 
-    //private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerMonth;
+    private double recreationIncomePerLastYear;
 
-    //private Map<ItemOfExpenses, Map<Integer, Double>> expensesPerQuarter;
-
-    //private Map<ItemOfExpenses, Double> expensesPerLastYear;
+    private double reserveIncomePerLastYear;
 
     public IncomeFinanceStatistics() {
     }
@@ -58,6 +66,22 @@ public class IncomeFinanceStatistics {
         this.user = user;
     }
 
+    public TotalIncomePerQuarter getTotalIncomePerQuarter() {
+        return totalIncomePerQuarter;
+    }
+
+    public void setTotalIncomePerQuarter(TotalIncomePerQuarter totalIncomePerQuarter) {
+        this.totalIncomePerQuarter = totalIncomePerQuarter;
+    }
+
+    public TotalIncomePerMonth getTotalIncomePerMonth() {
+        return totalIncomePerMonth;
+    }
+
+    public void setTotalIncomePerMonth(TotalIncomePerMonth totalIncomePerMonth) {
+        this.totalIncomePerMonth = totalIncomePerMonth;
+    }
+
     public Date getDate() {
         return date;
     }
@@ -66,76 +90,68 @@ public class IncomeFinanceStatistics {
         this.date = date;
     }
 
-    public Map<Integer, Double> getTotalExpensesPerMonth() {
-        return totalExpensesPerMonth;
+    public double getTotalIncomePerLastYear() {
+        return totalIncomePerLastYear;
     }
 
-    public void setTotalExpensesPerMonth(Map<Integer, Double> totalExpensesPerMonth) {
-        this.totalExpensesPerMonth = totalExpensesPerMonth;
+    public void setTotalIncomePerLastYear(double totalIncomePerLastYear) {
+        this.totalIncomePerLastYear = totalIncomePerLastYear;
     }
 
-    public Map<Integer, Double> getTotalExpensesPerQuarter() {
-        return totalExpensesPerQuarter;
+    public double getCurrentIncomePerLastYear() {
+        return currentIncomePerLastYear;
     }
 
-    public void setTotalExpensesPerQuarter(Map<Integer, Double> totalExpensesPerQuarter) {
-        this.totalExpensesPerQuarter = totalExpensesPerQuarter;
+    public void setCurrentIncomePerLastYear(double currentIncomePerLastYear) {
+        this.currentIncomePerLastYear = currentIncomePerLastYear;
     }
 
-    public double getTotalExpensesPerLastYear() {
-        return totalExpensesPerLastYear;
+    public double getCharityIncomePerLastYear() {
+        return charityIncomePerLastYear;
     }
 
-    public void setTotalExpensesPerLastYear(double totalExpensesPerLastYear) {
-        this.totalExpensesPerLastYear = totalExpensesPerLastYear;
+    public void setCharityIncomePerLastYear(double charityIncomePerLastYear) {
+        this.charityIncomePerLastYear = charityIncomePerLastYear;
     }
 
-    public Map<Integer, Double> getCurrentExpensesPerMonth() {
-        return currentExpensesPerMonth;
+    public double getHealthIncomePerLastYear() {
+        return healthIncomePerLastYear;
     }
 
-    public void setCurrentExpensesPerMonth(Map<Integer, Double> currentExpensesPerMonth) {
-        this.currentExpensesPerMonth = currentExpensesPerMonth;
+    public void setHealthIncomePerLastYear(double healthIncomePerLastYear) {
+        this.healthIncomePerLastYear = healthIncomePerLastYear;
     }
 
-    public Map<Integer, Double> getCurrentExpensesPerQuarter() {
-        return currentExpensesPerQuarter;
+    public double getKidsandpatsIncomePerLastYear() {
+        return kidsandpatsIncomePerLastYear;
     }
 
-    public void setCurrentExpensesPerQuarter(Map<Integer, Double> currentExpensesPerQuarter) {
-        this.currentExpensesPerQuarter = currentExpensesPerQuarter;
+    public void setKidsandpatsIncomePerLastYear(double kidsandpatsIncomePerLastYear) {
+        this.kidsandpatsIncomePerLastYear = kidsandpatsIncomePerLastYear;
     }
 
-    public double getCurrentExpensesPerLastYear() {
-        return currentExpensesPerLastYear;
+    public double getOthercapoutlaysIncomePerLastYear() {
+        return othercapoutlaysIncomePerLastYear;
     }
 
-    public void setCurrentExpensesPerLastYear(double currentExpensesPerLastYear) {
-        this.currentExpensesPerLastYear = currentExpensesPerLastYear;
-    }
-/*
-    public Map<ItemOfExpenses, Map<Integer, Double>> getExpensesPerMonth() {
-        return expensesPerMonth;
+    public void setOthercapoutlaysIncomePerLastYear(double othercapoutlaysIncomePerLastYear) {
+        this.othercapoutlaysIncomePerLastYear = othercapoutlaysIncomePerLastYear;
     }
 
-    public void setExpensesPerMonth(Map<ItemOfExpenses, Map<Integer, Double>> expensesPerMonth) {
-        this.expensesPerMonth = expensesPerMonth;
+    public double getRecreationIncomePerLastYear() {
+        return recreationIncomePerLastYear;
     }
 
-    public Map<ItemOfExpenses, Map<Integer, Double>> getExpensesPerQuarter() {
-        return expensesPerQuarter;
+    public void setRecreationIncomePerLastYear(double recreationIncomePerLastYear) {
+        this.recreationIncomePerLastYear = recreationIncomePerLastYear;
     }
 
-    public void setExpensesPerQuarter(Map<ItemOfExpenses, Map<Integer, Double>> expensesPerQuarter) {
-        this.expensesPerQuarter = expensesPerQuarter;
+    public double getReserveIncomePerLastYear() {
+        return reserveIncomePerLastYear;
     }
 
-    public Map<ItemOfExpenses, Double> getExpensesPerLastYear() {
-        return expensesPerLastYear;
+    public void setReserveIncomePerLastYear(double reserveIncomePerLastYear) {
+        this.reserveIncomePerLastYear = reserveIncomePerLastYear;
     }
 
-    public void setExpensesPerLastYear(Map<ItemOfExpenses, Double> expensesPerLastYear) {
-        this.expensesPerLastYear = expensesPerLastYear;
-    }
-    */
 }

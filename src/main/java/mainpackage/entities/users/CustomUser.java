@@ -13,6 +13,7 @@ import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.income.Income;
+import mainpackage.entities.incomefinancestatistics.IncomeFinanceStatistics;
 import mainpackage.entities.kidsandpets.KidsAndPets;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.overallbalance.OverallBalance;
@@ -264,6 +265,14 @@ public class CustomUser {
     public void setIncome(List<Income> income) {
         this.income = income;
     }
+
+    //public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {
+    //    return incomeFinanceStatistics;
+    //}
+
+    //public void setIncomeFinanceStatistics(List<IncomeFinanceStatistics> incomeFinanceStatistics) {
+    //    this.incomeFinanceStatistics = incomeFinanceStatistics;
+    //}
 
     public List<KidsAndPets> getKidsAndPets() {
         return kidsAndPets;

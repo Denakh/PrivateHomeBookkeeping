@@ -4,14 +4,14 @@ import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 public class TotalIncomePerQuarter {
 
     @Id
     @GeneratedValue
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "totalExpensesPerQuarter")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "totalIncomePerQuarter")
     private IncomeFinanceStatistics incomeFinanceStatistics;
 
     private double totalIncome1QuaterAgo;
@@ -33,45 +33,43 @@ public class TotalIncomePerQuarter {
         this.id = id;
     }
 
-    public ExpensesFinanceStatistics getExpensesFinanceStatistics() {
-        return expensesFinanceStatistics;
+    public IncomeFinanceStatistics getIncomeFinanceStatistics() {
+        return incomeFinanceStatistics;
     }
 
-    public void setExpensesFinanceStatistics(ExpensesFinanceStatistics expensesFinanceStatistics) {
-        this.expensesFinanceStatistics = expensesFinanceStatistics;
+    public void setIncomeFinanceStatistics(IncomeFinanceStatistics incomeFinanceStatistics) {
+        this.incomeFinanceStatistics = incomeFinanceStatistics;
     }
 
-    public double getTotalExpenses1QuaterAgo() {
-        return totalExpenses1QuaterAgo;
+    public double getTotalIncome1QuaterAgo() {
+        return totalIncome1QuaterAgo;
     }
 
-    public void setTotalExpenses1QuaterAgo(double totalExpenses1QuaterAgo) {
-        this.totalExpenses1QuaterAgo = totalExpenses1QuaterAgo;
+    public void setTotalIncome1QuaterAgo(double totalIncome1QuaterAgo) {
+        this.totalIncome1QuaterAgo = totalIncome1QuaterAgo;
     }
 
-    public double getTotalExpenses2QuaterAgo() {
-        return totalExpenses2QuaterAgo;
+    public double getTotalIncome2QuaterAgo() {
+        return totalIncome2QuaterAgo;
     }
 
-    public void setTotalExpenses2QuaterAgo(double totalExpenses2QuaterAgo) {
-        this.totalExpenses2QuaterAgo = totalExpenses2QuaterAgo;
+    public void setTotalIncome2QuaterAgo(double totalIncome2QuaterAgo) {
+        this.totalIncome2QuaterAgo = totalIncome2QuaterAgo;
     }
 
-    public double getTotalExpenses3QuaterAgo() {
-        return totalExpenses3QuaterAgo;
+    public double getTotalIncome3QuaterAgo() {
+        return totalIncome3QuaterAgo;
     }
 
-    public void setTotalExpenses3QuaterAgo(double totalExpenses3QuaterAgo) {
-        this.totalExpenses3QuaterAgo = totalExpenses3QuaterAgo;
+    public void setTotalIncome3QuaterAgo(double totalIncome3QuaterAgo) {
+        this.totalIncome3QuaterAgo = totalIncome3QuaterAgo;
     }
 
-    public double getTotalExpenses4QuaterAgo() {
-        return totalExpenses4QuaterAgo;
+    public double getTotalIncome4QuaterAgo() {
+        return totalIncome4QuaterAgo;
     }
 
-    public void setTotalExpenses4QuaterAgo(double totalExpenses4QuaterAgo) {
-        this.totalExpenses4QuaterAgo = totalExpenses4QuaterAgo;
+    public void setTotalIncome4QuaterAgo(double totalIncome4QuaterAgo) {
+        this.totalIncome4QuaterAgo = totalIncome4QuaterAgo;
     }
-
-
 }
