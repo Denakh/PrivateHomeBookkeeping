@@ -24,6 +24,14 @@ public class Recreation {
     @JoinColumn(name = "expensesPerMonth_id")
     private RecreationExpensesPerMonth recreationExpensesPerMonth;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private RecreationIncomePerQuarter recreationIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private RecreationIncomePerMonth recreationIncomePerMonth;
+
     private double changeAmount;
 
     //@Column(name = "msg_date")
@@ -67,6 +75,22 @@ public class Recreation {
 
     public void setRecreationExpensesPerMonth(RecreationExpensesPerMonth recreationExpensesPerMonth) {
         this.recreationExpensesPerMonth = recreationExpensesPerMonth;
+    }
+
+    public RecreationIncomePerQuarter getRecreationIncomePerQuarter() {
+        return recreationIncomePerQuarter;
+    }
+
+    public void setRecreationIncomePerQuarter(RecreationIncomePerQuarter recreationIncomePerQuarter) {
+        this.recreationIncomePerQuarter = recreationIncomePerQuarter;
+    }
+
+    public RecreationIncomePerMonth getRecreationIncomePerMonth() {
+        return recreationIncomePerMonth;
+    }
+
+    public void setRecreationIncomePerMonth(RecreationIncomePerMonth recreationIncomePerMonth) {
+        this.recreationIncomePerMonth = recreationIncomePerMonth;
     }
 
     public double getChangeAmount() {

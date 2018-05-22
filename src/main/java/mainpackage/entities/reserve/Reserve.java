@@ -24,6 +24,14 @@ public class Reserve {
     @JoinColumn(name = "expensesPerMonth_id")
     private ReserveExpensesPerMonth reserveExpensesPerMonth;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private ReserveIncomePerQuarter reserveIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private ReserveIncomePerMonth reserveIncomePerMonth;
+
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
@@ -65,6 +73,22 @@ public class Reserve {
 
     public void setReserveExpensesPerMonth(ReserveExpensesPerMonth reserveExpensesPerMonth) {
         this.reserveExpensesPerMonth = reserveExpensesPerMonth;
+    }
+
+    public ReserveIncomePerQuarter getReserveIncomePerQuarter() {
+        return reserveIncomePerQuarter;
+    }
+
+    public void setReserveIncomePerQuarter(ReserveIncomePerQuarter reserveIncomePerQuarter) {
+        this.reserveIncomePerQuarter = reserveIncomePerQuarter;
+    }
+
+    public ReserveIncomePerMonth getReserveIncomePerMonth() {
+        return reserveIncomePerMonth;
+    }
+
+    public void setReserveIncomePerMonth(ReserveIncomePerMonth reserveIncomePerMonth) {
+        this.reserveIncomePerMonth = reserveIncomePerMonth;
     }
 
     public Date getDate() {

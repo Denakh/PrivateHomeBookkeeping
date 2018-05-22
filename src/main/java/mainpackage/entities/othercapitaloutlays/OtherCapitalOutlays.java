@@ -24,6 +24,14 @@ public class OtherCapitalOutlays {
     @JoinColumn(name = "expensesPerMonth_id")
     private OtherCapitalOutlaysExpensesPerMonth otherCapitalOutlaysExpensesPerMonth;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private OtherCapitalOutlaysIncomePerQuarter otherCapitalOutlaysIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth;
+
     private double changeAmount;
 
     //@Column(name = "msg_date")
@@ -67,6 +75,22 @@ public class OtherCapitalOutlays {
 
     public void setOtherCapitalOutlaysExpensesPerMonth(OtherCapitalOutlaysExpensesPerMonth otherCapitalOutlaysExpensesPerMonth) {
         this.otherCapitalOutlaysExpensesPerMonth = otherCapitalOutlaysExpensesPerMonth;
+    }
+
+    public OtherCapitalOutlaysIncomePerQuarter getOtherCapitalOutlaysIncomePerQuarter() {
+        return otherCapitalOutlaysIncomePerQuarter;
+    }
+
+    public void setOtherCapitalOutlaysIncomePerQuarter(OtherCapitalOutlaysIncomePerQuarter otherCapitalOutlaysIncomePerQuarter) {
+        this.otherCapitalOutlaysIncomePerQuarter = otherCapitalOutlaysIncomePerQuarter;
+    }
+
+    public OtherCapitalOutlaysIncomePerMonth getOtherCapitalOutlaysIncomePerMonth() {
+        return otherCapitalOutlaysIncomePerMonth;
+    }
+
+    public void setOtherCapitalOutlaysIncomePerMonth(OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth) {
+        this.otherCapitalOutlaysIncomePerMonth = otherCapitalOutlaysIncomePerMonth;
     }
 
     public double getChangeAmount() {
