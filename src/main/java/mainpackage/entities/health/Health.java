@@ -24,6 +24,14 @@ public class Health {
     @JoinColumn(name = "expensesPerMonth_id")
     private HealthExpensesPerMonth healthExpensesPerMonth;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private HealthIncomePerQuarter healthIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private HealthIncomePerMonth healthIncomePerMonth;
+
     private double changeAmount;
 
     //@Column(name = "msg_date")
@@ -67,6 +75,22 @@ public class Health {
 
     public void setHealthExpensesPerMonth(HealthExpensesPerMonth healthExpensesPerMonth) {
         this.healthExpensesPerMonth = healthExpensesPerMonth;
+    }
+
+    public HealthIncomePerQuarter getHealthIncomePerQuarter() {
+        return healthIncomePerQuarter;
+    }
+
+    public void setHealthIncomePerQuarter(HealthIncomePerQuarter healthIncomePerQuarter) {
+        this.healthIncomePerQuarter = healthIncomePerQuarter;
+    }
+
+    public HealthIncomePerMonth getHealthIncomePerMonth() {
+        return healthIncomePerMonth;
+    }
+
+    public void setHealthIncomePerMonth(HealthIncomePerMonth healthIncomePerMonth) {
+        this.healthIncomePerMonth = healthIncomePerMonth;
     }
 
     public double getChangeAmount() {

@@ -24,6 +24,14 @@ public class Charity {
     @JoinColumn(name = "expensesPerMonth_id")
     private CharityExpensesPerMonth charityExpensesPerMonth;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerQuarter_id")
+    private CharityIncomePerQuarter charityIncomePerQuarter;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "incomePerMonth_id")
+    private CharityIncomePerMonth charityIncomePerMonth;
+
     private double changeAmount;
 
     //@Column(name = "msg_date")
@@ -67,6 +75,22 @@ public class Charity {
 
     public void setCharityExpensesPerMonth(CharityExpensesPerMonth charityExpensesPerMonth) {
         this.charityExpensesPerMonth = charityExpensesPerMonth;
+    }
+
+    public CharityIncomePerQuarter getCharityIncomePerQuarter() {
+        return charityIncomePerQuarter;
+    }
+
+    public void setCharityIncomePerQuarter(CharityIncomePerQuarter charityIncomePerQuarter) {
+        this.charityIncomePerQuarter = charityIncomePerQuarter;
+    }
+
+    public CharityIncomePerMonth getCharityIncomePerMonth() {
+        return charityIncomePerMonth;
+    }
+
+    public void setCharityIncomePerMonth(CharityIncomePerMonth charityIncomePerMonth) {
+        this.charityIncomePerMonth = charityIncomePerMonth;
     }
 
     public double getChangeAmount() {
