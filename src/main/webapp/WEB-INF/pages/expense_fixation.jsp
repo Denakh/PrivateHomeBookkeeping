@@ -6,11 +6,10 @@
 </head>
 <body>
 
-<form action="/income_fixation_execute" method="POST">
-    Amount, hrn: <input type="text" name="amount"><br>
+<form action="/expense_fixation_execute" method="POST">
+    Amount change, hrn: <input type="text" name="amountchange"><br>
     Description: <input type="text" name="description"><br>
-    Purpose:
-    <br/><input type="radio" name="purpose" value="general" /> general
+    Expanse type:
     <br/><input type="radio" name="purpose" value="charity" /> charity
     <br/><input type="radio" name="purpose" value="health" /> health
     <br/><input type="radio" name="purpose" value="kidsandpats" /> kids and pats
@@ -21,7 +20,7 @@
     <br/><input type="submit" />
 </form>
 
-    <p><a href="/">Main menu</a></p>
+<p><a href="/">Main menu</a></p>
 
 </body>
 </html>

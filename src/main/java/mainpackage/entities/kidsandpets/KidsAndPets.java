@@ -38,6 +38,8 @@ public class KidsAndPets {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
+    private double amountChange;
+
     private String description;
 
     private double amount;
@@ -107,6 +109,14 @@ public class KidsAndPets {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public double getAmountChange() {
+        return amountChange;
+    }
+
+    public void setAmountChange(double amountChange) {
+        this.amountChange = amountChange;
     }
 
     public String getDescription() {

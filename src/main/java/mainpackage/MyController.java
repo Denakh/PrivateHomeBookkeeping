@@ -89,4 +89,9 @@ public class MyController {
         return "income_fixation";
     }
 
+    @RequestMapping("/expense_fixation")
+    public String expenseFixation() {
+        return "expense_fixation";
+    }
+
 }
