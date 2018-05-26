@@ -83,4 +83,10 @@ public class MyController {
         model.addAttribute("login", user.getUsername());
         return "unauthorized";
     }
+
+    @RequestMapping("/income_fixation")
+    public String incomeFixation() {
+        return "income_fixation";
+    }
+
 }
