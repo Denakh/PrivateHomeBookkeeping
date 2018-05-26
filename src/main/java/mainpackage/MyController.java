@@ -94,4 +94,9 @@ public class MyController {
         return "expense_fixation";
     }
 
+    @RequestMapping("/dept_fixation")
+    public String deptFixation() {
+        return "dept_fixation";
+    }
+
 }
