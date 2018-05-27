@@ -13,8 +13,8 @@
     <br/><input type="radio" name="purpose" value="general" /> general
     <br/><input type="radio" name="purpose" value="charity" /> charity
     <br/><input type="radio" name="purpose" value="health" /> health
-    <br/><input type="radio" name="purpose" value="kidsandpats" /> kids and pats
-    <br/><input type="radio" name="purpose" value="othercapoutlays" /> other capital outlays
+    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
+    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
     <br/><input type="radio" name="purpose" value="recreation" /> recreation
     <br/><input type="radio" name="purpose" value="reserve" /> reserve
 

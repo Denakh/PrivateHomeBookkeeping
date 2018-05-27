@@ -7,12 +7,12 @@
 <body>
 
 <form action="/debt_fixation_execute" method="POST">
-    Amount, hrn: <input type="text" name="amountchange"><br>
+    Amount, hrn: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
     Percent: <input type="text" name="percent"><br>
     Percent for:
-    <br/><input type="radio" name="purpose" value="initialamount" /> initial amount
-    <br/><input type="radio" name="purpose" value="residualamount" /> residual amount
+    <br/><input type="radio" name="purpose" value="initial_amount" /> initial amount
+    <br/><input type="radio" name="purpose" value="residual_amount" /> residual amount
 
     <br/><input type="submit" />
 </form>
