@@ -104,4 +104,9 @@ public class MyController {
         return "deferral_fixation";
     }
 
+    @RequestMapping("/communal_pays_fixation")
+    public String communalpaysFixation() {
+        return "communalpay_fixation";
+    }
+
 }
