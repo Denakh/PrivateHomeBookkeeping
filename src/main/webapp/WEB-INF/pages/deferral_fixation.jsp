@@ -17,6 +17,7 @@
     <br/><input type="radio" name="source" value="other_capoutlays" /> other capital outlays
     <br/><input type="radio" name="source" value="recreation" /> recreation
     <br/><input type="radio" name="source" value="reserve" /> reserve
+    <br>
     Periodicity:
     <br/><input type="radio" name="periodicity" value="once" /> once
     <br/><input type="radio" name="periodicity" value="2_months" /> 2 months

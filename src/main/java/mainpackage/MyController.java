@@ -94,9 +94,9 @@ public class MyController {
         return "expense_fixation";
     }
 
-    @RequestMapping("/dept_fixation")
+    @RequestMapping("/debt_fixation")
     public String deptFixation() {
-        return "dept_fixation";
+        return "debt_fixation";
     }
 
     @RequestMapping("/deferral_fixation")
@@ -107,6 +107,21 @@ public class MyController {
     @RequestMapping("/communal_pays_fixation")
     public String communalpaysFixation() {
         return "communalpay_fixation";
+    }
+
+    @RequestMapping("/current_expenses_rate")
+    public String currentExpensesRateSetup() {
+        return "current_exp_rate_setup";
+    }
+
+    @RequestMapping("/foreign_currencies")
+    public String foreignCurrenciesOperations() {
+        return "foreign_currencies_operations";
+    }
+
+    @RequestMapping("/allocation_of_profits")
+    public String allocationOfProfits() {
+        return "allocation_of_profits";
     }
 
 }
