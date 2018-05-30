@@ -124,4 +124,23 @@ public class MyController {
         return "allocation_of_profits";
     }
 
+    @RequestMapping("/data_getting")
+    public String dataGetting() {
+        return "data_getting";
+    }
+
+
+    /*
+    @RequestMapping("/allocation_of_profits_show")
+    public String allocationOfProfitsShow() {
+        return "allocation_of_profits_table";
+    }
+
+
+    @RequestMapping("/communalpay_statistic_show")
+    public String communalPayStatisticShow() {
+        return "communalpay_statistic_table";
+    }
+    */
+
 }

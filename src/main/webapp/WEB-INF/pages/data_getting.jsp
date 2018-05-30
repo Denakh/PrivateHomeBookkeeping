@@ -6,16 +6,15 @@
 </head>
 <body>
 
-<form action="/communalpay_fixation_execute" method="POST">
-    Amount, hrn: <input type="text" name="amount"><br>
-    Description: <input type="text" name="description"><br>
-
-    <br/><input type="submit" />
-</form>
-
-
-Show communal pay statistic:
-<form action="/communalpay_statistic_show" method="POST">
+<form action="/data_getting_execute" method="POST">
+    Expense item:
+    <br/><input type="radio" name="purpose" value="charity" /> charity
+    <br/><input type="radio" name="purpose" value="health" /> health
+    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
+    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
+    <br/><input type="radio" name="purpose" value="recreation" /> recreation
+    <br/><input type="radio" name="purpose" value="reserve" /> reserve
+    <br>
     Periodicity:
     <br/><input type="radio" name="periodicity" value="1_month" /> 1 month
     <br/><input type="radio" name="periodicity" value="2_months" /> 2 months

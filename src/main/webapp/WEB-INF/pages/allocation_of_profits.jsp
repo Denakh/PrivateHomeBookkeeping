@@ -17,6 +17,10 @@
     <br/><input type="submit" />
 </form>
 
+
+<p><a href="/allocation_of_profits_show">Show current allocation of profits</a></p>
+
+
 <p><a href="/">Main menu</a></p>
 
 </body>

@@ -26,7 +26,7 @@
         <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>
         <p><a href="/deferral_fixation">Deferrals (expenses) fixation</a></p>
         <p><a href="/communal_pays_fixation">Communal pays fixation</a></p>
-        <p><a href="/income_fixation">Data getting</a></p>
+        <p><a href="/data_getting">Data getting</a></p>
         <p><a href="/current_expenses_rate">Current expenses rate</a></p>
         <p><a href="/foreign_currencies">Foreign currencies operations</a></p>
         <p><a href="/allocation_of_profits">Allocation of profits</a></p>

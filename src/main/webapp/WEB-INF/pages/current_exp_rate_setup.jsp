@@ -23,6 +23,10 @@
     <br/><input type="submit" />
 </form>
 
+
+<p><a href="/current_expenses_rate_show">Show current expenses rate</a></p>
+
+
 <p><a href="/">Main menu</a></p>
 
 </body>

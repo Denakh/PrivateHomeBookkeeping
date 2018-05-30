@@ -21,6 +21,23 @@
     <br/><input type="submit" />
 </form>
 
+
+Show income statistic:
+<form action="/income_show" method="POST">
+    Periodicity:
+    <br/><input type="radio" name="periodicity" value="1_month" /> 1 month
+    <br/><input type="radio" name="periodicity" value="2_months" /> 2 months
+    <br/><input type="radio" name="periodicity" value="3_months" /> 3 months
+    <br/><input type="radio" name="periodicity" value="4_months" /> 4 months
+    <br/><input type="radio" name="periodicity" value="5_months" /> 5 months
+    <br/><input type="radio" name="periodicity" value="6_months" /> 6 months
+    <br/><input type="radio" name="periodicity" value="year" /> year
+    <br/><input type="radio" name="periodicity" value="all_time" /> all time
+
+    <br/><input type="submit" />
+</form>
+
+
     <p><a href="/">Main menu</a></p>
 
 </body>
