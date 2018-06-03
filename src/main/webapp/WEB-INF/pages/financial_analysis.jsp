@@ -6,14 +6,16 @@
 </head>
 <body>
 
-<form action="/data_getting_execute" method="POST">
-    Expense item:
-    <br/><input type="radio" name="purpose" value="charity" /> charity
-    <br/><input type="radio" name="purpose" value="health" /> health
-    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
-    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
-    <br/><input type="radio" name="purpose" value="recreation" /> recreation
-    <br/><input type="radio" name="purpose" value="reserve" /> reserve
+<form action="/financial_analysis_execute" method="POST">
+    Financial analysis type:
+    <br/><input type="radio" name="purpose" value="gen_fin_condition" /> general finance condition
+    <br/><input type="radio" name="purpose" value="gen_balance" /> general balance
+    <br/><input type="radio" name="purpose" value="total_debt" /> total debt
+    <br/><input type="radio" name="purpose" value="deferrals" /> deferrals
+    <br/><input type="radio" name="purpose" value="total_income" /> total income
+    <br/><input type="radio" name="purpose" value="total_expenses" /> total expenses
+    <br/><input type="radio" name="purpose" value="total_cur_expenses" /> total current expenses
+    <br/><input type="radio" name="purpose" value="rel_fin_indexes" /> relative finance indexes
     <br>
     Periodicity:
     <br/><input type="radio" name="periodicity" value="1_month" /> 1 month
@@ -28,8 +30,8 @@
     <br/><input type="submit" />
 </form>
 
-<p><a href="/financial_analysis">Financial analysis</a></p>
 
+<p><a href="/data_getting">Previously menu</a></p>
 
 <p><a href="/">Main menu</a></p>
 

@@ -1,4 +1,4 @@
-package mainpackage.entities.ballancestatistics;
+package mainpackage.entities.balancestatistics;
 
 import mainpackage.entities.users.CustomUser;
 

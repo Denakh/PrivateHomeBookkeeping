@@ -129,6 +129,11 @@ public class MyController {
         return "data_getting";
     }
 
+    @RequestMapping("/financial_analysis")
+    public String financialAnalysis() {
+        return "financial_analysis";
+    }
+
 
     /*
     @RequestMapping("/allocation_of_profits_show")

@@ -1,4 +1,4 @@
-package mainpackage.entities.ballancestatistics;
+package mainpackage.entities.balancestatistics;
 
 public enum FinancialConditionBal {
     EXCELLENT, GOOD, SATISFACTORY, POOR, DANGEROUS;

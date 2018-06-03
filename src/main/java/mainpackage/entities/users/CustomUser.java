@@ -1,7 +1,7 @@
 package mainpackage.entities.users;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
-import mainpackage.entities.ballancestatistics.BallanceStatistics;
+import mainpackage.entities.balancestatistics.BallanceStatistics;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.communalpaystatistics.CommunalPayStatistics;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
