@@ -26,18 +26,5 @@ public class CharityServiceImpl implements CharityService {
     public void deleteCharity(Long id) {
         charityRepository.delete(id);
     }
-/*
-    @Override
-    @Transactional(readOnly = true)
-    public CustomUser getUserByLogin(String login) {
-        return charityRepository.findByLogin(login);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean existsByLogin(String login) {
-        return charityRepository.existsByLogin(login);
-    }
-*/
 
 }
