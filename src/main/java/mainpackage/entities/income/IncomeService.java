@@ -2,6 +2,8 @@ package mainpackage.entities.income;
 
 import mainpackage.entities.charity.Charity;
 
+import java.util.List;
+
 public interface IncomeService {
 
     void addIncome(Income income);
@@ -9,5 +11,7 @@ public interface IncomeService {
     void updateIncome(Income income);
 
     void deleteIncome(Long id);
+
+    List<Income> getIncome ();
 
 }

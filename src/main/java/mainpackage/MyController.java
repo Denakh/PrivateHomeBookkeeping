@@ -147,7 +147,7 @@ public class MyController {
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
-
+/*
         switch (purpose) {
             case "1":
                 showFlats(conn, sc, 1);

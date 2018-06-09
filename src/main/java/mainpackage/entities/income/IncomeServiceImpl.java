@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class IncomeServiceImpl implements IncomeService {
     @Autowired
@@ -26,6 +28,12 @@ public class IncomeServiceImpl implements IncomeService {
     @Transactional
     public void deleteIncome(Long id) {
         incomeRepository.delete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Income> getIncome() {
+        return incomeRepository.findAll();
     }
 
 }

@@ -31,6 +31,8 @@
         <p><a href="/foreign_currencies">Foreign currencies operations</a></p>
         <p><a href="/allocation_of_profits">Allocation of profits</a></p>
 
+        <p><a href="/get_users">Get users list</a></p>
+
     </div>
 </body>
 </html>
