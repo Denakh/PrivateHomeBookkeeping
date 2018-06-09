@@ -134,6 +134,59 @@ public class MyController {
         return "financial_analysis";
     }
 
+    @RequestMapping("/changing_check")
+    public String changingCheck() {
+        return "/";
+    }
+
+    @RequestMapping("/income_fixation_execute")
+    public String incomeFixationExecute(@RequestParam String amount,
+                                        @RequestParam String description,
+                                        @RequestParam String purpose,
+                                        Model model) {
+        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+
+        switch (purpose) {
+            case "1":
+                showFlats(conn, sc, 1);
+                break;
+            case "2":
+                showFlats(conn, sc, 2);
+                break;
+            case "3":
+                showFlats(conn, sc, 3);
+                ;
+                break;
+            case "4":
+                System.out.println("Program has been finished");
+                return;
+            default:
+                System.out.println("Command doesn't exist");
+                break;
+        }
+
+        /*
+        CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);
+        userService.addUser(dbUser);
+       /*
+       Amount, hrn: <input type="text" name="amount"><br>
+    Description: <input type="text" name="description"><br>
+    Purpose:
+    <br/><input type="radio" name="purpose" value="general" /> general
+    <br/><input type="radio" name="purpose" value="charity" /> charity
+    <br/><input type="radio" name="purpose" value="health" /> health
+    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
+    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
+    <br/><input type="radio" name="purpose" value="recreation" /> recreation
+    <br/><input type="radio" name="purpose" value="reserve" /> reserve
+        */
+
+
+        return "changing_check";
+    }
+
 
     /*
     @RequestMapping("/allocation_of_profits_show")
