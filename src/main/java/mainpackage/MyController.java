@@ -1,5 +1,7 @@
 package mainpackage;
 
+import mainpackage.entities.income.Income;
+import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
@@ -13,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
+
 @Controller
 public class MyController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private IncomeService incomeService;
+
 
     @RequestMapping("/")
     public String index(Model model){
@@ -134,22 +141,31 @@ public class MyController {
         return "financial_analysis";
     }
 
-    @RequestMapping("/changing_check")
-    public String changingCheck() {
-        return "/";
-    }
-
     @RequestMapping("/income_fixation_execute")
     public String incomeFixationExecute(@RequestParam String amount,
                                         @RequestParam String description,
                                         @RequestParam String purpose,
                                         Model model) {
+        double damount;
+        String errorStr = "";
+        try {
+            damount = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
         User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
-/*
+        Date date = new Date();
+
+        Income income = new Income(dbUser, damount, date, description, purpose);
+        incomeService.addIncome(income);
+
+        /*
         switch (purpose) {
-            case "1":
+            case "charity":
                 showFlats(conn, sc, 1);
                 break;
             case "2":
@@ -184,7 +200,7 @@ public class MyController {
         */
 
 
-        return "changing_check";
+        return "redirect:/";
     }
 
 

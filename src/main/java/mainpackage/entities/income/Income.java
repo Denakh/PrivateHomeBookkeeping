@@ -1,5 +1,6 @@
 package mainpackage.entities.income;
 
+import mainpackage.entities.kidsandpets.KidsAndPetsExpensesPerQuarter;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -16,6 +17,10 @@ public class Income {
     @JoinColumn(name="user_id")
     private CustomUser user;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "generalIncome_id")
+    private GeneralIncome generalIncome;
+
     private double amount;
 
     //@Column(name = "msg_date")
@@ -27,6 +32,14 @@ public class Income {
     private String purpose;
 
     public Income() {
+    }
+
+    public Income(CustomUser user, double amount, Date date, String description, String purpose) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.purpose = purpose;
     }
 
     public long getId() {
@@ -43,6 +56,14 @@ public class Income {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public GeneralIncome getGeneralIncome() {
+        return generalIncome;
+    }
+
+    public void setGeneralIncome(GeneralIncome generalIncome) {
+        this.generalIncome = generalIncome;
     }
 
     public double getAmount() {
