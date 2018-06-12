@@ -32,13 +32,11 @@ public class KidsAndPets {
     @JoinColumn(name = "incomePerMonth_id")
     private KidsAndPetsIncomePerMonth kidsAndPetsIncomePerMonth;
 
-    private double changeAmount;
+    private double amountChange;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
-
-    private double amountChange;
 
     private String description;
 
@@ -93,14 +91,6 @@ public class KidsAndPets {
 
     public void setKidsAndPetsIncomePerMonth(KidsAndPetsIncomePerMonth kidsAndPetsIncomePerMonth) {
         this.kidsAndPetsIncomePerMonth = kidsAndPetsIncomePerMonth;
-    }
-
-    public double getChangeAmount() {
-        return changeAmount;
-    }
-
-    public void setChangeAmount(double changeAmount) {
-        this.changeAmount = changeAmount;
     }
 
     public Date getDate() {

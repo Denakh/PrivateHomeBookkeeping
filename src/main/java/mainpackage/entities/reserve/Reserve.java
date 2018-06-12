@@ -32,11 +32,11 @@ public class Reserve {
     @JoinColumn(name = "incomePerMonth_id")
     private ReserveIncomePerMonth reserveIncomePerMonth;
 
+    private double amountChange;
+
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
-
-    private double amountChange;
 
     private String description;
 

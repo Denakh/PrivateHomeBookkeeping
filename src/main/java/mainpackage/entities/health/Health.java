@@ -32,19 +32,24 @@ public class Health {
     @JoinColumn(name = "incomePerMonth_id")
     private HealthIncomePerMonth healthIncomePerMonth;
 
-    private double changeAmount;
+    private double amountChange;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
-
-    private double amountChange;
 
     private String description;
 
     private double amount;
 
     public Health() {
+    }
+
+    public Health(CustomUser user, double amountChange, Date date, String description) {
+        this.user = user;
+        this.amountChange = amountChange;
+        this.date = date;
+        this.description = description;
     }
 
     public long getId() {
@@ -93,14 +98,6 @@ public class Health {
 
     public void setHealthIncomePerMonth(HealthIncomePerMonth healthIncomePerMonth) {
         this.healthIncomePerMonth = healthIncomePerMonth;
-    }
-
-    public double getChangeAmount() {
-        return changeAmount;
-    }
-
-    public void setChangeAmount(double changeAmount) {
-        this.changeAmount = changeAmount;
     }
 
     public Date getDate() {

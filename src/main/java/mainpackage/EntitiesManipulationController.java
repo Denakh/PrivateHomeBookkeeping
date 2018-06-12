@@ -1,5 +1,9 @@
 package mainpackage;
 
+import mainpackage.entities.charity.Charity;
+import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.health.Health;
+import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.users.CustomUser;
@@ -18,78 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Date;
 
 @Controller
-public class MyController {
+public class EntitiesManipulationController {
+
     @Autowired
     private UserService userService;
     @Autowired
     private IncomeService incomeService;
-
-
-    @RequestMapping("/")
-    public String index(Model model){
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-
-        CustomUser dbUser = userService.getUserByLogin(login);
-
-        model.addAttribute("login", login);
-        model.addAttribute("roles", user.getAuthorities());
-        model.addAttribute("email", dbUser.getEmail());
-        model.addAttribute("phone", dbUser.getPhone());
-
-        return "index";
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@RequestParam(required = false) String email, @RequestParam(required = false) String phone) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-
-        CustomUser dbUser = userService.getUserByLogin(login);
-        dbUser.setEmail(email);
-        dbUser.setPhone(phone);
-
-        userService.updateUser(dbUser);
-
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/newuser", method = RequestMethod.POST)
-    public String update(@RequestParam String login,
-                         @RequestParam String password,
-                         @RequestParam(required = false) String email,
-                         @RequestParam(required = false) String phone,
-                         Model model) {
-        if (userService.existsByLogin(login)) {
-            model.addAttribute("exists", true);
-            return "register";
-        }
-
-        ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-        String passHash = encoder.encodePassword(password, null);
-
-        CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);
-        userService.addUser(dbUser);
-
-        return "redirect:/";
-    }
-
-    @RequestMapping("/register")
-    public String register() {
-        return "register";
-    }
-
-    @RequestMapping("/admin")
-    public String admin(){
-        return "admin";
-    }
-
-    @RequestMapping("/unauthorized")
-    public String unauthorized(Model model){
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("login", user.getUsername());
-        return "unauthorized";
-    }
+    @Autowired
+    private CharityService charityService;
+    @Autowired
+    private HealthService healthService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -162,6 +104,19 @@ public class MyController {
 
         Income income = new Income(dbUser, damount, date, description, purpose);
         incomeService.addIncome(income);
+
+        switch (purpose) {
+            case "charity":
+                charityService.addCharity(new Charity(dbUser, damount, date, description));
+                break;
+            case "health":
+                healthService.addHealth(new Health(dbUser, damount, date, description));
+                break;
+            default:
+                errorStr = "Purpose error. Try again";
+                model.addAttribute("error_message", errorStr);
+                return "/input_error";
+        }
 
         /*
         switch (purpose) {

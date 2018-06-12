@@ -32,13 +32,11 @@ public class OtherCapitalOutlays {
     @JoinColumn(name = "incomePerMonth_id")
     private OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth;
 
-    private double changeAmount;
+    private double amountChange;
 
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
-
-    private double amountChange;
 
     private String description;
 
@@ -93,14 +91,6 @@ public class OtherCapitalOutlays {
 
     public void setOtherCapitalOutlaysIncomePerMonth(OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth) {
         this.otherCapitalOutlaysIncomePerMonth = otherCapitalOutlaysIncomePerMonth;
-    }
-
-    public double getChangeAmount() {
-        return changeAmount;
-    }
-
-    public void setChangeAmount(double changeAmount) {
-        this.changeAmount = changeAmount;
     }
 
     public Date getDate() {
