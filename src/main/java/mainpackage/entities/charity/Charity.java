@@ -52,6 +52,14 @@ public class Charity {
         this.description = description;
     }
 
+    public Charity(CustomUser user, double amountChange, Date date, String description, double amount) {
+        this.user = user;
+        this.amountChange = amountChange;
+        this.date = date;
+        this.description = description;
+        this.amount = amount;
+    }
+
     public long getId() {
         return id;
     }

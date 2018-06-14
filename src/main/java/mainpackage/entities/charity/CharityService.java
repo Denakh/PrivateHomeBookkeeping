@@ -8,4 +8,6 @@ public interface CharityService {
 
     void deleteCharity(Long id);
 
+    Charity findLastEntry();
+
 }

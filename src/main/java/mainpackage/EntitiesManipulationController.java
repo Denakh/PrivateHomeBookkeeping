@@ -107,7 +107,8 @@ public class EntitiesManipulationController {
 
         switch (purpose) {
             case "charity":
-                charityService.addCharity(new Charity(dbUser, damount, date, description));
+                Charity c = charityService.findLastEntry();
+                charityService.addCharity(new Charity(dbUser, damount, date, description, c.getAmount()+damount));
                 break;
             case "health":
                 healthService.addHealth(new Health(dbUser, damount, date, description));

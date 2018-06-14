@@ -27,4 +27,10 @@ public class CharityServiceImpl implements CharityService {
         charityRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public Charity findLastEntry() {
+        return charityRepository.findLastEntry();
+    }
+
 }
