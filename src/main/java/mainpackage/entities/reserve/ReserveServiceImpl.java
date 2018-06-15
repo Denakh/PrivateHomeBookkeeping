@@ -28,4 +28,10 @@ public class ReserveServiceImpl implements ReserveService {
         reserveRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public Reserve findLastEntry() {
+        return reserveRepository.findLastEntry();
+    }
+
 }

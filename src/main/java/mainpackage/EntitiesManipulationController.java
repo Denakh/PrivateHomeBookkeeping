@@ -6,6 +6,14 @@ import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
+import mainpackage.entities.kidsandpets.KidsAndPets;
+import mainpackage.entities.kidsandpets.KidsAndPetsService;
+import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
+import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
+import mainpackage.entities.recreation.Recreation;
+import mainpackage.entities.recreation.RecreationService;
+import mainpackage.entities.reserve.Reserve;
+import mainpackage.entities.reserve.ReserveService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
@@ -32,6 +40,14 @@ public class EntitiesManipulationController {
     private CharityService charityService;
     @Autowired
     private HealthService healthService;
+    @Autowired
+    private KidsAndPetsService kidsAndPetsService;
+    @Autowired
+    private OtherCapitalOutlaysService otherCapitalOutlaysService;
+    @Autowired
+    private RecreationService recreationService;
+    @Autowired
+    private ReserveService reserveService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -97,21 +113,48 @@ public class EntitiesManipulationController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
-
         Income income = new Income(dbUser, damount, date, description, purpose);
         incomeService.addIncome(income);
-
+        double am = 0;
         switch (purpose) {
             case "charity":
                 Charity c = charityService.findLastEntry();
-                charityService.addCharity(new Charity(dbUser, damount, date, description, c.getAmount()+damount));
+                if (c != null) am = c.getAmount();
+                charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
                 break;
             case "health":
-                healthService.addHealth(new Health(dbUser, damount, date, description));
+                Health h = healthService.findLastEntry();
+                if (h != null) am = h.getAmount();
+                healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+                break;
+            case "kids_and_pets":
+                KidsAndPets k = kidsAndPetsService.findLastEntry();
+                if (k != null) am = k.getAmount();
+                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
+                        am + damount));
+                break;
+            case "other_capoutlays":
+                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+                if (o != null) am = o.getAmount();
+                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
+                        description, am + damount));
+                break;
+            case "recreation":
+                Recreation rec = recreationService.findLastEntry();
+                if (rec != null) am = rec.getAmount();
+                recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
+                        am + damount));
+                break;
+            case "reserve":
+                Reserve res = reserveService.findLastEntry();
+                if (res != null) am = res.getAmount();
+                reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+                break;
+            case "general":
                 break;
             default:
                 errorStr = "Purpose error. Try again";
@@ -119,25 +162,6 @@ public class EntitiesManipulationController {
                 return "/input_error";
         }
 
-        /*
-        switch (purpose) {
-            case "charity":
-                showFlats(conn, sc, 1);
-                break;
-            case "2":
-                showFlats(conn, sc, 2);
-                break;
-            case "3":
-                showFlats(conn, sc, 3);
-                ;
-                break;
-            case "4":
-                System.out.println("Program has been finished");
-                return;
-            default:
-                System.out.println("Command doesn't exist");
-                break;
-        }
 
         /*
         CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);

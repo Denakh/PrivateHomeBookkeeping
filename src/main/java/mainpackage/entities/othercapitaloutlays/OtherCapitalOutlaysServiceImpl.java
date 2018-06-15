@@ -28,4 +28,10 @@ public class OtherCapitalOutlaysServiceImpl implements OtherCapitalOutlaysServic
         otherCapitalOutlaysRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public OtherCapitalOutlays findLastEntry() {
+        return otherCapitalOutlaysRepository.findLastEntry();
+    }
+
 }

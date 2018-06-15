@@ -10,4 +10,6 @@ public interface OtherCapitalOutlaysService {
 
     void deleteOtherCapitalOutlays(Long id);
 
+    OtherCapitalOutlays findLastEntry();
+
 }

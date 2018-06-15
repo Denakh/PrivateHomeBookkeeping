@@ -10,4 +10,6 @@ public interface RecreationService {
 
     void deleteRecreation(Long id);
 
+    Recreation findLastEntry();
+
 }

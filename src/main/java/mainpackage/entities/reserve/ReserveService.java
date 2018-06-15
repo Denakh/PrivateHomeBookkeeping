@@ -10,4 +10,6 @@ public interface ReserveService {
 
     void deleteReserve(Long id);
 
+    Reserve findLastEntry();
+
 }

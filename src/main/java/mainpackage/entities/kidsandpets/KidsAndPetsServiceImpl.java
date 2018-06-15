@@ -28,4 +28,10 @@ public class KidsAndPetsServiceImpl implements KidsAndPetsService {
         kidsAndPetsRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public KidsAndPets findLastEntry() {
+        return kidsAndPetsRepository.findLastEntry();
+    }
+
 }

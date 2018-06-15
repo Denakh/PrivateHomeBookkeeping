@@ -10,4 +10,6 @@ public interface HealthService {
 
     void deleteHealth(Long id);
 
+    Health findLastEntry();
+
 }

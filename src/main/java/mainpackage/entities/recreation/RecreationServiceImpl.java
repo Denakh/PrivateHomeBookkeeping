@@ -28,4 +28,10 @@ public class RecreationServiceImpl implements RecreationService {
         recreationRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public Recreation findLastEntry() {
+        return recreationRepository.findLastEntry();
+    }
+
 }

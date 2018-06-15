@@ -28,4 +28,10 @@ public class HealthServiceImpl implements HealthService {
         healthRepository.delete(id);
     }
 
+    @Override
+    @Transactional
+    public Health findLastEntry() {
+        return healthRepository.findLastEntry();
+    }
+
 }

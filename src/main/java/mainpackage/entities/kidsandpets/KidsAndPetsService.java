@@ -10,4 +10,6 @@ public interface KidsAndPetsService {
 
     void deleteKidsAndPets(Long id);
 
+    KidsAndPets findLastEntry();
+
 }
