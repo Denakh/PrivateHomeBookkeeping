@@ -120,67 +120,13 @@ public class EntitiesManipulationController {
         Income income = new Income(dbUser, damount, date, description, purpose);
         incomeService.addIncome(income);
         double am = 0;
-        switch (purpose) {
-            case "charity":
-                Charity c = charityService.findLastEntry();
-                if (c != null) am = c.getAmount();
-                charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
-                break;
-            case "health":
-                Health h = healthService.findLastEntry();
-                if (h != null) am = h.getAmount();
-                healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
-                break;
-            case "kids_and_pets":
-                KidsAndPets k = kidsAndPetsService.findLastEntry();
-                if (k != null) am = k.getAmount();
-                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
-                        am + damount));
-                break;
-            case "other_capoutlays":
-                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
-                if (o != null) am = o.getAmount();
-                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
-                        description, am + damount));
-                break;
-            case "recreation":
-                Recreation rec = recreationService.findLastEntry();
-                if (rec != null) am = rec.getAmount();
-                recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
-                        am + damount));
-                break;
-            case "reserve":
-                Reserve res = reserveService.findLastEntry();
-                if (res != null) am = res.getAmount();
-                reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-                break;
-            case "general":
-                break;
-            default:
-                errorStr = "Purpose error. Try again";
-                model.addAttribute("error_message", errorStr);
-                return "/input_error";
+        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+        if (res) return "redirect:/";
+        else {
+        errorStr = "Purpose error. Try again";
+        model.addAttribute("error_message", errorStr);
+        return "/input_error";
         }
-
-
-        /*
-        CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);
-        userService.addUser(dbUser);
-       /*
-       Amount, hrn: <input type="text" name="amount"><br>
-    Description: <input type="text" name="description"><br>
-    Purpose:
-    <br/><input type="radio" name="purpose" value="general" /> general
-    <br/><input type="radio" name="purpose" value="charity" /> charity
-    <br/><input type="radio" name="purpose" value="health" /> health
-    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
-    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
-    <br/><input type="radio" name="purpose" value="recreation" /> recreation
-    <br/><input type="radio" name="purpose" value="reserve" /> reserve
-        */
-
-
-        return "redirect:/";
     }
 
 
@@ -196,5 +142,48 @@ public class EntitiesManipulationController {
         return "communalpay_statistic_table";
     }
     */
+
+private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description,
+                         double am) {
+    switch (purpose) {
+        case "charity":
+            Charity c = charityService.findLastEntry();
+            if (c != null) am = c.getAmount();
+            charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+            break;
+        case "health":
+            Health h = healthService.findLastEntry();
+            if (h != null) am = h.getAmount();
+            healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+            break;
+        case "kids_and_pets":
+            KidsAndPets k = kidsAndPetsService.findLastEntry();
+            if (k != null) am = k.getAmount();
+            kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
+                    am + damount));
+            break;
+        case "other_capoutlays":
+            OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+            if (o != null) am = o.getAmount();
+            otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
+                    description, am + damount));
+            break;
+        case "recreation":
+            Recreation rec = recreationService.findLastEntry();
+            if (rec != null) am = rec.getAmount();
+            recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
+                    am + damount));
+            break;
+        case "reserve":
+            Reserve res = reserveService.findLastEntry();
+            if (res != null) am = res.getAmount();
+            reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+            break;
+        case "general":
+            break;
+        default: return false;
+    }
+    return true;
+}
 
 }
