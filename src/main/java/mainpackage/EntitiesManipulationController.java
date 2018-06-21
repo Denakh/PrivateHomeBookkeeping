@@ -4,6 +4,8 @@ import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
+import mainpackage.entities.income.GeneralIncome;
+import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.kidsandpets.KidsAndPets;
@@ -27,7 +29,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Controller
 public class EntitiesManipulationController {
@@ -48,6 +52,9 @@ public class EntitiesManipulationController {
     private RecreationService recreationService;
     @Autowired
     private ReserveService reserveService;
+    @Autowired
+    private GeneralIncomeService generalIncomeService;
+
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -118,6 +125,23 @@ public class EntitiesManipulationController {
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
+        /*
+        if (purpose.equals("general")) {
+            GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
+            GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
+            gcalendar.setTime(date);
+            double accumulation;
+            double excessForAllocation;
+            if (generalIncomePrev.getAccumulation() > 6600 &&
+                    gcalendar.get(Calendar.MONTH)+1 < generalIncomePrev.getMonthNumber()) {
+            accumulation = generalIncomePrev.getAccumulation() + damount;
+            excessForAllocation = accumulation - 6600;
+            }
+            GeneralIncome generalIncome = new GeneralIncome(damount, date);
+            generalIncomeService.addGeneralIncome(generalIncome);
+            income.setGeneralIncome(generalIncome);
+        }
+        */
         incomeService.addIncome(income);
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
