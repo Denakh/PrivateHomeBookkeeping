@@ -1,6 +1,7 @@
 package mainpackage.entities.currentexpensesrate;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
+import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +31,8 @@ public class CurrentExpensesRateServiceImpl implements CurrentExpensesRateServic
 
     @Override
     @Transactional
-    public CurrentExpensesRate findLastEntry() {
-        return currentExpensesRateRepository.findLastEntry();
+    public CurrentExpensesRate findLastEntry(CustomUser user) {
+        return currentExpensesRateRepository.findLastEntry(user);
     }
 
 }

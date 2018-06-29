@@ -3,6 +3,8 @@ package mainpackage;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
+import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncome;
@@ -54,7 +56,8 @@ public class EntitiesManipulationController {
     private GeneralIncomeService generalIncomeService;
     @Autowired
     private AllocationOfProfitsService allocationOfProfitsService;
-
+    @Autowired
+    private CurrentExpensesRateService currentExpensesRateService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -127,18 +130,58 @@ public class EntitiesManipulationController {
         Income income = new Income(dbUser, damount, date, description, purpose);
         if (purpose.equals("general")) {
             GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
+            CurrentExpensesRate currentExpensesRate = currentExpensesRateService.findLastEntry(dbUser);
             GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
             gcalendar.setTime(date);
+            byte monthNumber = generalIncomePrev.getMonthNumber();
+            double dcurrentExpensesRate = 0;
+            switch (monthNumber) {
+                case 1:
+                    dcurrentExpensesRate = currentExpensesRate.getM1am();
+                    break;
+                case 2:
+                    dcurrentExpensesRate = currentExpensesRate.getM2am();
+                    break;
+                case 3:
+                    dcurrentExpensesRate = currentExpensesRate.getM3am();
+                    break;
+                case 4:
+                    dcurrentExpensesRate = currentExpensesRate.getM4am();
+                    break;
+                case 5:
+                    dcurrentExpensesRate = currentExpensesRate.getM5am();
+                    break;
+                case 6:
+                    dcurrentExpensesRate = currentExpensesRate.getM6am();
+                    break;
+                case 7:
+                    dcurrentExpensesRate = currentExpensesRate.getM7am();
+                    break;
+                case 8:
+                    dcurrentExpensesRate = currentExpensesRate.getM8am();
+                    break;
+                case 9:
+                    dcurrentExpensesRate = currentExpensesRate.getM9am();
+                    break;
+                case 10:
+                    dcurrentExpensesRate = currentExpensesRate.getM10am();
+                    break;
+                case 11:
+                    dcurrentExpensesRate = currentExpensesRate.getM11am();
+                    break;
+                case 12:
+                    dcurrentExpensesRate = currentExpensesRate.getM12am();
+                    break;
+            }
             double accumulation = generalIncomePrev.getAccumulation() + damount;
             double excessForAllocation = 0;
-            byte monthNumber = generalIncomePrev.getMonthNumber();
             boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
             boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
-            if (accumulation > 6600 && (monthCheck1 || monthCheck2)) {
-                excessForAllocation = accumulation - 6600;
+            if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
+                excessForAllocation = accumulation - dcurrentExpensesRate;
             }
-            if (!(monthCheck1 || monthCheck2) && accumulation > 6600) {
-                accumulation = accumulation - 6600;
+            if (!(monthCheck1 || monthCheck2) && accumulation > dcurrentExpensesRate) {
+                accumulation = accumulation - dcurrentExpensesRate;
                 if (monthNumber != 12) monthNumber += 1;
                 else monthNumber = 1;
             }

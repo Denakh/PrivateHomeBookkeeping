@@ -1,6 +1,7 @@
 package mainpackage.entities.currentexpensesrate;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
+import mainpackage.entities.users.CustomUser;
 
 public interface CurrentExpensesRateService {
 
@@ -10,6 +11,6 @@ public interface CurrentExpensesRateService {
 
     void deleteCurrentExpensesRate(Long id);
 
-    CurrentExpensesRate findLastEntry();
+    CurrentExpensesRate findLastEntry(CustomUser user);
 
 }
