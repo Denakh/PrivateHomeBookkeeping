@@ -1,8 +1,5 @@
 package mainpackage.entities.recreation;
 
-import mainpackage.entities.charity.Charity;
-import mainpackage.entities.recreation.Recreation;
-
 import javax.persistence.*;
 
 @Entity

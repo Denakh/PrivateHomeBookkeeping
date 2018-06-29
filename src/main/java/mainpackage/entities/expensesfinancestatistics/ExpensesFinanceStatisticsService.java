@@ -1,7 +1,5 @@
 package mainpackage.entities.expensesfinancestatistics;
 
-import mainpackage.entities.charity.Charity;
-
 public interface ExpensesFinanceStatisticsService {
 
     void addExpensesFinanceStatistics(ExpensesFinanceStatistics expensesFinanceStatistics);

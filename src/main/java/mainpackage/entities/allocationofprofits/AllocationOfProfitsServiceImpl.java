@@ -1,6 +1,6 @@
 package mainpackage.entities.allocationofprofits;
 
-import mainpackage.entities.charity.Charity;
+import mainpackage.entities.income.GeneralIncome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +26,12 @@ public class AllocationOfProfitsServiceImpl implements AllocationOfProfitsServic
     @Transactional
     public void deleteAllocationOfProfits(Long id) {
         allocationOfProfitsRepository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public AllocationOfProfits findLastEntry() {
+        return allocationOfProfitsRepository.findLastEntry();
     }
 
 }

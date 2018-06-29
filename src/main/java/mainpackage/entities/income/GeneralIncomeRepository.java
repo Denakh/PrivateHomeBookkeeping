@@ -1,6 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.reserve.Reserve;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

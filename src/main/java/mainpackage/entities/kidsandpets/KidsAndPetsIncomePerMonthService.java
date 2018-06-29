@@ -1,7 +1,5 @@
 package mainpackage.entities.kidsandpets;
 
-import mainpackage.entities.charity.Charity;
-
 public interface KidsAndPetsIncomePerMonthService {
 
     void addKidsAndPetsIncomePerMonth(KidsAndPetsIncomePerMonth kidsAndPetsIncomePerMonth);

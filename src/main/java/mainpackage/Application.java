@@ -2,13 +2,10 @@ package mainpackage;
 
 import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.income.GeneralIncomeService;
-import mainpackage.entities.users.CustomUser;
-import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 
 import java.util.Date;
 

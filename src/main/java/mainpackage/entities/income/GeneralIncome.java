@@ -1,7 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.kidsandpets.KidsAndPets;
-
 import javax.persistence.*;
 import java.util.Date;
 

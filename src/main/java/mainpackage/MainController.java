@@ -1,10 +1,5 @@
 package mainpackage;
 
-import mainpackage.entities.charity.Charity;
-import mainpackage.entities.charity.CharityService;
-import mainpackage.entities.health.HealthService;
-import mainpackage.entities.income.Income;
-import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
@@ -18,16 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
-
 @Controller
 public class MainController {
     @Autowired
     private UserService userService;
 
     @RequestMapping("/")
-    public String index(Model model){
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String index(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
 
         CustomUser dbUser = userService.getUserByLogin(login);
@@ -42,7 +35,7 @@ public class MainController {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public String update(@RequestParam(required = false) String email, @RequestParam(required = false) String phone) {
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
 
         CustomUser dbUser = userService.getUserByLogin(login);
@@ -80,13 +73,13 @@ public class MainController {
     }
 
     @RequestMapping("/admin")
-    public String admin(){
+    public String admin() {
         return "admin";
     }
 
     @RequestMapping("/unauthorized")
-    public String unauthorized(Model model){
-        User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String unauthorized(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("login", user.getUsername());
         return "unauthorized";
     }

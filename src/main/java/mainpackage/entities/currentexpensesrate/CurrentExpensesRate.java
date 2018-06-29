@@ -12,7 +12,7 @@ public class CurrentExpensesRate {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     @Enumerated(EnumType.STRING)

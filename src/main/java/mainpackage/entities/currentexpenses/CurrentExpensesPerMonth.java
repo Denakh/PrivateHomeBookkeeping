@@ -1,8 +1,5 @@
 package mainpackage.entities.currentexpenses;
 
-import mainpackage.entities.charity.Charity;
-import mainpackage.entities.currentexpenses.CurrentExpenses;
-
 import javax.persistence.*;
 
 @Entity

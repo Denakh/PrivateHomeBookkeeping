@@ -32,9 +32,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/get_users").hasRole("ADMIN")
                 .antMatchers("/register").permitAll()
                 .and()
-        .exceptionHandling().accessDeniedPage("/unauthorized")
+                .exceptionHandling().accessDeniedPage("/unauthorized")
                 .and()
-        .formLogin()
+                .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
                 .failureUrl("/login?error")
@@ -42,14 +42,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("j_password")
                 .permitAll()
                 .and()
-        .logout()
+                .logout()
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
                 .invalidateHttpSession(true);
     }
 
-    private ShaPasswordEncoder getShaPasswordEncoder(){
+    private ShaPasswordEncoder getShaPasswordEncoder() {
         return new ShaPasswordEncoder();
     }
 }

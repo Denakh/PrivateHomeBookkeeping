@@ -39,61 +39,61 @@ public class CustomUser {
     private String email;
     private String phone;
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<AllocationOfProfits> allocationOfProfits = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<BallanceStatistics> ballanceStatistics = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Charity> charity = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CommunalPayStatistics> communalPayStatistics = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CurrentExpenses> currentExpenses = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CurrentExpensesRate> currentExpensesRate = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Debt> Debt = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Deferrals> deferrals = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ExchangeTransactions> exchangeTransactions = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ExpensesFinanceStatistics> expensesFinanceStatistics = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<ForeignCurrencies> foreignCurrencies = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Health> health = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Income> income = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<KidsAndPets> kidsAndPets = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OtherCapitalOutlays> otherCapitalOutlays = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<OverallBalance> overallBalance = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Recreation> recreation = new ArrayList<>();
 
-    @OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Reserve> reserve = new ArrayList<>();
 
 
@@ -313,7 +313,6 @@ public class CustomUser {
     public void setReserve(List<Reserve> reserve) {
         this.reserve = reserve;
     }
-
 
 
 }

@@ -13,7 +13,7 @@ public class Deferrals {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     private double amount;

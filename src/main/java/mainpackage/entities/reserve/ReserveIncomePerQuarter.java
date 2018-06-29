@@ -1,7 +1,5 @@
 package mainpackage.entities.reserve;
 
-import mainpackage.entities.health.Health;
-
 import javax.persistence.*;
 
 @Entity

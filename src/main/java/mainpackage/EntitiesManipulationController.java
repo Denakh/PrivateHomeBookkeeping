@@ -17,16 +17,13 @@ import mainpackage.entities.recreation.RecreationService;
 import mainpackage.entities.reserve.Reserve;
 import mainpackage.entities.reserve.ReserveService;
 import mainpackage.entities.users.CustomUser;
-import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Calendar;
@@ -132,15 +129,15 @@ public class EntitiesManipulationController {
             double accumulation = generalIncomePrev.getAccumulation() + damount;
             double excessForAllocation = 0;
             byte monthNumber = generalIncomePrev.getMonthNumber();
-            boolean monthCheck1 = gcalendar.get(Calendar.MONTH)+1 < monthNumber;
-            boolean monthCheck2 = gcalendar.get(Calendar.MONTH)+1 >= 11 && monthNumber <= 2;
+            boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
+            boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
             if (accumulation > 6600 && (monthCheck1 || monthCheck2)) {
-            excessForAllocation = accumulation - 6600;
+                excessForAllocation = accumulation - 6600;
             }
             if (!(monthCheck1 || monthCheck2) && accumulation > 6600) {
-            accumulation = accumulation - 6600;
-            if (monthNumber != 12) monthNumber += 1;
-                    else monthNumber = 1;
+                accumulation = accumulation - 6600;
+                if (monthNumber != 12) monthNumber += 1;
+                else monthNumber = 1;
             }
 
             GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
@@ -152,9 +149,9 @@ public class EntitiesManipulationController {
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
         if (res) return "redirect:/";
         else {
-        errorStr = "Purpose error. Try again";
-        model.addAttribute("error_message", errorStr);
-        return "/input_error";
+            errorStr = "Purpose error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
         }
     }
 
@@ -172,47 +169,48 @@ public class EntitiesManipulationController {
     }
     */
 
-private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description,
-                         double am) {
-    switch (purpose) {
-        case "charity":
-            Charity c = charityService.findLastEntry();
-            if (c != null) am = c.getAmount();
-            charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
-            break;
-        case "health":
-            Health h = healthService.findLastEntry();
-            if (h != null) am = h.getAmount();
-            healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
-            break;
-        case "kids_and_pets":
-            KidsAndPets k = kidsAndPetsService.findLastEntry();
-            if (k != null) am = k.getAmount();
-            kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
-                    am + damount));
-            break;
-        case "other_capoutlays":
-            OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
-            if (o != null) am = o.getAmount();
-            otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
-                    description, am + damount));
-            break;
-        case "recreation":
-            Recreation rec = recreationService.findLastEntry();
-            if (rec != null) am = rec.getAmount();
-            recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
-                    am + damount));
-            break;
-        case "reserve":
-            Reserve res = reserveService.findLastEntry();
-            if (res != null) am = res.getAmount();
-            reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-            break;
-        case "general":
-            break;
-        default: return false;
+    private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description,
+                                double am) {
+        switch (purpose) {
+            case "charity":
+                Charity c = charityService.findLastEntry();
+                if (c != null) am = c.getAmount();
+                charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+                break;
+            case "health":
+                Health h = healthService.findLastEntry();
+                if (h != null) am = h.getAmount();
+                healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+                break;
+            case "kids_and_pets":
+                KidsAndPets k = kidsAndPetsService.findLastEntry();
+                if (k != null) am = k.getAmount();
+                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
+                        am + damount));
+                break;
+            case "other_capoutlays":
+                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+                if (o != null) am = o.getAmount();
+                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
+                        description, am + damount));
+                break;
+            case "recreation":
+                Recreation rec = recreationService.findLastEntry();
+                if (rec != null) am = rec.getAmount();
+                recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
+                        am + damount));
+                break;
+            case "reserve":
+                Reserve res = reserveService.findLastEntry();
+                if (res != null) am = res.getAmount();
+                reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+                break;
+            case "general":
+                break;
+            default:
+                return false;
+        }
+        return true;
     }
-    return true;
-}
 
 }

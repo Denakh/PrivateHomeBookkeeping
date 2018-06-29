@@ -13,7 +13,7 @@ public class Reserve {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -74,7 +74,7 @@ public class Reserve {
     }
 
     public void setReserveExpensesPerQuarter(ReserveExpensesPerQuarter reserveExpensesPerQuarter) {
-       this.reserveExpensesPerQuarter = reserveExpensesPerQuarter;
+        this.reserveExpensesPerQuarter = reserveExpensesPerQuarter;
     }
 
     public ReserveExpensesPerMonth getReserveExpensesPerMonth() {

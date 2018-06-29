@@ -1,7 +1,5 @@
 package mainpackage.entities.othercapitaloutlays;
 
-import mainpackage.entities.charity.Charity;
-
 public interface OtherCapitalOutlaysService {
 
     void addOtherCapitalOutlays(OtherCapitalOutlays otherCapitalOutlays);

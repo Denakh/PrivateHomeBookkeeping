@@ -1,7 +1,5 @@
 package mainpackage.entities.charity;
 
-import mainpackage.entities.charity.Charity;
-
 import javax.persistence.*;
 
 @Entity

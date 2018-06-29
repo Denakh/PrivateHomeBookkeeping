@@ -1,6 +1,5 @@
 package mainpackage.entities.communalpaystatistics;
 
-import mainpackage.entities.charity.Charity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommunalPayStatisticsRepository extends JpaRepository<CommunalPayStatistics, Long> {

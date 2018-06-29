@@ -11,7 +11,7 @@ public class AllocationOfProfits {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     private String purpose;

@@ -13,7 +13,7 @@ public class OtherCapitalOutlays {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)

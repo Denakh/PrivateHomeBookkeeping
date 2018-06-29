@@ -1,12 +1,9 @@
 package mainpackage.entities.incomefinancestatistics;
 
-import mainpackage.entities.expensesfinancestatistics.TotalExpensesPerMonth;
-import mainpackage.entities.expensesfinancestatistics.TotalExpensesPerQuarter;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Map;
 
 @Entity
 public class IncomeFinanceStatistics {
@@ -16,7 +13,7 @@ public class IncomeFinanceStatistics {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)

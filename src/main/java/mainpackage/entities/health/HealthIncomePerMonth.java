@@ -1,7 +1,5 @@
 package mainpackage.entities.health;
 
-import mainpackage.entities.currentexpenses.CurrentExpenses;
-
 import javax.persistence.*;
 
 @Entity

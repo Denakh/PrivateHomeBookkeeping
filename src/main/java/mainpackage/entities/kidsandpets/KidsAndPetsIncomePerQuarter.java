@@ -1,7 +1,5 @@
 package mainpackage.entities.kidsandpets;
 
-import mainpackage.entities.health.Health;
-
 import javax.persistence.*;
 
 @Entity

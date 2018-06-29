@@ -1,7 +1,5 @@
 package mainpackage.entities.charity;
 
-import mainpackage.entities.allocationofprofits.AllocationOfProfits;
-
 public interface CharityIncomePerMonthService {
 
     void addCharityIncomePerMonth(CharityIncomePerMonth charityIncomePerMonth);

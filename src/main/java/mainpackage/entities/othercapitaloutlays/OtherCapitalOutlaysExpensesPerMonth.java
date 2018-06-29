@@ -1,8 +1,5 @@
 package mainpackage.entities.othercapitaloutlays;
 
-import mainpackage.entities.charity.Charity;
-import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
-
 import javax.persistence.*;
 
 @Entity

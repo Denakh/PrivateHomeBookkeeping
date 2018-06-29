@@ -1,7 +1,5 @@
 package mainpackage.entities.othercapitaloutlays;
 
-import mainpackage.entities.health.Health;
-
 import javax.persistence.*;
 
 @Entity

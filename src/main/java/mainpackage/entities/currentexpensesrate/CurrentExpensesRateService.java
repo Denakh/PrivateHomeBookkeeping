@@ -1,7 +1,5 @@
 package mainpackage.entities.currentexpensesrate;
 
-import mainpackage.entities.charity.Charity;
-
 public interface CurrentExpensesRateService {
 
     void addCurrentExpensesRate(CurrentExpensesRate currentExpensesRate);

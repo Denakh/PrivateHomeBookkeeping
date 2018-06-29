@@ -1,7 +1,5 @@
 package mainpackage.entities.communalpaystatistics;
 
-import mainpackage.entities.charity.Charity;
-
 public interface CommunalPayStatisticsService {
 
     void addCommunalPayStatistics(CommunalPayStatistics communalPayStatistics);

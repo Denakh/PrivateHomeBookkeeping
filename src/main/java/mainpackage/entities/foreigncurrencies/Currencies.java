@@ -1,7 +1,5 @@
 package mainpackage.entities.foreigncurrencies;
 
-import java.util.Scanner;
-
 public enum Currencies {
 
     USD, EUR, UAH;

@@ -1,6 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.kidsandpets.KidsAndPetsExpensesPerQuarter;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
@@ -14,7 +13,7 @@ public class Income {
     private long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private CustomUser user;
 
     @OneToOne(fetch = FetchType.LAZY)

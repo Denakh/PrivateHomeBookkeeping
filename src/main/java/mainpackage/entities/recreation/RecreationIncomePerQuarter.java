@@ -1,7 +1,5 @@
 package mainpackage.entities.recreation;
 
-import mainpackage.entities.health.Health;
-
 import javax.persistence.*;
 
 @Entity
