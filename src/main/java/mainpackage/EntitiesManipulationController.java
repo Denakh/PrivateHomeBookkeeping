@@ -142,6 +142,7 @@ public class EntitiesManipulationController {
             if (monthNumber != 12) monthNumber += 1;
                     else monthNumber = 1;
             }
+
             GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
             generalIncomeService.addGeneralIncome(generalIncome);
             income.setGeneralIncome(generalIncome);
