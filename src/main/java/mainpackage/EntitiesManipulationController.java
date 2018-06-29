@@ -125,23 +125,29 @@ public class EntitiesManipulationController {
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
-        /*
+//
         if (purpose.equals("general")) {
             GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
             GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
             gcalendar.setTime(date);
-            double accumulation;
-            double excessForAllocation;
-            if (generalIncomePrev.getAccumulation() > 6600 &&
-                    gcalendar.get(Calendar.MONTH)+1 < generalIncomePrev.getMonthNumber()) {
-            accumulation = generalIncomePrev.getAccumulation() + damount;
+            double accumulation = generalIncomePrev.getAccumulation() + damount;
+            double excessForAllocation = 0;
+            byte monthNumber = generalIncomePrev.getMonthNumber();
+            boolean monthCheck1 = gcalendar.get(Calendar.MONTH)+1 < monthNumber;
+            boolean monthCheck2 = gcalendar.get(Calendar.MONTH)+1 >= 11 && monthNumber <= 2;
+            if (accumulation > 6600 && (monthCheck1 || monthCheck2)) {
             excessForAllocation = accumulation - 6600;
             }
-            GeneralIncome generalIncome = new GeneralIncome(damount, date);
+            if (!(monthCheck1 || monthCheck2) && accumulation > 6600) {
+            accumulation = accumulation - 6600;
+            if (monthNumber != 12) monthNumber += 1;
+                    else monthNumber = 1;
+            }
+            GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
             generalIncomeService.addGeneralIncome(generalIncome);
             income.setGeneralIncome(generalIncome);
         }
-        */
+        //
         incomeService.addIncome(income);
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);

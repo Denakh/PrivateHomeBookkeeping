@@ -30,12 +30,17 @@ public class GeneralIncome {
     public GeneralIncome() {
     }
 
-    public GeneralIncome(double amount, Date date) {
+    public GeneralIncome(Date date, byte monthNumber) {
+        this.date = date;
+        this.monthNumber = monthNumber;
+    }
+
+    public GeneralIncome(double amount, Date date, byte monthNumber, double accumulation, double excessForAllocation) {
         this.amount = amount;
         this.date = date;
-        //this.monthNumber = monthNumber;
-        //this.accumulation = accumulation;
-        //this.excessForAllocation = excessForAllocation;
+        this.monthNumber = monthNumber;
+        this.accumulation = accumulation;
+        this.excessForAllocation = excessForAllocation;
     }
 
     public GeneralIncome(double amount, Date date, Income income, byte monthNumber, double accumulation, double excessForAllocation) {
