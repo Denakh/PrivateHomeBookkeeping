@@ -125,7 +125,6 @@ public class EntitiesManipulationController {
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
-//
         if (purpose.equals("general")) {
             GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
             GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
@@ -147,7 +146,6 @@ public class EntitiesManipulationController {
             generalIncomeService.addGeneralIncome(generalIncome);
             income.setGeneralIncome(generalIncome);
         }
-        //
         incomeService.addIncome(income);
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
