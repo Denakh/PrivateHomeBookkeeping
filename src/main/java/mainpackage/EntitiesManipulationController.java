@@ -1,5 +1,6 @@
 package mainpackage;
 
+import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.health.Health;
@@ -51,6 +52,8 @@ public class EntitiesManipulationController {
     private ReserveService reserveService;
     @Autowired
     private GeneralIncomeService generalIncomeService;
+    @Autowired
+    private AllocationOfProfitsService allocationOfProfitsService;
 
 
     @RequestMapping("/income_fixation")
@@ -139,7 +142,6 @@ public class EntitiesManipulationController {
                 if (monthNumber != 12) monthNumber += 1;
                 else monthNumber = 1;
             }
-
             GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
             generalIncomeService.addGeneralIncome(generalIncome);
             income.setGeneralIncome(generalIncome);

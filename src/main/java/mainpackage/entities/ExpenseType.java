@@ -1,7 +1,7 @@
 package mainpackage.entities;
 
 public enum ExpenseType {
-    CHARITY, HEALTH, KIDSANDPATS, OTHERCAPOUTLAYS, RECREATION, RESERVE;
+    CHARITY, HEALTH, KIDSANDPETS, OTHERCAPOUTLAYS, RECREATION, RESERVE;
 
     //@Override
     //public String toString() {

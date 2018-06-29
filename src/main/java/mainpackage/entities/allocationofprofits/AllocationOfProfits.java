@@ -14,11 +14,26 @@ public class AllocationOfProfits {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    private String purpose;
+    //CHARITY, HEALTH, KIDSANDPATS, OTHERCAPOUTLAYS, RECREATION, RESERVE;
 
-    private double percent;
+    private double charityPercent;
+    private double healthPercent;
+    private double kidsAndPetsPercent;
+    private double otherCapOutLaysPercent;
+    private double recreationPercent;
+    private double reservePercent;
 
     public AllocationOfProfits() {
+    }
+
+    public AllocationOfProfits(double charityPercent, double healthPercent, double kidsAndPetsPercent,
+                               double otherCapOutLaysPercent, double recreationPercent, double reservePercent) {
+        this.charityPercent = charityPercent;
+        this.healthPercent = healthPercent;
+        this.kidsAndPetsPercent = kidsAndPetsPercent;
+        this.otherCapOutLaysPercent = otherCapOutLaysPercent;
+        this.recreationPercent = recreationPercent;
+        this.reservePercent = reservePercent;
     }
 
     public long getId() {
@@ -37,19 +52,52 @@ public class AllocationOfProfits {
         this.user = user;
     }
 
-    public String getPurpose() {
-        return purpose;
+    public double getCharityPercent() {
+        return charityPercent;
     }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
+    public void setCharityPercent(double charityPercent) {
+        this.charityPercent = charityPercent;
     }
 
-    public double getPercent() {
-        return percent;
+    public double getHealthPercent() {
+        return healthPercent;
     }
 
-    public void setPercent(double percent) {
-        this.percent = percent;
+    public void setHealthPercent(double healthPercent) {
+        this.healthPercent = healthPercent;
     }
+
+    public double getKidsAndPetsPercent() {
+        return kidsAndPetsPercent;
+    }
+
+    public void setKidsAndPetsPercent(double kidsAndPetsPercent) {
+        this.kidsAndPetsPercent = kidsAndPetsPercent;
+    }
+
+    public double getOtherCapOutLaysPercent() {
+        return otherCapOutLaysPercent;
+    }
+
+    public void setOtherCapOutLaysPercent(double otherCapOutLaysPercent) {
+        this.otherCapOutLaysPercent = otherCapOutLaysPercent;
+    }
+
+    public double getRecreationPercent() {
+        return recreationPercent;
+    }
+
+    public void setRecreationPercent(double recreationPercent) {
+        this.recreationPercent = recreationPercent;
+    }
+
+    public double getReservePercent() {
+        return reservePercent;
+    }
+
+    public void setReservePercent(double reservePercent) {
+        this.reservePercent = reservePercent;
+    }
+
 }
