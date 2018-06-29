@@ -1,6 +1,7 @@
 package mainpackage.entities.allocationofprofits;
 
 import mainpackage.entities.income.GeneralIncome;
+import mainpackage.entities.users.CustomUser;
 
 public interface AllocationOfProfitsService {
 
@@ -10,6 +11,6 @@ public interface AllocationOfProfitsService {
 
     void deleteAllocationOfProfits(Long id);
 
-    AllocationOfProfits findLastEntry();
+    AllocationOfProfits findLastEntry(CustomUser user);
 
 }

@@ -35,7 +35,7 @@ public class Application {
                 allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(10.0, 10.0, 30.0,
                         30.0, 10.0, 10.0));
                 currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(8000, 8000, 8000, 8000,
-                                7000, 6000, 6000, 6000, 6000, 6000, 7000, 8000));
+                        7000, 6000, 6000, 6000, 6000, 6000, 7000, 8000));
             }
         };
     }

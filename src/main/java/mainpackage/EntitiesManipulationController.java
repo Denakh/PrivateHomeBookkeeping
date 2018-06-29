@@ -1,5 +1,6 @@
 package mainpackage;
 
+import mainpackage.entities.allocationofprofits.AllocationOfProfits;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
@@ -129,65 +130,8 @@ public class EntitiesManipulationController {
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
         if (purpose.equals("general")) {
-            GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
-            CurrentExpensesRate currentExpensesRate = currentExpensesRateService.findLastEntry(dbUser);
-            GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
-            gcalendar.setTime(date);
-            byte monthNumber = generalIncomePrev.getMonthNumber();
-            double dcurrentExpensesRate = 0;
-            switch (monthNumber) {
-                case 1:
-                    dcurrentExpensesRate = currentExpensesRate.getM1am();
-                    break;
-                case 2:
-                    dcurrentExpensesRate = currentExpensesRate.getM2am();
-                    break;
-                case 3:
-                    dcurrentExpensesRate = currentExpensesRate.getM3am();
-                    break;
-                case 4:
-                    dcurrentExpensesRate = currentExpensesRate.getM4am();
-                    break;
-                case 5:
-                    dcurrentExpensesRate = currentExpensesRate.getM5am();
-                    break;
-                case 6:
-                    dcurrentExpensesRate = currentExpensesRate.getM6am();
-                    break;
-                case 7:
-                    dcurrentExpensesRate = currentExpensesRate.getM7am();
-                    break;
-                case 8:
-                    dcurrentExpensesRate = currentExpensesRate.getM8am();
-                    break;
-                case 9:
-                    dcurrentExpensesRate = currentExpensesRate.getM9am();
-                    break;
-                case 10:
-                    dcurrentExpensesRate = currentExpensesRate.getM10am();
-                    break;
-                case 11:
-                    dcurrentExpensesRate = currentExpensesRate.getM11am();
-                    break;
-                case 12:
-                    dcurrentExpensesRate = currentExpensesRate.getM12am();
-                    break;
-            }
-            double accumulation = generalIncomePrev.getAccumulation() + damount;
-            double excessForAllocation = 0;
-            boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
-            boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
-            if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
-                excessForAllocation = accumulation - dcurrentExpensesRate;
-            }
-            if (!(monthCheck1 || monthCheck2) && accumulation > dcurrentExpensesRate) {
-                accumulation = accumulation - dcurrentExpensesRate;
-                if (monthNumber != 12) monthNumber += 1;
-                else monthNumber = 1;
-            }
-            GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
-            generalIncomeService.addGeneralIncome(generalIncome);
-            income.setGeneralIncome(generalIncome);
+            this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
+            return "redirect:/";
         }
         incomeService.addIncome(income);
         double am = 0;
@@ -256,6 +200,107 @@ public class EntitiesManipulationController {
                 return false;
         }
         return true;
+    }
+
+    private void entitiesAddFromGeneral(CustomUser dbUser, double damount, Date date, String description, Income income) {
+        GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
+        CurrentExpensesRate currentExpensesRate = currentExpensesRateService.findLastEntry(dbUser);
+        GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
+        gcalendar.setTime(date);
+        byte monthNumber = generalIncomePrev.getMonthNumber();
+        double dcurrentExpensesRate = 0;
+        switch (monthNumber) {
+            case 1:
+                dcurrentExpensesRate = currentExpensesRate.getM1am();
+                break;
+            case 2:
+                dcurrentExpensesRate = currentExpensesRate.getM2am();
+                break;
+            case 3:
+                dcurrentExpensesRate = currentExpensesRate.getM3am();
+                break;
+            case 4:
+                dcurrentExpensesRate = currentExpensesRate.getM4am();
+                break;
+            case 5:
+                dcurrentExpensesRate = currentExpensesRate.getM5am();
+                break;
+            case 6:
+                dcurrentExpensesRate = currentExpensesRate.getM6am();
+                break;
+            case 7:
+                dcurrentExpensesRate = currentExpensesRate.getM7am();
+                break;
+            case 8:
+                dcurrentExpensesRate = currentExpensesRate.getM8am();
+                break;
+            case 9:
+                dcurrentExpensesRate = currentExpensesRate.getM9am();
+                break;
+            case 10:
+                dcurrentExpensesRate = currentExpensesRate.getM10am();
+                break;
+            case 11:
+                dcurrentExpensesRate = currentExpensesRate.getM11am();
+                break;
+            case 12:
+                dcurrentExpensesRate = currentExpensesRate.getM12am();
+                break;
+        }
+        double accumulation = generalIncomePrev.getAccumulation() + damount;
+        double excessForAllocationPrev = generalIncomePrev.getExcessForAllocation();
+        double excessForAllocationRest = 0;
+        boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
+        boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
+        if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
+            excessForAllocationRest = accumulation - dcurrentExpensesRate - excessForAllocationPrev;
+        }
+        if (!(monthCheck1 || monthCheck2) && accumulation > dcurrentExpensesRate) {
+            accumulation = accumulation - dcurrentExpensesRate;
+            if (monthNumber != 12) monthNumber += 1;
+            else monthNumber = 1;
+        }
+        GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, accumulation - dcurrentExpensesRate);
+        generalIncomeService.addGeneralIncome(generalIncome);
+        income.setGeneralIncome(generalIncome);
+        incomeService.addIncome(income);
+        if (excessForAllocationRest > 0) {
+            AllocationOfProfits allocationOfProfits = allocationOfProfitsService.findLastEntry(dbUser);
+            double am = 0;
+            Charity c = charityService.findLastEntry();
+            if (c != null) am = c.getAmount();
+            damount = allocationOfProfits.getCharityPercent()*excessForAllocationRest/100;
+            charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+            am = 0;
+            Health h = healthService.findLastEntry();
+            if (h != null) am = h.getAmount();
+            damount = allocationOfProfits.getHealthPercent()*excessForAllocationRest/100;
+            healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+            am = 0;
+            KidsAndPets k = kidsAndPetsService.findLastEntry();
+            if (k != null) am = k.getAmount();
+            damount = allocationOfProfits.getKidsAndPetsPercent()*excessForAllocationRest/100;
+            kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
+                    am + damount));
+            am = 0;
+            OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+            if (o != null) am = o.getAmount();
+            damount = allocationOfProfits.getOtherCapOutLaysPercent()*excessForAllocationRest/100;
+            otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
+                    description, am + damount));
+            am = 0;
+            Recreation rec = recreationService.findLastEntry();
+            if (rec != null) am = rec.getAmount();
+            damount = allocationOfProfits.getRecreationPercent()*excessForAllocationRest/100;
+            recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
+                    am + damount));
+            am = 0;
+            Reserve res = reserveService.findLastEntry();
+            if (res != null) am = res.getAmount();
+            damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
+            reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+        }
+
     }
 
 }
