@@ -203,8 +203,7 @@ public class EntitiesManipulationController {
         GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
         gcalendar.setTime(date);
         byte monthNumber = generalIncomePrev.getMonthNumber();
-        double dcurrentExpensesRate = 0;
-        CurrentExpensesRate.getExpRateForMonthNum(monthNumber, currentExpensesRate);
+        double dcurrentExpensesRate = CurrentExpensesRate.getExpRateForMonthNum(monthNumber, currentExpensesRate);
         double accumulation = generalIncomePrev.getAccumulation() + damount;
         double excessForAllocationPrev = generalIncomePrev.getExcessForAllocation();
         double excessForAllocationRest = 0;
