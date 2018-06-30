@@ -212,12 +212,11 @@ public class EntitiesManipulationController {
                 if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
             excessForAllocationRest = accumulation - dcurrentExpensesRate - excessForAllocationPrev;
         }
-        //
         double excessForAllocation = excessForAllocationPrev + excessForAllocationRest;
         if (!(monthCheck1 || monthCheck2)) {
             if (excessForAllocationPrev > 0) {
                 excessForAllocation = 0;
-                accumulation = 0;
+                accumulation = damount;
                 if (monthNumber != 12) monthNumber += 1;
                 else monthNumber = 1;
             }
@@ -227,54 +226,51 @@ public class EntitiesManipulationController {
                 else monthNumber = 1;
             }
         }
-        //
         GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
         generalIncomeService.addGeneralIncome(generalIncome);
         income.setGeneralIncome(generalIncome);
         incomeService.addIncome(income);
         if (excessForAllocationRest > 0) {
-            AllocationOfProfits.allocationOfProfitsExe(allocationOfProfitsService, dbUser, charityService, healthService, kidsAndPetsService,
-                    otherCapitalOutlaysService, recreationService, reserveService, excessForAllocationRest, date, description);
-
-/*
-            AllocationOfProfits allocationOfProfits = allocationOfProfitsService.findLastEntry(dbUser);
-            double am = 0;
-            Charity c = charityService.findLastEntry();
-            if (c != null) am = c.getAmount();
-            damount = allocationOfProfits.getCharityPercent()*excessForAllocationRest/100;
-            charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
-            am = 0;
-            Health h = healthService.findLastEntry();
-            if (h != null) am = h.getAmount();
-            damount = allocationOfProfits.getHealthPercent()*excessForAllocationRest/100;
-            healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
-            am = 0;
-            KidsAndPets k = kidsAndPetsService.findLastEntry();
-            if (k != null) am = k.getAmount();
-            damount = allocationOfProfits.getKidsAndPetsPercent()*excessForAllocationRest/100;
-            kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
-                    am + damount));
-            am = 0;
-            OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
-            if (o != null) am = o.getAmount();
-            damount = allocationOfProfits.getOtherCapOutLaysPercent()*excessForAllocationRest/100;
-            otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
-                    description, am + damount));
-            am = 0;
-            Recreation rec = recreationService.findLastEntry();
-            if (rec != null) am = rec.getAmount();
-            damount = allocationOfProfits.getRecreationPercent()*excessForAllocationRest/100;
-            recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
-                    am + damount));
-            am = 0;
-            Reserve res = reserveService.findLastEntry();
-            if (res != null) am = res.getAmount();
-            damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
-            reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-
-        */
+            this.allocationOfProfitsExe(dbUser, excessForAllocationRest, date, description);
         }
+    }
 
+    private void allocationOfProfitsExe(CustomUser dbUser, double excessForAllocationRest, Date date, String description) {
+        double damount;
+        AllocationOfProfits allocationOfProfits = allocationOfProfitsService.findLastEntry(dbUser);
+        double am = 0;
+        Charity c = charityService.findLastEntry();
+        if (c != null) am = c.getAmount();
+        damount = allocationOfProfits.getCharityPercent()*excessForAllocationRest/100;
+        charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+        am = 0;
+        Health h = healthService.findLastEntry();
+        if (h != null) am = h.getAmount();
+        damount = allocationOfProfits.getHealthPercent()*excessForAllocationRest/100;
+        healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+        am = 0;
+        KidsAndPets k = kidsAndPetsService.findLastEntry();
+        if (k != null) am = k.getAmount();
+        damount = allocationOfProfits.getKidsAndPetsPercent()*excessForAllocationRest/100;
+        kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
+                am + damount));
+        am = 0;
+        OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+        if (o != null) am = o.getAmount();
+        damount = allocationOfProfits.getOtherCapOutLaysPercent()*excessForAllocationRest/100;
+        otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
+                description, am + damount));
+        am = 0;
+        Recreation rec = recreationService.findLastEntry();
+        if (rec != null) am = rec.getAmount();
+        damount = allocationOfProfits.getRecreationPercent()*excessForAllocationRest/100;
+        recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
+                am + damount));
+        am = 0;
+        Reserve res = reserveService.findLastEntry();
+        if (res != null) am = res.getAmount();
+        damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
+        reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
     }
 
 }
