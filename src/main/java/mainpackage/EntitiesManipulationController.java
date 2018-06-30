@@ -210,19 +210,34 @@ public class EntitiesManipulationController {
         double excessForAllocationRest = 0;
         boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
         boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
-        if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
+                if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
             excessForAllocationRest = accumulation - dcurrentExpensesRate - excessForAllocationPrev;
         }
-        if (!(monthCheck1 || monthCheck2) && accumulation > dcurrentExpensesRate) {
-            accumulation = accumulation - dcurrentExpensesRate;
-            if (monthNumber != 12) monthNumber += 1;
-            else monthNumber = 1;
+        //
+        double excessForAllocation = excessForAllocationPrev + excessForAllocationRest;
+        if (!(monthCheck1 || monthCheck2)) {
+            if (excessForAllocationPrev > 0) {
+                excessForAllocation = 0;
+                accumulation = 0;
+                if (monthNumber != 12) monthNumber += 1;
+                else monthNumber = 1;
+            }
+            if (accumulation > dcurrentExpensesRate) {
+                accumulation = accumulation - dcurrentExpensesRate;
+                if (monthNumber != 12) monthNumber += 1;
+                else monthNumber = 1;
+            }
         }
-        GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, accumulation - dcurrentExpensesRate);
+        //
+        GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
         generalIncomeService.addGeneralIncome(generalIncome);
         income.setGeneralIncome(generalIncome);
         incomeService.addIncome(income);
         if (excessForAllocationRest > 0) {
+            AllocationOfProfits.allocationOfProfitsExe(allocationOfProfitsService, dbUser, charityService, healthService, kidsAndPetsService,
+                    otherCapitalOutlaysService, recreationService, reserveService, excessForAllocationRest, date, description);
+
+/*
             AllocationOfProfits allocationOfProfits = allocationOfProfitsService.findLastEntry(dbUser);
             double am = 0;
             Charity c = charityService.findLastEntry();
@@ -257,6 +272,8 @@ public class EntitiesManipulationController {
             if (res != null) am = res.getAmount();
             damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
             reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+
+        */
         }
 
     }
