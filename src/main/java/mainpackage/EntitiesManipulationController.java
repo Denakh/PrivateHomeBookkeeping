@@ -158,8 +158,7 @@ public class EntitiesManipulationController {
     }
     */
 
-    private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description,
-                                double am) {
+    private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
                 Charity c = charityService.findLastEntry();
@@ -174,14 +173,12 @@ public class EntitiesManipulationController {
             case "kids_and_pets":
                 KidsAndPets k = kidsAndPetsService.findLastEntry();
                 if (k != null) am = k.getAmount();
-                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
-                        am + damount));
+                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description, am + damount));
                 break;
             case "other_capoutlays":
                 OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
                 if (o != null) am = o.getAmount();
-                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
-                        description, am + damount));
+                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date, description, am + damount));
                 break;
             case "recreation":
                 Recreation rec = recreationService.findLastEntry();
@@ -193,8 +190,6 @@ public class EntitiesManipulationController {
                 Reserve res = reserveService.findLastEntry();
                 if (res != null) am = res.getAmount();
                 reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-                break;
-            case "general":
                 break;
             default:
                 return false;
@@ -209,44 +204,7 @@ public class EntitiesManipulationController {
         gcalendar.setTime(date);
         byte monthNumber = generalIncomePrev.getMonthNumber();
         double dcurrentExpensesRate = 0;
-        switch (monthNumber) {
-            case 1:
-                dcurrentExpensesRate = currentExpensesRate.getM1am();
-                break;
-            case 2:
-                dcurrentExpensesRate = currentExpensesRate.getM2am();
-                break;
-            case 3:
-                dcurrentExpensesRate = currentExpensesRate.getM3am();
-                break;
-            case 4:
-                dcurrentExpensesRate = currentExpensesRate.getM4am();
-                break;
-            case 5:
-                dcurrentExpensesRate = currentExpensesRate.getM5am();
-                break;
-            case 6:
-                dcurrentExpensesRate = currentExpensesRate.getM6am();
-                break;
-            case 7:
-                dcurrentExpensesRate = currentExpensesRate.getM7am();
-                break;
-            case 8:
-                dcurrentExpensesRate = currentExpensesRate.getM8am();
-                break;
-            case 9:
-                dcurrentExpensesRate = currentExpensesRate.getM9am();
-                break;
-            case 10:
-                dcurrentExpensesRate = currentExpensesRate.getM10am();
-                break;
-            case 11:
-                dcurrentExpensesRate = currentExpensesRate.getM11am();
-                break;
-            case 12:
-                dcurrentExpensesRate = currentExpensesRate.getM12am();
-                break;
-        }
+        CurrentExpensesRate.getExpRateForMonthNum(monthNumber, currentExpensesRate);
         double accumulation = generalIncomePrev.getAccumulation() + damount;
         double excessForAllocationPrev = generalIncomePrev.getExcessForAllocation();
         double excessForAllocationRest = 0;

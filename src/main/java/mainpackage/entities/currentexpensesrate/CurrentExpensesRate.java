@@ -159,4 +159,47 @@ public class CurrentExpensesRate {
         this.m12am = m12am;
     }
 
+    public static double getExpRateForMonthNum(byte monthNumber, CurrentExpensesRate currentExpensesRate) {
+        double dcurrentExpensesRate = 0;
+        switch (monthNumber) {
+            case 1:
+                dcurrentExpensesRate = currentExpensesRate.getM1am();
+                break;
+            case 2:
+                dcurrentExpensesRate = currentExpensesRate.getM2am();
+                break;
+            case 3:
+                dcurrentExpensesRate = currentExpensesRate.getM3am();
+                break;
+            case 4:
+                dcurrentExpensesRate = currentExpensesRate.getM4am();
+                break;
+            case 5:
+                dcurrentExpensesRate = currentExpensesRate.getM5am();
+                break;
+            case 6:
+                dcurrentExpensesRate = currentExpensesRate.getM6am();
+                break;
+            case 7:
+                dcurrentExpensesRate = currentExpensesRate.getM7am();
+                break;
+            case 8:
+                dcurrentExpensesRate = currentExpensesRate.getM8am();
+                break;
+            case 9:
+                dcurrentExpensesRate = currentExpensesRate.getM9am();
+                break;
+            case 10:
+                dcurrentExpensesRate = currentExpensesRate.getM10am();
+                break;
+            case 11:
+                dcurrentExpensesRate = currentExpensesRate.getM11am();
+                break;
+            case 12:
+                dcurrentExpensesRate = currentExpensesRate.getM12am();
+                break;
+        }
+        return dcurrentExpensesRate;
+    }
+
 }
