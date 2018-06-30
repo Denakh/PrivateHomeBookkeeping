@@ -1,5 +1,6 @@
 package mainpackage.entities.income;
 
+import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +30,8 @@ public class GeneralIncomeServiceImpl implements GeneralIncomeService {
 
     @Override
     @Transactional
-    public GeneralIncome findLastEntry() {
-        return generalIncomeRepository.findLastEntry();
+    public GeneralIncome findLastEntry(CustomUser user) {
+        return generalIncomeRepository.findLastEntry(user);
     }
 
 }

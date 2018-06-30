@@ -12,6 +12,7 @@ import mainpackage.entities.exchangetransactions.ExchangeTransactions;
 import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.health.Health;
+import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.incomefinancestatistics.IncomeFinanceStatistics;
 import mainpackage.entities.kidsandpets.KidsAndPets;
@@ -77,6 +78,9 @@ public class CustomUser {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Income> income = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GeneralIncome> generalIncomes = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<IncomeFinanceStatistics> incomeFinanceStatistics = new ArrayList<>();
@@ -264,6 +268,14 @@ public class CustomUser {
 
     public void setIncome(List<Income> income) {
         this.income = income;
+    }
+
+    public List<GeneralIncome> getGeneralIncomes() {
+        return generalIncomes;
+    }
+
+    public void setGeneralIncomes(List<GeneralIncome> generalIncomes) {
+        this.generalIncomes = generalIncomes;
     }
 
     public List<IncomeFinanceStatistics> getIncomeFinanceStatistics() {

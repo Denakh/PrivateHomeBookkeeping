@@ -1,5 +1,7 @@
 package mainpackage.entities.income;
 
+import mainpackage.entities.users.CustomUser;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -9,6 +11,10 @@ public class GeneralIncome {
     @Id
     @GeneratedValue
     private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private CustomUser user;
 
     private double amount;
 
@@ -41,7 +47,17 @@ public class GeneralIncome {
         this.excessForAllocation = excessForAllocation;
     }
 
-    public GeneralIncome(double amount, Date date, Income income, byte monthNumber, double accumulation, double excessForAllocation) {
+    public GeneralIncome(CustomUser user, double amount, Date date, byte monthNumber, double accumulation, double excessForAllocation) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.monthNumber = monthNumber;
+        this.accumulation = accumulation;
+        this.excessForAllocation = excessForAllocation;
+    }
+
+    public GeneralIncome(CustomUser user, double amount, Date date, Income income, byte monthNumber, double accumulation, double excessForAllocation) {
+        this.user = user;
         this.amount = amount;
         this.date = date;
         this.income = income;
@@ -52,6 +68,14 @@ public class GeneralIncome {
 
     public long getId() {
         return id;
+    }
+
+    public CustomUser getUser() {
+        return user;
+    }
+
+    public void setUser(CustomUser user) {
+        this.user = user;
     }
 
     public void setId(long id) {

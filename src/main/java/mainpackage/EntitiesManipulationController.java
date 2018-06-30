@@ -136,15 +136,31 @@ public class EntitiesManipulationController {
         incomeService.addIncome(income);
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
-        if (res) return "redirect:/";
-        else {
-            errorStr = "Purpose error. Try again";
+        return this.returnResPage(res, model);
+     }
+
+    @RequestMapping("/expense_fixation_execute")
+    public String expenseFixationExecute(@RequestParam String amount_change,
+                                        @RequestParam String description,
+                                        @RequestParam String purpose,
+                                        Model model) {
+        double damount;
+        String errorStr = "";
+        try {
+            damount = -1*Double.parseDouble(amount_change);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        Date date = new Date();
+        double am = 0;
+        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+        return this.returnResPage(res, model);
     }
-
-
     /*
     @RequestMapping("/allocation_of_profits_show")
     public String allocationOfProfitsShow() {
@@ -198,7 +214,7 @@ public class EntitiesManipulationController {
     }
 
     private void entitiesAddFromGeneral(CustomUser dbUser, double damount, Date date, String description, Income income) {
-        GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry();
+        GeneralIncome generalIncomePrev = generalIncomeService.findLastEntry(dbUser);
         CurrentExpensesRate currentExpensesRate = currentExpensesRateService.findLastEntry(dbUser);
         GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
         gcalendar.setTime(date);
@@ -226,7 +242,7 @@ public class EntitiesManipulationController {
                 else monthNumber = 1;
             }
         }
-        GeneralIncome generalIncome = new GeneralIncome(damount, date, monthNumber, accumulation, excessForAllocation);
+        GeneralIncome generalIncome = new GeneralIncome(dbUser, damount, date, monthNumber, accumulation, excessForAllocation);
         generalIncomeService.addGeneralIncome(generalIncome);
         income.setGeneralIncome(generalIncome);
         incomeService.addIncome(income);
@@ -271,6 +287,16 @@ public class EntitiesManipulationController {
         if (res != null) am = res.getAmount();
         damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
         reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
+    }
+
+    private String returnResPage(boolean res, Model model) {
+        String errorStr;
+        if (res) return "redirect:/";
+        else {
+            errorStr = "Purpose error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
     }
 
 }
