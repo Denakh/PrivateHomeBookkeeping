@@ -287,7 +287,7 @@ public class EntitiesManipulationController {
         if (res != null) am = res.getAmount();
         damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
         reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-    }
+     }
 
     private String returnResPage(boolean res, Model model) {
         String errorStr;
