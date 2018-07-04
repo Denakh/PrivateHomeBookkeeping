@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 @Controller
-public class EntitiesManipulationController {
+public class AddEntitiesController {
 
     @Autowired
     private UserService userService;
@@ -100,16 +100,6 @@ public class EntitiesManipulationController {
         return "allocation_of_profits";
     }
 
-    @RequestMapping("/data_getting")
-    public String dataGetting() {
-        return "data_getting";
-    }
-
-    @RequestMapping("/financial_analysis")
-    public String financialAnalysis() {
-        return "financial_analysis";
-    }
-
     @RequestMapping("/income_fixation_execute")
     public String incomeFixationExecute(@RequestParam String amount,
                                         @RequestParam String description,
@@ -161,18 +151,6 @@ public class EntitiesManipulationController {
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
         return this.returnResPage(res, model);
     }
-    /*
-    @RequestMapping("/allocation_of_profits_show")
-    public String allocationOfProfitsShow() {
-        return "allocation_of_profits_table";
-    }
-
-
-    @RequestMapping("/communalpay_statistic_show")
-    public String communalPayStatisticShow() {
-        return "communalpay_statistic_table";
-    }
-    */
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
