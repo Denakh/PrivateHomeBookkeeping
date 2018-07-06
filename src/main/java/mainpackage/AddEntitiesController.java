@@ -127,17 +127,17 @@ public class AddEntitiesController {
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
         return this.returnResPage(res, model);
-     }
+    }
 
     @RequestMapping("/expense_fixation_execute")
     public String expenseFixationExecute(@RequestParam String amount_change,
-                                        @RequestParam String description,
-                                        @RequestParam String purpose,
-                                        Model model) {
+                                         @RequestParam String description,
+                                         @RequestParam String purpose,
+                                         Model model) {
         double damount;
         String errorStr = "";
         try {
-            damount = -1*Double.parseDouble(amount_change);
+            damount = -1 * Double.parseDouble(amount_change);
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
@@ -160,28 +160,34 @@ public class AddEntitiesController {
                                         @RequestParam String recreation_percent,
                                         @RequestParam String reserve_percent,
                                         Model model) {
-
-        double dcharityPercent;
-        double dhealthPercent;
-        double dkidsandpetsPercent;
-        double dothercapoutlaysPercent;
-        double drecreationPercent;
-        double dreservePercent;
+        double dcharityPercent, dhealthPercent, dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent, percentSum;
         String errorStr = "";
-        /*
         try {
-            dcharityPercent = Double.parseDouble(amount_change);
-            dhealthPercent = Double.parseDouble(amount_change);
-            dkidsandpetsPercent = Double.parseDouble(amount_change);
-            dothercapoutlaysPercent = Double.parseDouble(amount_change);
-            drecreationPercent = Double.parseDouble(amount_change);
-            dreservePercent = Double.parseDouble(amount_change);
+            dcharityPercent = Double.parseDouble(charity_percent);
+            dhealthPercent = Double.parseDouble(health_percent);
+            dkidsandpetsPercent = Double.parseDouble(kids_and_pets_percent);
+            dothercapoutlaysPercent = Double.parseDouble(other_capoutlays_percent);
+            drecreationPercent = Double.parseDouble(recreation_percent);
+            dreservePercent = Double.parseDouble(reserve_percent);
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-         */
+        percentSum = dcharityPercent + dhealthPercent + dkidsandpetsPercent + dothercapoutlaysPercent +
+                drecreationPercent + dreservePercent;
+        if (percentSum != 100) {
+            errorStr = "Percent sum isn't equal 100. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        Date date = new Date();
+        allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(dbUser, date, dcharityPercent, dhealthPercent,
+                dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent));
+        return "redirect:/";
     }
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
@@ -235,7 +241,7 @@ public class AddEntitiesController {
         double excessForAllocationRest = 0;
         boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
         boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
-                if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
+        if (accumulation > dcurrentExpensesRate && (monthCheck1 || monthCheck2)) {
             excessForAllocationRest = accumulation - dcurrentExpensesRate - excessForAllocationPrev;
         }
         double excessForAllocation = excessForAllocationPrev + excessForAllocationRest;
@@ -267,37 +273,37 @@ public class AddEntitiesController {
         double am = 0;
         Charity c = charityService.findLastEntry();
         if (c != null) am = c.getAmount();
-        damount = allocationOfProfits.getCharityPercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getCharityPercent() * excessForAllocationRest / 100;
         charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
         am = 0;
         Health h = healthService.findLastEntry();
         if (h != null) am = h.getAmount();
-        damount = allocationOfProfits.getHealthPercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getHealthPercent() * excessForAllocationRest / 100;
         healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
         am = 0;
         KidsAndPets k = kidsAndPetsService.findLastEntry();
         if (k != null) am = k.getAmount();
-        damount = allocationOfProfits.getKidsAndPetsPercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getKidsAndPetsPercent() * excessForAllocationRest / 100;
         kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
                 am + damount));
         am = 0;
         OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
         if (o != null) am = o.getAmount();
-        damount = allocationOfProfits.getOtherCapOutLaysPercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getOtherCapOutLaysPercent() * excessForAllocationRest / 100;
         otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
                 description, am + damount));
         am = 0;
         Recreation rec = recreationService.findLastEntry();
         if (rec != null) am = rec.getAmount();
-        damount = allocationOfProfits.getRecreationPercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getRecreationPercent() * excessForAllocationRest / 100;
         recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
                 am + damount));
         am = 0;
         Reserve res = reserveService.findLastEntry();
         if (res != null) am = res.getAmount();
-        damount = allocationOfProfits.getReservePercent()*excessForAllocationRest/100;
+        damount = allocationOfProfits.getReservePercent() * excessForAllocationRest / 100;
         reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
-     }
+    }
 
     private String returnResPage(boolean res, Model model) {
         String errorStr;
@@ -308,5 +314,6 @@ public class AddEntitiesController {
             return "/input_error";
         }
     }
+
 
 }

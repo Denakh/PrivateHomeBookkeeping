@@ -28,7 +28,9 @@ public class AllocationOfProfits {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    //CHARITY, HEALTH, KIDSANDPATS, OTHERCAPOUTLAYS, RECREATION, RESERVE;
+    //@Column(name = "msg_date")
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date date;
 
     private double charityPercent;
     private double healthPercent;
@@ -42,6 +44,18 @@ public class AllocationOfProfits {
 
     public AllocationOfProfits(double charityPercent, double healthPercent, double kidsAndPetsPercent,
                                double otherCapOutLaysPercent, double recreationPercent, double reservePercent) {
+        this.charityPercent = charityPercent;
+        this.healthPercent = healthPercent;
+        this.kidsAndPetsPercent = kidsAndPetsPercent;
+        this.otherCapOutLaysPercent = otherCapOutLaysPercent;
+        this.recreationPercent = recreationPercent;
+        this.reservePercent = reservePercent;
+    }
+
+    public AllocationOfProfits(CustomUser user, Date date, double charityPercent, double healthPercent,
+                               double kidsAndPetsPercent, double otherCapOutLaysPercent, double recreationPercent, double reservePercent) {
+        this.user = user;
+        this.date = date;
         this.charityPercent = charityPercent;
         this.healthPercent = healthPercent;
         this.kidsAndPetsPercent = kidsAndPetsPercent;
@@ -64,6 +78,14 @@ public class AllocationOfProfits {
 
     public void setUser(CustomUser user) {
         this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public double getCharityPercent() {
