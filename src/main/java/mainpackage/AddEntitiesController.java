@@ -152,6 +152,38 @@ public class AddEntitiesController {
         return this.returnResPage(res, model);
     }
 
+    @RequestMapping("/allocation_of_profits_execute")
+    public String incomeFixationExecute(@RequestParam String charity_percent,
+                                        @RequestParam String health_percent,
+                                        @RequestParam String kids_and_pets_percent,
+                                        @RequestParam String other_capoutlays_percent,
+                                        @RequestParam String recreation_percent,
+                                        @RequestParam String reserve_percent,
+                                        Model model) {
+
+        double dcharityPercent;
+        double dhealthPercent;
+        double dkidsandpetsPercent;
+        double dothercapoutlaysPercent;
+        double drecreationPercent;
+        double dreservePercent;
+        String errorStr = "";
+        /*
+        try {
+            dcharityPercent = Double.parseDouble(amount_change);
+            dhealthPercent = Double.parseDouble(amount_change);
+            dkidsandpetsPercent = Double.parseDouble(amount_change);
+            dothercapoutlaysPercent = Double.parseDouble(amount_change);
+            drecreationPercent = Double.parseDouble(amount_change);
+            dreservePercent = Double.parseDouble(amount_change);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+         */
+    }
+
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
