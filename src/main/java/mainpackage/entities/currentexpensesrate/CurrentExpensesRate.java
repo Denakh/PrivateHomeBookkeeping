@@ -3,6 +3,7 @@ package mainpackage.entities.currentexpensesrate;
 import mainpackage.entities.users.CustomUser;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class CurrentExpensesRate {
@@ -14,6 +15,9 @@ public class CurrentExpensesRate {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private CustomUser user;
+
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Date date;
 
     private double m1am;
     private double m2am;
@@ -33,6 +37,24 @@ public class CurrentExpensesRate {
 
     public CurrentExpensesRate(double m1am, double m2am, double m3am, double m4am, double m5am, double m6am, double m7am,
                                double m8am, double m9am, double m10am, double m11am, double m12am) {
+        this.m1am = m1am;
+        this.m2am = m2am;
+        this.m3am = m3am;
+        this.m4am = m4am;
+        this.m5am = m5am;
+        this.m6am = m6am;
+        this.m7am = m7am;
+        this.m8am = m8am;
+        this.m9am = m9am;
+        this.m10am = m10am;
+        this.m11am = m11am;
+        this.m12am = m12am;
+    }
+
+    public CurrentExpensesRate(CustomUser user, Date date, double m1am, double m2am, double m3am, double m4am, double m5am,
+                               double m6am, double m7am, double m8am, double m9am, double m10am, double m11am, double m12am) {
+        this.user = user;
+        this.date = date;
         this.m1am = m1am;
         this.m2am = m2am;
         this.m3am = m3am;

@@ -190,6 +190,49 @@ public class AddEntitiesController {
         return "redirect:/";
     }
 
+    @RequestMapping("/current_expenses_rate_execute")
+    public String currentExpensesRateAdd(@RequestParam String amount1,
+                                         @RequestParam String amount2,
+                                         @RequestParam String amount3,
+                                         @RequestParam String amount4,
+                                         @RequestParam String amount5,
+                                         @RequestParam String amount6,
+                                         @RequestParam String amount7,
+                                         @RequestParam String amount8,
+                                         @RequestParam String amount9,
+                                         @RequestParam String amount10,
+                                         @RequestParam String amount11,
+                                         @RequestParam String amount12,
+                                        Model model) {
+        double damount1, damount2, damount3, damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12;
+        String errorStr = "";
+        try {
+            damount1 = Double.parseDouble(amount1);
+            damount2 = Double.parseDouble(amount2);
+            damount3 = Double.parseDouble(amount3);
+            damount4 = Double.parseDouble(amount4);
+            damount5 = Double.parseDouble(amount5);
+            damount6 = Double.parseDouble(amount6);
+            damount7 = Double.parseDouble(amount7);
+            damount8 = Double.parseDouble(amount8);
+            damount9 = Double.parseDouble(amount9);
+            damount10 = Double.parseDouble(amount10);
+            damount11 = Double.parseDouble(amount11);
+            damount12 = Double.parseDouble(amount12);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        Date date = new Date();
+        currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(dbUser, date, damount1, damount2, damount3,
+                damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12));
+        return "redirect:/";
+    }
+
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
