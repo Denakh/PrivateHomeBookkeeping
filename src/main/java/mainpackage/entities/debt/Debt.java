@@ -21,6 +21,8 @@ public class Debt {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
+    private String description;
+
     private boolean percentForInitialAm;
 
     private double percent;
@@ -28,6 +30,16 @@ public class Debt {
     private double totalAmount;
 
     public Debt() {
+    }
+
+    public Debt(CustomUser user, double amount, Date date, String description, boolean percentForInitialAm, double percent, double totalAmount) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.percentForInitialAm = percentForInitialAm;
+        this.percent = percent;
+        this.totalAmount = totalAmount;
     }
 
     public long getId() {
@@ -60,6 +72,14 @@ public class Debt {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public boolean isPercentForInitialAm() {

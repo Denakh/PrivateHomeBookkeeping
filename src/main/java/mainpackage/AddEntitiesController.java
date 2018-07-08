@@ -6,6 +6,8 @@ import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
+import mainpackage.entities.debt.Debt;
+import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncome;
@@ -59,6 +61,8 @@ public class AddEntitiesController {
     private AllocationOfProfitsService allocationOfProfitsService;
     @Autowired
     private CurrentExpensesRateService currentExpensesRateService;
+    @Autowired
+    private DebtService debtService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -230,6 +234,32 @@ public class AddEntitiesController {
         Date date = new Date();
         currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(dbUser, date, damount1, damount2, damount3,
                 damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12));
+        return "redirect:/";
+    }
+
+    @RequestMapping("/debt_fixation_execute")
+    public String incomeFixationExecute(@RequestParam String amount,
+                                        @RequestParam String description,
+                                        @RequestParam String percent,
+                                        @RequestParam String purpose,
+                                        Model model) {
+        double damount, dpercent;
+        boolean percentForInitialAm = false;
+        String errorStr = "";
+        try {
+            damount = Double.parseDouble(amount);
+            dpercent = Double.parseDouble(percent);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+        if (purpose.equals("initial_amount")) percentForInitialAm = true;
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        Date date = new Date();
+        //debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent));
         return "redirect:/";
     }
 

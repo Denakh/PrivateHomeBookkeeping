@@ -14,6 +14,8 @@
     <br/><input type="radio" name="purpose" value="initial_amount" /> initial amount
     <br/><input type="radio" name="purpose" value="residual_amount" /> residual amount
 
+    * For debt paying back fixation: amount has to be with sign "-" and percent have to be with value 0.
+
     <br/><input type="submit" />
 </form>
 
