@@ -1,5 +1,8 @@
 package mainpackage.entities.debt;
 
+import mainpackage.entities.users.CustomUser;
+import org.springframework.data.repository.query.Param;
+
 public interface DebtService {
 
     void addDebt(Debt debt);
@@ -7,5 +10,7 @@ public interface DebtService {
     void updateDebt(Debt debt);
 
     void deleteDebt(Long id);
+
+    Debt findLastEntry(CustomUser user);
 
 }

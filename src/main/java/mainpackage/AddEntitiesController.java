@@ -207,7 +207,7 @@ public class AddEntitiesController {
                                          @RequestParam String amount10,
                                          @RequestParam String amount11,
                                          @RequestParam String amount12,
-                                        Model model) {
+                                         Model model) {
         double damount1, damount2, damount3, damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12;
         String errorStr = "";
         try {
@@ -241,7 +241,7 @@ public class AddEntitiesController {
     public String incomeFixationExecute(@RequestParam String amount,
                                         @RequestParam String description,
                                         @RequestParam String percent,
-                                        @RequestParam String purpose,
+                                        @RequestParam(defaultValue = "0") String purpose,
                                         Model model) {
         double damount, dpercent;
         boolean percentForInitialAm = false;
@@ -254,12 +254,15 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        if(purpose.equals("0")) return this.errorEmptyStr(model);
         if (purpose.equals("initial_amount")) percentForInitialAm = true;
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
-        //debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent));
+        Debt debtPrev = debtService.findLastEntry(dbUser);
+        double debtTotAmPrev = debtPrev.getTotalAmount();
+        debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, debtTotAmPrev + damount));
         return "redirect:/";
     }
 
@@ -387,6 +390,12 @@ public class AddEntitiesController {
             return "/input_error";
         }
     }
+
+    private String errorEmptyStr(Model model) {
+        String errorStr = "Not choose variant in list. Try again";
+        model.addAttribute("error_message", errorStr);
+        return "/input_error";
+}
 
 
 }
