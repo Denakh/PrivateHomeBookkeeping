@@ -107,7 +107,7 @@ public class AddEntitiesController {
     @RequestMapping("/income_fixation_execute")
     public String incomeFixationExecute(@RequestParam String amount,
                                         @RequestParam String description,
-                                        @RequestParam String purpose,
+                                        @RequestParam(defaultValue = "0") String purpose,
                                         Model model) {
         double damount;
         String errorStr = "";
@@ -118,6 +118,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        if(purpose.equals("0")) return this.errorEmptyStr(model);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
@@ -136,7 +137,7 @@ public class AddEntitiesController {
     @RequestMapping("/expense_fixation_execute")
     public String expenseFixationExecute(@RequestParam String amount_change,
                                          @RequestParam String description,
-                                         @RequestParam String purpose,
+                                         @RequestParam(defaultValue = "0") String purpose,
                                          Model model) {
         double damount;
         String errorStr = "";
@@ -147,6 +148,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        if(purpose.equals("0")) return this.errorEmptyStr(model);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
