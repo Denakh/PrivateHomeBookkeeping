@@ -100,7 +100,11 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/allocation_of_profits")
-    public String allocationOfProfits() {
+    public String allocationOfProfits(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        model.addAttribute("allocationOfProfits", allocationOfProfitsService.findLastEntry(dbUser));
         return "allocation_of_profits";
     }
 

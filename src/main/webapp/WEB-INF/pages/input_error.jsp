@@ -6,9 +6,9 @@
 </head>
 <body>
 <div align="center">
-    <h1> ${error_message} </h1>
+    <h2> ${error_message} </h2>
 
-    <p><a href="/">Main menu</a></p>
+    <h2> <p><a href="/">Main menu</a></p> </h2>
 </div>
 </body>
 </html>
