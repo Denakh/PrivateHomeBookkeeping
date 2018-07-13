@@ -122,7 +122,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        if(purpose.equals("0")) return this.errorEmptyStr(model);
+        if (purpose.equals("0")) return this.errorEmptyStr(model);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
@@ -152,7 +152,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        if(purpose.equals("0")) return this.errorEmptyStr(model);
+        if (purpose.equals("0")) return this.errorEmptyStr(model);
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
@@ -244,31 +244,35 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/debt_fixation_execute")
-    public String incomeFixationExecute(@RequestParam String amount,
+    public String incomeFixationExecute(@RequestParam(defaultValue = "0") String amount,
                                         @RequestParam String description,
-                                        @RequestParam String percent,
+                                        @RequestParam(defaultValue = "-101") String percent,
                                         @RequestParam(defaultValue = "0") String purpose,
+                                        @RequestParam(defaultValue = "0") String id_for_change,
                                         Model model) {
         double damount, dpercent;
+        long idForChange;
         boolean percentForInitialAm = false;
         String errorStr = "";
         try {
             damount = Double.parseDouble(amount);
             dpercent = Double.parseDouble(percent);
+            idForChange = Long.parseLong(id_for_change);
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        if(purpose.equals("0")) return this.errorEmptyStr(model);
         if (purpose.equals("initial_amount")) percentForInitialAm = true;
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         CustomUser dbUser = userService.getUserByLogin(login);
         Date date = new Date();
-        Debt debtPrev = debtService.findLastEntry(dbUser);
-        double debtTotAmPrev = debtPrev.getTotalAmount();
-        debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, debtTotAmPrev + damount));
+        if (idForChange > 0) return this.existingDebtChange(idForChange, damount, dbUser, date, description, dpercent,
+                purpose, percentForInitialAm, model);
+        if (purpose.equals("0")) return this.errorEmptyStr(model);
+        if (dpercent == -101) dpercent = 0;
+        debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, damount));
         return "redirect:/";
     }
 
@@ -387,6 +391,36 @@ public class AddEntitiesController {
         reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
     }
 
+    private String existingDebtChange(long debtId, double damount, CustomUser dbUser, Date date, String description,
+                                      double dpercent, String purpose, boolean percentForInitialAm, Model model) {
+        boolean mark = false;
+        Debt debtForChange = debtService.findEntryById(debtId);
+        if (damount != 0) {
+            double newRemSum = debtForChange.getRemainingSum() + damount;
+            if (newRemSum < 0) newRemSum = 0;
+            debtForChange.setRemainingSum(newRemSum);
+            mark = true;
+        }
+        if (dpercent != -101) {
+            debtForChange.setPercent(dpercent);
+            mark = true;
+        }
+        if (!purpose.equals("0")) {
+            debtForChange.setPercentForInitialAm(percentForInitialAm);
+            mark = true;
+        }
+        if (mark) {
+            if (dpercent == -101) dpercent = 0;
+            debtService.updateDebt(debtForChange);
+            debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, debtId));
+            return "redirect:/";
+        } else {
+            String errorStr = "No debt changing has been detected, operation hasn't been implemented";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+    }
+
     private String returnResPage(boolean res, Model model) {
         String errorStr;
         if (res) return "redirect:/";
@@ -401,7 +435,7 @@ public class AddEntitiesController {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
         return "/input_error";
-}
+    }
 
 
 }

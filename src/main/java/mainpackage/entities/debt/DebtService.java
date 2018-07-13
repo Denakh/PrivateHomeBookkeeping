@@ -13,4 +13,6 @@ public interface DebtService {
 
     Debt findLastEntry(CustomUser user);
 
+    Debt findEntryById(long id);
+
 }

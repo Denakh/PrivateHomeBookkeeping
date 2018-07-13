@@ -13,8 +13,12 @@
     Percent for:
     <br/><input type="radio" name="purpose" value="initial_amount" /> initial amount
     <br/><input type="radio" name="purpose" value="residual_amount" /> residual amount
+    <br>Existing debt Id for change : <input type="text" name="id_for_change"><br>
 
-    <br/>* For debt paying back fixation: amount has to be with sign "-" and percent have to be with value 0.
+    <br/>* For fixation of existing debt params changing (paying back, existing debt growth, percent params changing):
+    <br/> - amount has to be with sign "-" for paying back;
+    <br/> - new percent params can be specified in case of need;
+    <br/> - id of existing debt in the list under has to be specified (for new debt fixation don't input any value in the line);
 
     <br/><input type="submit" />
 </form>

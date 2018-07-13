@@ -27,19 +27,33 @@ public class Debt {
 
     private double percent;
 
-    private double totalAmount;
+    private long idDebtForChange;
+
+    private double remainingSum;
 
     public Debt() {
     }
 
-    public Debt(CustomUser user, double amount, Date date, String description, boolean percentForInitialAm, double percent, double totalAmount) {
+    public Debt(CustomUser user, double amount, Date date, String description, boolean percentForInitialAm, double percent,
+                double remainingSum) {
         this.user = user;
         this.amount = amount;
         this.date = date;
         this.description = description;
         this.percentForInitialAm = percentForInitialAm;
         this.percent = percent;
-        this.totalAmount = totalAmount;
+        this.remainingSum = remainingSum;
+    }
+
+    public Debt(CustomUser user, double amount, Date date, String description, boolean percentForInitialAm, double percent,
+                long idDebtForChange) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.percentForInitialAm = percentForInitialAm;
+        this.percent = percent;
+        this.idDebtForChange = idDebtForChange;
     }
 
     public long getId() {
@@ -98,12 +112,19 @@ public class Debt {
         this.percent = percent;
     }
 
-    public double getTotalAmount() {
-        return totalAmount;
+    public long getIdDebtForChange() {
+        return idDebtForChange;
     }
 
-    public void setTotalAmount(double totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setIdDebtForChange(long idDebtForChange) {
+        this.idDebtForChange = idDebtForChange;
     }
 
+    public double getRemainingSum() {
+        return remainingSum;
+    }
+
+    public void setRemainingSum(double remainingSum) {
+        this.remainingSum = remainingSum;
+    }
 }

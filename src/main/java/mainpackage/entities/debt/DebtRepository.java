@@ -11,4 +11,7 @@ public interface DebtRepository extends JpaRepository<Debt, Long> {
     @Query("SELECT d FROM Debt d where d.id = (SELECT MAX(d.id) FROM Debt d WHERE d.user = :user)")
     Debt findLastEntry(@Param("user") CustomUser user);
 
+    @Query("SELECT d FROM Debt d where d.id = :id")
+    Debt findEntryById(@Param("id") long id);
+
 }

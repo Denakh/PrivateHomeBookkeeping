@@ -34,4 +34,10 @@ public class DebtServiceImpl implements DebtService {
         return debtRepository.findLastEntry(user);
     }
 
+    @Override
+    @Transactional
+    public Debt findEntryById(long id) {
+        return debtRepository.findEntryById(id);
+    }
+
 }
