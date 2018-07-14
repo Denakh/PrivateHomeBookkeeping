@@ -75,7 +75,11 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/debt_fixation")
-    public String deptFixation() {
+    public String deptFixation(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        model.addAttribute("debts", debtService.findEffectiveDebtsList(dbUser));
         return "debt_fixation";
     }
 
@@ -394,7 +398,12 @@ public class AddEntitiesController {
     private String existingDebtChange(long debtId, double damount, CustomUser dbUser, Date date, String description,
                                       double dpercent, String purpose, boolean percentForInitialAm, Model model) {
         boolean mark = false;
-        Debt debtForChange = debtService.findEntryById(debtId);
+        Debt debtForChange = debtService.findEntryById(dbUser, debtId);
+        if (debtForChange == null) {
+            String errorStr = "Error in debt id number";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
         if (damount != 0) {
             double newRemSum = debtForChange.getRemainingSum() + damount;
             if (newRemSum < 0) newRemSum = 0;

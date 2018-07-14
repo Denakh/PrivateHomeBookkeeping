@@ -11,32 +11,67 @@
     Description: <input type="text" name="description"><br>
     Percent: <input type="text" name="percent"><br>
     Percent for:
-    <br/><input type="radio" name="purpose" value="initial_amount" /> initial amount
-    <br/><input type="radio" name="purpose" value="residual_amount" /> residual amount
+    <br/><input type="radio" name="purpose" value="initial_amount"/> initial amount
+    <br/><input type="radio" name="purpose" value="residual_amount"/> residual amount
     <br>Existing debt Id for change : <input type="text" name="id_for_change"><br>
 
     <br/>* For fixation of existing debt params changing (paying back, existing debt growth, percent params changing):
     <br/> - amount has to be with sign "-" for paying back;
     <br/> - new percent params can be specified in case of need;
-    <br/> - id of existing debt in the list under has to be specified (for new debt fixation don't input any value in the line);
+    <br/> - id of existing debt in the list under has to be specified (for new debt fixation don't input any value in
+    the line);
 
-    <br/><input type="submit" />
+    <br/><input type="submit"/>
 </form>
 
+<table border="1">
+    <thead>
+    <tr>
+        <td><b>Debt id</b></td>
+        <td><b>Initial amount</b></td>
+        <td><b>Entry date</b></td>
+        <td><b>Description</b></td>
+        <td><b>Percent</b></td>
+        <td><b>Percent for initial (true)
+            or remaining amount</b></td>
+        <td><b>Remaining sum</b></td>
+    </tr>
+    </thead>
+    <c:choose>
+        <c:when test="${not empty debts}">
+            <c:forEach items="${debts}" var="debt">
+                <tr>
+                    <td>${debt.id}</td>
+                    <td>${debt.amount}</td>
+                    <td>${debt.date}</td>
+                    <td>${debt.description}</td>
+                    <td>${debt.percent}</td>
+                    <td>${debt.percentForInitialAm}</td>
+                    <td>${debt.remainingSum}</td>
+                </tr>
+            </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="7">Effective debt entries don't exist</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
+</table>
 
-Show debt statistic:
+<br>Show debt statistic:
 <form action="/debt_show" method="POST">
     Periodicity:
-    <br/><input type="radio" name="periodicity" value="1_month" /> 1 month
-    <br/><input type="radio" name="periodicity" value="2_months" /> 2 months
-    <br/><input type="radio" name="periodicity" value="3_months" /> 3 months
-    <br/><input type="radio" name="periodicity" value="4_months" /> 4 months
-    <br/><input type="radio" name="periodicity" value="5_months" /> 5 months
-    <br/><input type="radio" name="periodicity" value="6_months" /> 6 months
-    <br/><input type="radio" name="periodicity" value="year" /> year
-    <br/><input type="radio" name="periodicity" value="all_time" /> all time
+    <br/><input type="radio" name="periodicity" value="1_month"/> 1 month
+    <br/><input type="radio" name="periodicity" value="2_months"/> 2 months
+    <br/><input type="radio" name="periodicity" value="3_months"/> 3 months
+    <br/><input type="radio" name="periodicity" value="4_months"/> 4 months
+    <br/><input type="radio" name="periodicity" value="5_months"/> 5 months
+    <br/><input type="radio" name="periodicity" value="6_months"/> 6 months
+    <br/><input type="radio" name="periodicity" value="year"/> year
+    <br/><input type="radio" name="periodicity" value="all_time"/> all time
 
-    <br/><input type="submit" />
+    <br/><input type="submit"/>
 </form>
 
 

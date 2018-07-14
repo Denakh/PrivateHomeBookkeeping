@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class DebtServiceImpl implements DebtService {
     @Autowired
@@ -36,8 +38,12 @@ public class DebtServiceImpl implements DebtService {
 
     @Override
     @Transactional
-    public Debt findEntryById(long id) {
-        return debtRepository.findEntryById(id);
+    public Debt findEntryById(CustomUser user, long id) {
+        return debtRepository.findEntryById(user, id);
     }
 
+    @Override
+    public List<Debt> findEffectiveDebtsList(CustomUser user) {
+        return debtRepository.findEffectiveDebtsList(user);
+    }
 }

@@ -7,7 +7,7 @@
 <body>
 
 <h2> Current percent(%) for allocation of profits </h2>
-<table border="1" class="table table-striped">
+<table border="1">
     <thead>
     <tr>
         <td><b>Charity</b></td>
