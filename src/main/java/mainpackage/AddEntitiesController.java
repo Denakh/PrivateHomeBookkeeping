@@ -94,7 +94,11 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/current_expenses_rate")
-    public String currentExpensesRateSetup() {
+    public String currentExpensesRateSetup(Model model) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        CustomUser dbUser = userService.getUserByLogin(login);
+        model.addAttribute("currentExpensesRate", currentExpensesRateService.findLastEntry(dbUser));
         return "current_exp_rate_setup";
     }
 

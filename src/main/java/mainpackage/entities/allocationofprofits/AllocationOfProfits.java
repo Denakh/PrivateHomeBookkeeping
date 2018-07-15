@@ -1,19 +1,6 @@
 package mainpackage.entities.allocationofprofits;
 
-import mainpackage.entities.charity.Charity;
-import mainpackage.entities.charity.CharityService;
-import mainpackage.entities.health.Health;
-import mainpackage.entities.health.HealthService;
-import mainpackage.entities.kidsandpets.KidsAndPets;
-import mainpackage.entities.kidsandpets.KidsAndPetsService;
-import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
-import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
-import mainpackage.entities.recreation.Recreation;
-import mainpackage.entities.recreation.RecreationService;
-import mainpackage.entities.reserve.Reserve;
-import mainpackage.entities.reserve.ReserveService;
 import mainpackage.entities.users.CustomUser;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.Date;

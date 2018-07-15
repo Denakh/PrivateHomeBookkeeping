@@ -1,6 +1,5 @@
 package mainpackage.entities.currentexpensesrate;
 
-import mainpackage.entities.allocationofprofits.AllocationOfProfits;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

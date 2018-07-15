@@ -85,6 +85,14 @@ public class CurrentExpensesRate {
         this.user = user;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public double getM1am() {
         return m1am;
     }

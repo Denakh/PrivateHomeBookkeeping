@@ -40,10 +40,10 @@
     Percent for reserve: <input type="text" name="reserve_percent"><br>
     Percent for other_capoutlays: <input type="text" name="other_capoutlays_percent"><br>
 
-    <br/><input type="submit" />
+    <br/><input type="submit"/>
 </form>
 
-<h2> <p><a href="/">Main menu</a></p> </h2>
+<h2><p><a href="/">Main menu</a></p></h2>
 
 </body>
 </html>

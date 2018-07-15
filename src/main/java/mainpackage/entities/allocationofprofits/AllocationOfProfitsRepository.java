@@ -1,6 +1,5 @@
 package mainpackage.entities.allocationofprofits;
 
-import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

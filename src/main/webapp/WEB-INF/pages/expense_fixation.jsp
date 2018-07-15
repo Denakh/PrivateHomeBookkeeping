@@ -10,14 +10,14 @@
     Amount change, hrn: <input type="text" name="amount_change"><br>
     Description: <input type="text" name="description"><br>
     Expanse type:
-    <br/><input type="radio" name="purpose" value="charity" /> charity
-    <br/><input type="radio" name="purpose" value="health" /> health
-    <br/><input type="radio" name="purpose" value="kids_and_pets" /> kids and pats
-    <br/><input type="radio" name="purpose" value="other_capoutlays" /> other capital outlays
-    <br/><input type="radio" name="purpose" value="recreation" /> recreation
-    <br/><input type="radio" name="purpose" value="reserve" /> reserve
+    <br/><input type="radio" name="purpose" value="charity"/> charity
+    <br/><input type="radio" name="purpose" value="health"/> health
+    <br/><input type="radio" name="purpose" value="kids_and_pets"/> kids and pats
+    <br/><input type="radio" name="purpose" value="other_capoutlays"/> other capital outlays
+    <br/><input type="radio" name="purpose" value="recreation"/> recreation
+    <br/><input type="radio" name="purpose" value="reserve"/> reserve
 
-    <br/><input type="submit" />
+    <br/><input type="submit"/>
 </form>
 
 

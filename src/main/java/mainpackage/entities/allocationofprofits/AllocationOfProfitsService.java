@@ -1,6 +1,5 @@
 package mainpackage.entities.allocationofprofits;
 
-import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.users.CustomUser;
 
 public interface AllocationOfProfitsService {

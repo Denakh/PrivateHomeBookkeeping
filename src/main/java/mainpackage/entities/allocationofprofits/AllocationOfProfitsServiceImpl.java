@@ -1,6 +1,5 @@
 package mainpackage.entities.allocationofprofits;
 
-import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
