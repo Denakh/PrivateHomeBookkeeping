@@ -19,15 +19,24 @@
         <td><b>Adding date</b></td>
     </tr>
     </thead>
-    <tr>
-        <td>${allocationOfProfits.charityPercent}</td>
-        <td>${allocationOfProfits.healthPercent}</td>
-        <td>${allocationOfProfits.kidsAndPetsPercent}</td>
-        <td>${allocationOfProfits.recreationPercent}</td>
-        <td>${allocationOfProfits.reservePercent}</td>
-        <td>${allocationOfProfits.otherCapOutLaysPercent}</td>
-        <td>${allocationOfProfits.date}</td>
-    </tr>
+    <c:choose>
+        <c:when test="${allocationOfProfits ne null}">
+            <tr>
+                <td>${allocationOfProfits.charityPercent}</td>
+                <td>${allocationOfProfits.healthPercent}</td>
+                <td>${allocationOfProfits.kidsAndPetsPercent}</td>
+                <td>${allocationOfProfits.recreationPercent}</td>
+                <td>${allocationOfProfits.reservePercent}</td>
+                <td>${allocationOfProfits.otherCapOutLaysPercent}</td>
+                <td>${allocationOfProfits.date}</td>
+            </tr>
+        </c:when>
+        <c:otherwise>
+            <tr>
+                <td colspan="7">Effective allocation of profits values entry don't exist</td>
+            </tr>
+        </c:otherwise>
+    </c:choose>
 </table>
 
 
