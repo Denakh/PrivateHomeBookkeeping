@@ -24,7 +24,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    //@Bean
+    @Bean
     public CommandLineRunner demo(final UserService userService, final GeneralIncomeService generalIncomeService,
                                   final AllocationOfProfitsService allocationOfProfitsService,
                                   final CurrentExpensesRateService currentExpensesRateService,

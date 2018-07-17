@@ -13,7 +13,9 @@ import mainpackage.entities.reserve.ReserveService;
 import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ShowEntitiesController {
@@ -49,6 +51,16 @@ public class ShowEntitiesController {
     @RequestMapping("/financial_analysis")
     public String financialAnalysis() {
         return "financial_analysis";
+    }
+
+    @RequestMapping("/data_getting_execute")
+    public String dataGettingExe(@RequestParam(defaultValue = "0") String purpose,
+                                 @RequestParam(defaultValue = "0") String periodicity,
+                                 Model model) {
+    //if ()
+
+
+        return "data_getting";
     }
 
     /*

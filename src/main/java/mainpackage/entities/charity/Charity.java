@@ -16,22 +16,6 @@ public class Charity {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuarter_id")
-    private CharityExpensesPerQuarter charityExpensesPerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerMonth_id")
-    private CharityExpensesPerMonth charityExpensesPerMonth;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerQuarter_id")
-    private CharityIncomePerQuarter charityIncomePerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerMonth_id")
-    private CharityIncomePerMonth charityIncomePerMonth;
-
     private double amountChange;
 
     //@Column(name = "msg_date")
@@ -74,38 +58,6 @@ public class Charity {
 
     public void setUser(CustomUser user) {
         this.user = user;
-    }
-
-    public CharityExpensesPerQuarter getCharityExpensesPerQuarter() {
-        return charityExpensesPerQuarter;
-    }
-
-    public void setCharityExpensesPerQuarter(CharityExpensesPerQuarter charityExpensesPerQuarter) {
-        this.charityExpensesPerQuarter = charityExpensesPerQuarter;
-    }
-
-    public CharityExpensesPerMonth getCharityExpensesPerMonth() {
-        return charityExpensesPerMonth;
-    }
-
-    public void setCharityExpensesPerMonth(CharityExpensesPerMonth charityExpensesPerMonth) {
-        this.charityExpensesPerMonth = charityExpensesPerMonth;
-    }
-
-    public CharityIncomePerQuarter getCharityIncomePerQuarter() {
-        return charityIncomePerQuarter;
-    }
-
-    public void setCharityIncomePerQuarter(CharityIncomePerQuarter charityIncomePerQuarter) {
-        this.charityIncomePerQuarter = charityIncomePerQuarter;
-    }
-
-    public CharityIncomePerMonth getCharityIncomePerMonth() {
-        return charityIncomePerMonth;
-    }
-
-    public void setCharityIncomePerMonth(CharityIncomePerMonth charityIncomePerMonth) {
-        this.charityIncomePerMonth = charityIncomePerMonth;
     }
 
     public Date getDate() {

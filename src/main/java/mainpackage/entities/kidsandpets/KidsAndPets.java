@@ -16,22 +16,6 @@ public class KidsAndPets {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuarter_id")
-    private KidsAndPetsExpensesPerQuarter kidsAndPetsExpensesPerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerMonth_id")
-    private KidsAndPetsExpensesPerMonth kidsAndPetsExpensesPerMonth;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerQuarter_id")
-    private KidsAndPetsIncomePerQuarter kidsAndPetsIncomePerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerMonth_id")
-    private KidsAndPetsIncomePerMonth kidsAndPetsIncomePerMonth;
-
     private double amountChange;
 
     //@Column(name = "msg_date")
@@ -67,38 +51,6 @@ public class KidsAndPets {
 
     public void setUser(CustomUser user) {
         this.user = user;
-    }
-
-    public KidsAndPetsExpensesPerQuarter getKidsAndPetsExpensesPerQuarter() {
-        return kidsAndPetsExpensesPerQuarter;
-    }
-
-    public void setKidsAndPetsExpensesPerQuarter(KidsAndPetsExpensesPerQuarter kidsAndPetsExpensesPerQuarter) {
-        this.kidsAndPetsExpensesPerQuarter = kidsAndPetsExpensesPerQuarter;
-    }
-
-    public KidsAndPetsExpensesPerMonth getKidsAndPetsExpensesPerMonth() {
-        return kidsAndPetsExpensesPerMonth;
-    }
-
-    public void setKidsAndPetsExpensesPerMonth(KidsAndPetsExpensesPerMonth kidsAndPetsExpensesPerMonth) {
-        this.kidsAndPetsExpensesPerMonth = kidsAndPetsExpensesPerMonth;
-    }
-
-    public KidsAndPetsIncomePerQuarter getKidsAndPetsIncomePerQuarter() {
-        return kidsAndPetsIncomePerQuarter;
-    }
-
-    public void setKidsAndPetsIncomePerQuarter(KidsAndPetsIncomePerQuarter kidsAndPetsIncomePerQuarter) {
-        this.kidsAndPetsIncomePerQuarter = kidsAndPetsIncomePerQuarter;
-    }
-
-    public KidsAndPetsIncomePerMonth getKidsAndPetsIncomePerMonth() {
-        return kidsAndPetsIncomePerMonth;
-    }
-
-    public void setKidsAndPetsIncomePerMonth(KidsAndPetsIncomePerMonth kidsAndPetsIncomePerMonth) {
-        this.kidsAndPetsIncomePerMonth = kidsAndPetsIncomePerMonth;
     }
 
     public Date getDate() {

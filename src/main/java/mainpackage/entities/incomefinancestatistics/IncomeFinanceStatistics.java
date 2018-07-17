@@ -16,14 +16,6 @@ public class IncomeFinanceStatistics {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerQuarter_id")
-    private TotalIncomePerQuarter totalIncomePerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerMonth_id")
-    private TotalIncomePerMonth totalIncomePerMonth;
-
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
@@ -61,22 +53,6 @@ public class IncomeFinanceStatistics {
 
     public void setUser(CustomUser user) {
         this.user = user;
-    }
-
-    public TotalIncomePerQuarter getTotalIncomePerQuarter() {
-        return totalIncomePerQuarter;
-    }
-
-    public void setTotalIncomePerQuarter(TotalIncomePerQuarter totalIncomePerQuarter) {
-        this.totalIncomePerQuarter = totalIncomePerQuarter;
-    }
-
-    public TotalIncomePerMonth getTotalIncomePerMonth() {
-        return totalIncomePerMonth;
-    }
-
-    public void setTotalIncomePerMonth(TotalIncomePerMonth totalIncomePerMonth) {
-        this.totalIncomePerMonth = totalIncomePerMonth;
     }
 
     public Date getDate() {

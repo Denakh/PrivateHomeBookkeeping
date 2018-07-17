@@ -16,22 +16,6 @@ public class OtherCapitalOutlays {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuarter_id")
-    private OtherCapitalOutlaysExpensesPerQuarter otherCapitalOutlaysExpensesPerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerMonth_id")
-    private OtherCapitalOutlaysExpensesPerMonth otherCapitalOutlaysExpensesPerMonth;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerQuarter_id")
-    private OtherCapitalOutlaysIncomePerQuarter otherCapitalOutlaysIncomePerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "incomePerMonth_id")
-    private OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth;
-
     private double amountChange;
 
     //@Column(name = "msg_date")
@@ -67,38 +51,6 @@ public class OtherCapitalOutlays {
 
     public void setUser(CustomUser user) {
         this.user = user;
-    }
-
-    public OtherCapitalOutlaysExpensesPerQuarter getOtherCapitalOutlaysExpensesPerQuarter() {
-        return otherCapitalOutlaysExpensesPerQuarter;
-    }
-
-    public void setOtherCapitalOutlaysExpensesPerQuarter(OtherCapitalOutlaysExpensesPerQuarter otherCapitalOutlaysExpensesPerQuarter) {
-        this.otherCapitalOutlaysExpensesPerQuarter = otherCapitalOutlaysExpensesPerQuarter;
-    }
-
-    public OtherCapitalOutlaysExpensesPerMonth getOtherCapitalOutlaysExpensesPerMonth() {
-        return otherCapitalOutlaysExpensesPerMonth;
-    }
-
-    public void setOtherCapitalOutlaysExpensesPerMonth(OtherCapitalOutlaysExpensesPerMonth otherCapitalOutlaysExpensesPerMonth) {
-        this.otherCapitalOutlaysExpensesPerMonth = otherCapitalOutlaysExpensesPerMonth;
-    }
-
-    public OtherCapitalOutlaysIncomePerQuarter getOtherCapitalOutlaysIncomePerQuarter() {
-        return otherCapitalOutlaysIncomePerQuarter;
-    }
-
-    public void setOtherCapitalOutlaysIncomePerQuarter(OtherCapitalOutlaysIncomePerQuarter otherCapitalOutlaysIncomePerQuarter) {
-        this.otherCapitalOutlaysIncomePerQuarter = otherCapitalOutlaysIncomePerQuarter;
-    }
-
-    public OtherCapitalOutlaysIncomePerMonth getOtherCapitalOutlaysIncomePerMonth() {
-        return otherCapitalOutlaysIncomePerMonth;
-    }
-
-    public void setOtherCapitalOutlaysIncomePerMonth(OtherCapitalOutlaysIncomePerMonth otherCapitalOutlaysIncomePerMonth) {
-        this.otherCapitalOutlaysIncomePerMonth = otherCapitalOutlaysIncomePerMonth;
     }
 
     public Date getDate() {
