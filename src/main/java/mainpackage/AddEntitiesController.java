@@ -76,9 +76,7 @@ public class AddEntitiesController {
 
     @RequestMapping("/debt_fixation")
     public String deptFixation(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         model.addAttribute("debts", debtService.findEffectiveDebtsList(dbUser));
         return "debt_fixation";
     }
@@ -95,9 +93,7 @@ public class AddEntitiesController {
 
     @RequestMapping("/current_expenses_rate")
     public String currentExpensesRateSetup(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         model.addAttribute("currentExpensesRate", currentExpensesRateService.findLastEntry(dbUser));
         return "current_exp_rate_setup";
     }
@@ -109,9 +105,7 @@ public class AddEntitiesController {
 
     @RequestMapping("/allocation_of_profits")
     public String allocationOfProfits(Model model) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         model.addAttribute("allocationOfProfits", allocationOfProfitsService.findLastEntry(dbUser));
         return "allocation_of_profits";
     }
@@ -131,9 +125,7 @@ public class AddEntitiesController {
             return "/input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
         if (purpose.equals("general")) {
@@ -161,9 +153,7 @@ public class AddEntitiesController {
             return "/input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         double am = 0;
         boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
@@ -199,9 +189,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(dbUser, date, dcharityPercent, dhealthPercent,
                 dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent));
@@ -242,9 +230,7 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(dbUser, date, damount1, damount2, damount3,
                 damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12));
@@ -272,9 +258,7 @@ public class AddEntitiesController {
             return "/input_error";
         }
         if (purpose.equals("initial_amount")) percentForInitialAm = true;
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String login = user.getUsername();
-        CustomUser dbUser = userService.getUserByLogin(login);
+        CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         if (idForChange > 0) return this.existingDebtChange(idForChange, damount, dbUser, date, description, dpercent,
                 purpose, percentForInitialAm, model);
@@ -448,6 +432,12 @@ public class AddEntitiesController {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
         return "/input_error";
+    }
+
+    private CustomUser getCurrentUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String login = user.getUsername();
+        return userService.getUserByLogin(login);
     }
 
 
