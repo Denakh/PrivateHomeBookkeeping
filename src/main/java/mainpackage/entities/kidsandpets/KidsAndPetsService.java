@@ -1,5 +1,10 @@
 package mainpackage.entities.kidsandpets;
 
+import mainpackage.entities.users.CustomUser;
+
+import java.util.Date;
+import java.util.List;
+
 public interface KidsAndPetsService {
 
     void addKidsAndPets(KidsAndPets kidsAndPets);
@@ -8,6 +13,10 @@ public interface KidsAndPetsService {
 
     void deleteKidsAndPets(Long id);
 
-    KidsAndPets findLastEntry();
+    List<KidsAndPets> getAllEntriesList(CustomUser user);
+
+    List<KidsAndPets> findEntriesFromDate(CustomUser user, Date date);
+
+    KidsAndPets findLastEntry(CustomUser user);
 
 }

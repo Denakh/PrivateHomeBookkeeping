@@ -271,33 +271,33 @@ public class AddEntitiesController {
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
-                Charity c = charityService.findLastEntry();
+                Charity c = charityService.findLastEntry(dbUser);
                 if (c != null) am = c.getAmount();
                 charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
                 break;
             case "health":
-                Health h = healthService.findLastEntry();
+                Health h = healthService.findLastEntry(dbUser);
                 if (h != null) am = h.getAmount();
                 healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
                 break;
             case "kids_and_pets":
-                KidsAndPets k = kidsAndPetsService.findLastEntry();
+                KidsAndPets k = kidsAndPetsService.findLastEntry(dbUser);
                 if (k != null) am = k.getAmount();
                 kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description, am + damount));
                 break;
             case "other_capoutlays":
-                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry(dbUser);
                 if (o != null) am = o.getAmount();
                 otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date, description, am + damount));
                 break;
             case "recreation":
-                Recreation rec = recreationService.findLastEntry();
+                Recreation rec = recreationService.findLastEntry(dbUser);
                 if (rec != null) am = rec.getAmount();
                 recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
                         am + damount));
                 break;
             case "reserve":
-                Reserve res = reserveService.findLastEntry();
+                Reserve res = reserveService.findLastEntry(dbUser);
                 if (res != null) am = res.getAmount();
                 reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));
                 break;
@@ -349,35 +349,35 @@ public class AddEntitiesController {
         double damount;
         AllocationOfProfits allocationOfProfits = allocationOfProfitsService.findLastEntry(dbUser);
         double am = 0;
-        Charity c = charityService.findLastEntry();
+        Charity c = charityService.findLastEntry(dbUser);
         if (c != null) am = c.getAmount();
         damount = allocationOfProfits.getCharityPercent() * excessForAllocationRest / 100;
         charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
         am = 0;
-        Health h = healthService.findLastEntry();
+        Health h = healthService.findLastEntry(dbUser);
         if (h != null) am = h.getAmount();
         damount = allocationOfProfits.getHealthPercent() * excessForAllocationRest / 100;
         healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
         am = 0;
-        KidsAndPets k = kidsAndPetsService.findLastEntry();
+        KidsAndPets k = kidsAndPetsService.findLastEntry(dbUser);
         if (k != null) am = k.getAmount();
         damount = allocationOfProfits.getKidsAndPetsPercent() * excessForAllocationRest / 100;
         kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description,
                 am + damount));
         am = 0;
-        OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry();
+        OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry(dbUser);
         if (o != null) am = o.getAmount();
         damount = allocationOfProfits.getOtherCapOutLaysPercent() * excessForAllocationRest / 100;
         otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date,
                 description, am + damount));
         am = 0;
-        Recreation rec = recreationService.findLastEntry();
+        Recreation rec = recreationService.findLastEntry(dbUser);
         if (rec != null) am = rec.getAmount();
         damount = allocationOfProfits.getRecreationPercent() * excessForAllocationRest / 100;
         recreationService.addRecreation(new Recreation(dbUser, damount, date, description,
                 am + damount));
         am = 0;
-        Reserve res = reserveService.findLastEntry();
+        Reserve res = reserveService.findLastEntry(dbUser);
         if (res != null) am = res.getAmount();
         damount = allocationOfProfits.getReservePercent() * excessForAllocationRest / 100;
         reserveService.addReserve(new Reserve(dbUser, damount, date, description, am + damount));

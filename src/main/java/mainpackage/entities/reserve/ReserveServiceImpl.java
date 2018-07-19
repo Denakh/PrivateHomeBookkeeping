@@ -1,8 +1,12 @@
 package mainpackage.entities.reserve;
 
+import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class ReserveServiceImpl implements ReserveService {
@@ -28,9 +32,19 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
+    public List<Reserve> getAllEntriesList(CustomUser user) {
+        return reserveRepository.getAllEntriesList(user);
+    }
+
+    @Override
+    public List<Reserve> findEntriesFromDate(CustomUser user, Date date) {
+        return reserveRepository.findEntriesFromDate(user, date);
+    }
+
+    @Override
     @Transactional
-    public Reserve findLastEntry() {
-        return reserveRepository.findLastEntry();
+    public Reserve findLastEntry(CustomUser user) {
+        return reserveRepository.findLastEntry(user);
     }
 
 }

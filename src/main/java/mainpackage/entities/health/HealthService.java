@@ -1,5 +1,10 @@
 package mainpackage.entities.health;
 
+import mainpackage.entities.users.CustomUser;
+
+import java.util.Date;
+import java.util.List;
+
 public interface HealthService {
 
     void addHealth(Health health);
@@ -8,6 +13,10 @@ public interface HealthService {
 
     void deleteHealth(Long id);
 
-    Health findLastEntry();
+    List<Health> getAllEntriesList(CustomUser user);
+
+    List<Health> findEntriesFromDate(CustomUser user, Date date);
+
+    Health findLastEntry(CustomUser user);
 
 }

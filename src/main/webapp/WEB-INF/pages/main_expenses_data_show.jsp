@@ -17,7 +17,7 @@
     </thead>
     <c:choose>
         <c:when test="${not empty expEntityList}">
-            <c:forEach items="${expEntity}" var="debt">
+            <c:forEach items="${expEntity}" var="expEntity">
                 <tr>
                     <td>${expEntity.amountChange}</td>
                     <td>${expEntity.date}</td>

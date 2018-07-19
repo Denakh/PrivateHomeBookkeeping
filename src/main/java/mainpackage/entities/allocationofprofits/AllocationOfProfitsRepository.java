@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface AllocationOfProfitsRepository extends JpaRepository<AllocationOfProfits, Long> {
 
-    @Query("SELECT a FROM AllocationOfProfits a where a.id = (SELECT MAX(a.id) FROM AllocationOfProfits a WHERE a.user = :user)")
+    @Query("SELECT a FROM AllocationOfProfits a WHERE a.id = (SELECT MAX(a.id) FROM AllocationOfProfits a WHERE a.user = :user)")
     AllocationOfProfits findLastEntry(@Param("user") CustomUser user);
 
 }

@@ -1,8 +1,12 @@
 package mainpackage.entities.charity;
 
+import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 public class CharityServiceImpl implements CharityService {
@@ -28,9 +32,19 @@ public class CharityServiceImpl implements CharityService {
     }
 
     @Override
+    public List<Charity> getAllEntriesList(CustomUser user) {
+        return charityRepository.getAllEntriesList(user);
+    }
+
+    @Override
+    public List<Charity> findEntriesFromDate(CustomUser user, Date date) {
+        return charityRepository.findEntriesFromDate(user, date);
+    }
+
+    @Override
     @Transactional
-    public Charity findLastEntry() {
-        return charityRepository.findLastEntry();
+    public Charity findLastEntry(CustomUser user) {
+        return charityRepository.findLastEntry(user);
     }
 
 }

@@ -68,40 +68,15 @@ public class ShowEntitiesController {
     public String dataGettingExe(@RequestParam(defaultValue = "0") String purpose,
                                  @RequestParam(defaultValue = "0") String periodicity,
                                  Model model) {
-    if (purpose.equals("0")||periodicity.equals("0")) return this.errorEmptyStr(model);
-    CustomUser dbUser = this.getCurrentUser();
-    Date date = new Date();
-    long curTime = date.getTime();
-    long period = -1;
-        switch (periodicity) {
-            case "1_month":
-                period = 1 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "2_months":
-                period = 2 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "3_months":
-                period = 3 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "4_months":
-                period = 4 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "5_months":
-                period = 5 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "6_months":
-                period = 6 * 30 * 24 * 60 * 60 * 1000;
-                break;
-            case "year":
-                period = 365 * 24 * 60 * 60 * 1000;
-                break;
-        }
-    /*
-    if (period == -1) {}
-    else {
-            Date dateFrom = new Date(curTime - period);
-    }
-    */
+        if (purpose.equals("0") || periodicity.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(periodicity);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        entitiesShow(purpose, dbUser, dateFrom, model);
         return "main_expenses_data_show";
     }
 
@@ -127,6 +102,57 @@ public class ShowEntitiesController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         return userService.getUserByLogin(login);
+    }
+
+    private void entitiesShow(String purpose, CustomUser dbUser, Date date, Model model) {
+        switch (purpose) {
+            case "charity":
+                model.addAttribute("expEntityList", charityService.findEntriesFromDate(dbUser, date));
+                break;
+            case "health":
+                model.addAttribute("expEntityList", healthService.findEntriesFromDate(dbUser, date));
+                break;
+            case "kids_and_pets":
+                model.addAttribute("expEntityList", kidsAndPetsService.findEntriesFromDate(dbUser, date));
+                break;
+            case "other_capoutlays":
+                model.addAttribute("expEntityList", otherCapitalOutlaysService.findEntriesFromDate(dbUser, date));
+                break;
+            case "recreation":
+                model.addAttribute("expEntityList", recreationService.findEntriesFromDate(dbUser, date));
+                break;
+            case "reserve":
+                model.addAttribute("expEntityList", reserveService.findEntriesFromDate(dbUser, date));
+                break;
+        }
+    }
+
+    private long getPeriod(String periodicity) {
+        long period = -1;
+        switch (periodicity) {
+            case "1_month":
+                period = 1 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "2_months":
+                period = 2 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "3_months":
+                period = 3 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "4_months":
+                period = 4 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "5_months":
+                period = 5 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "6_months":
+                period = 6 * 30 * 24 * 60 * 60 * 1000;
+                break;
+            case "year":
+                period = 365 * 24 * 60 * 60 * 1000;
+                break;
+        }
+        return period;
     }
 
 }
