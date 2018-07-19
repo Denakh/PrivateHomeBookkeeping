@@ -131,7 +131,7 @@ public class ShowEntitiesController {
         long period = -1;
         switch (periodicity) {
             case "1_month":
-                period = 1 * 30 * 24 * 60 * 60 * 1000;
+                period = 2592000000L;
                 break;
             case "2_months":
                 period = 2 * 30 * 24 * 60 * 60 * 1000;
