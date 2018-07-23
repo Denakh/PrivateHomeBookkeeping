@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,4 +47,10 @@ public class DebtServiceImpl implements DebtService {
     public List<Debt> findEffectiveDebtsList(CustomUser user) {
         return debtRepository.findEffectiveDebtsList(user);
     }
+
+    @Override
+    public List<Debt> findEntriesFromDate(CustomUser user, Date date) {
+        return debtRepository.findEntriesFromDate(user, date);
+    }
+
 }

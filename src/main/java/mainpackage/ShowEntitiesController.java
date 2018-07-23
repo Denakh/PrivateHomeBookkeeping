@@ -4,6 +4,7 @@ import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
+import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncomeService;
@@ -53,6 +54,8 @@ public class ShowEntitiesController {
     private AllocationOfProfitsService allocationOfProfitsService;
     @Autowired
     private CurrentExpensesRateService currentExpensesRateService;
+    @Autowired
+    private DebtService debtService;
 
     @RequestMapping("/data_getting")
     public String dataGetting() {
@@ -78,6 +81,21 @@ public class ShowEntitiesController {
         else dateFrom = new Date(curTime - period);
         entitiesShow(purpose, dbUser, dateFrom, model);
         return "main_expenses_data_show";
+    }
+
+    @RequestMapping("/debt_show")
+    public String debtGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+                                 Model model) {
+        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(periodicity);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        debtsShow(dbUser, dateFrom, model);
+        return "debt_show";
     }
 
     /*
@@ -127,6 +145,10 @@ public class ShowEntitiesController {
         }
     }
 
+    private void debtsShow(CustomUser dbUser, Date date, Model model) {
+                model.addAttribute("debtEntityList", debtService.findEntriesFromDate(dbUser, date));
+    }
+
     private long getPeriod(String periodicity) {
         long period = -1;
         switch (periodicity) {
@@ -134,22 +156,22 @@ public class ShowEntitiesController {
                 period = 2592000000L;
                 break;
             case "2_months":
-                period = 2 * 30 * 24 * 60 * 60 * 1000;
+                period = 5184000000L;
                 break;
             case "3_months":
-                period = 3 * 30 * 24 * 60 * 60 * 1000;
+                period = 7776000000L;
                 break;
             case "4_months":
-                period = 4 * 30 * 24 * 60 * 60 * 1000;
+                period = 10368000000L;
                 break;
             case "5_months":
-                period = 5 * 30 * 24 * 60 * 60 * 1000;
+                period = 12960000000L;
                 break;
             case "6_months":
-                period = 6 * 30 * 24 * 60 * 60 * 1000;
+                period = 15552000000L;
                 break;
             case "year":
-                period = 365 * 24 * 60 * 60 * 1000;
+                period = 31536000000L;
                 break;
         }
         return period;

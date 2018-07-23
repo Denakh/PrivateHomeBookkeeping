@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface DebtRepository extends JpaRepository<Debt, Long> {
@@ -17,5 +18,8 @@ public interface DebtRepository extends JpaRepository<Debt, Long> {
 
     @Query("SELECT d FROM Debt d WHERE d.idDebtForChange = 0 AND d.remainingSum > 0 AND d.user = :user ORDER BY d.id ASC")
     List<Debt> findEffectiveDebtsList(@Param("user") CustomUser user);
+
+    @Query("SELECT d FROM Debt d WHERE d.date >= :date AND d.user = :user ORDER BY d.id ASC")
+    List<Debt> findEntriesFromDate(@Param("user") CustomUser user, @Param("date") Date date);
 
 }
