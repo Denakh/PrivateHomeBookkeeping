@@ -1,5 +1,9 @@
 package mainpackage.entities.income;
 
+import mainpackage.entities.debt.Debt;
+import mainpackage.entities.users.CustomUser;
+
+import java.util.Date;
 import java.util.List;
 
 public interface IncomeService {
@@ -11,5 +15,7 @@ public interface IncomeService {
     void deleteIncome(Long id);
 
     List<Income> getIncome();
+
+    List<Income> findEntriesFromDate(CustomUser user, Date date);
 
 }

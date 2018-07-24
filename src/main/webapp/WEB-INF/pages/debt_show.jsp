@@ -6,6 +6,7 @@
 </head>
 <body>
 
+<h2> Debts list </h2>
 <table border="1">
     <thead>
     <tr>

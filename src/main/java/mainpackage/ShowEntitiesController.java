@@ -98,6 +98,21 @@ public class ShowEntitiesController {
         return "debt_show";
     }
 
+    @RequestMapping("/income_show")
+    public String incomeGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+                                   Model model) {
+        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(periodicity);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        incomsShow(dbUser, dateFrom, model);
+        return "income_show";
+    }
+
     /*
     @RequestMapping("/allocation_of_profits_show")
     public String allocationOfProfitsShow() {
@@ -146,7 +161,11 @@ public class ShowEntitiesController {
     }
 
     private void debtsShow(CustomUser dbUser, Date date, Model model) {
-                model.addAttribute("debtEntityList", debtService.findEntriesFromDate(dbUser, date));
+        model.addAttribute("debtEntityList", debtService.findEntriesFromDate(dbUser, date));
+    }
+
+    private void incomsShow(CustomUser dbUser, Date date, Model model) {
+        model.addAttribute("incomeEntityList", incomeService.findEntriesFromDate(dbUser, date));
     }
 
     private long getPeriod(String periodicity) {

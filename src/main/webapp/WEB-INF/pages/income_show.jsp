@@ -6,30 +6,30 @@
 </head>
 <body>
 
-<h2> Main expenses list for: </h2>
+<h2> Incomes list </h2>
 <table border="1">
     <thead>
     <tr>
-        <td><b>Amount change</b></td>
-        <td><b>Entry date</b></td>
-        <td><b>Description</b></td>
         <td><b>Amount</b></td>
+        <td><b>Entry date</b></td>
+        <td><b>Purpose</b></td>
+        <td><b>Description</b></td>
     </tr>
     </thead>
     <c:choose>
-        <c:when test="${not empty expEntityList}">
-            <c:forEach items="${expEntityList}" var="expEntity">
+        <c:when test="${not empty incomeEntityList}">
+            <c:forEach items="${incomeEntityList}" var="income">
                 <tr>
-                    <td>${expEntity.amountChange}</td>
-                    <td>${expEntity.date}</td>
-                    <td>${expEntity.description}</td>
-                    <td>${expEntity.amount}</td>
+                    <td>${income.amount}</td>
+                    <td>${income.date}</td>
+                    <td>${income.purpose}</td>
+                    <td>${income.description}</td>
                 </tr>
             </c:forEach>
         </c:when>
         <c:otherwise>
             <tr>
-                <td colspan="4">Effective entries don't exist</td>
+                <td colspan="4">Effective income entries don't exist</td>
             </tr>
         </c:otherwise>
     </c:choose>
