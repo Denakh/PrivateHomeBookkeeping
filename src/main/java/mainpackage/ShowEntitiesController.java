@@ -141,21 +141,27 @@ public class ShowEntitiesController {
         switch (purpose) {
             case "charity":
                 model.addAttribute("expEntityList", charityService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "charity");
                 break;
             case "health":
                 model.addAttribute("expEntityList", healthService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "health");
                 break;
             case "kids_and_pets":
                 model.addAttribute("expEntityList", kidsAndPetsService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "kids and pets");
                 break;
             case "other_capoutlays":
                 model.addAttribute("expEntityList", otherCapitalOutlaysService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "other capital outlays");
                 break;
             case "recreation":
                 model.addAttribute("expEntityList", recreationService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "recreation");
                 break;
             case "reserve":
                 model.addAttribute("expEntityList", reserveService.findEntriesFromDate(dbUser, date));
+                model.addAttribute("expEntityName", "reserve");
                 break;
         }
     }

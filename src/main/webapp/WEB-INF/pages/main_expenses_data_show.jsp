@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<h2> Main expenses list for: </h2>
+<h2> Main expenses list for ${expEntityName} </h2>
 <table border="1">
     <thead>
     <tr>
