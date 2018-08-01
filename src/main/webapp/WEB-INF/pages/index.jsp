@@ -21,6 +21,8 @@
     <c:url value="/logout" var="logoutUrl"/>
     <p>Click to logout: <a href="${logoutUrl}">LOGOUT</a></p>
 
+    <p><a href="/current_exp_calculation">Monthly current expanses calculation</a></p>
+
     <p><a href="/income_fixation">Income fixation</a></p>
     <p><a href="/expense_fixation">Expense fixation (not current)</a></p>
     <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>
