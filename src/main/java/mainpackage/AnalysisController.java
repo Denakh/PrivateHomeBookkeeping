@@ -3,6 +3,7 @@ package mainpackage;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
@@ -86,57 +87,59 @@ public class AnalysisController {
         byte curMonthNumber = (byte) (gcalendar.get(Calendar.MONTH) + 1);
         byte curDayNumber = (byte) (gcalendar.get(Calendar.DAY_OF_MONTH));
         byte prevMonthNumber = (byte) (curMonthNumber - 1);
+        double charityAm = 0;
+        double healthAm = 0;
+        double kidsAndPetsAm = 0;
+        double otherCapitalOutlaysAm = 0;
+        double recreationAm = 0;
+        double reserveAm = 0;
+        if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
+        if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
+        if (kidsAndPetsService.findLastEntry(dbUser) != null) kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null) otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
+        if (recreationService.findLastEntry(dbUser) != null) recreationAm = recreationService.findLastEntry(dbUser).getAmount();
+        if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
         if (curMonthNumber == 0) prevMonthNumber = 12;
         if (!effectiveDebtsList.isEmpty()) {
             for (Debt d : effectiveDebtsList) debtsTotAmount += d.getAmount();
         }
-        double totalCurExp = charityService.findLastEntry(dbUser).getAmount() +
-                healthService.findLastEntry(dbUser).getAmount() + kidsAndPetsService.findLastEntry(dbUser).getAmount() +
-                otherCapitalOutlaysService.findLastEntry(dbUser).getAmount() +
-                recreationService.findLastEntry(dbUser).getAmount() + reserveService.findLastEntry(dbUser).getAmount() +
-                debtsTotAmount + getCurrentExpRate(dbUser, curMonthNumber)*(1 - (curDayNumber/30)) - dfactAmount +
-                getCurrentExpRate(dbUser, prevMonthNumber);
-
-        /*
-        Income income = new Income(dbUser, damount, date, description, purpose);
-        if (purpose.equals("general")) {
-            this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
-            return "redirect:/";
-        }
-        incomeService.addIncome(income);
-        double am = 0;
-        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
-        return this.returnResPage(res, model);
-        */
+        double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
+                debtsTotAmount + getCurrentExpRate(dbUser, curMonthNumber) * (1 - (1.0*curDayNumber / 30)) - dfactAmount;
+        double totalCurExp = getCurrentExpRate(dbUser, prevMonthNumber) + dif;
+        model.addAttribute("calculation_result", totalCurExp);
+        model.addAttribute("difference", dif);
         return "/current_exp_calculation_result";
     }
 
     private double getCurrentExpRate(CustomUser user, Byte month) {
-        switch (month) {
-            case 1:
-                return currentExpensesRateService.findLastEntry(user).getM1am();
-            case 2:
-                return currentExpensesRateService.findLastEntry(user).getM2am();
-            case 3:
-                return currentExpensesRateService.findLastEntry(user).getM3am();
-            case 4:
-                return currentExpensesRateService.findLastEntry(user).getM4am();
-            case 5:
-                return currentExpensesRateService.findLastEntry(user).getM5am();
-            case 6:
-                return currentExpensesRateService.findLastEntry(user).getM6am();
-            case 7:
-                return currentExpensesRateService.findLastEntry(user).getM7am();
-            case 8:
-                return currentExpensesRateService.findLastEntry(user).getM8am();
-            case 9:
-                return currentExpensesRateService.findLastEntry(user).getM9am();
-            case 10:
-                return currentExpensesRateService.findLastEntry(user).getM10am();
-            case 11:
-                return currentExpensesRateService.findLastEntry(user).getM11am();
-            case 12:
-                return currentExpensesRateService.findLastEntry(user).getM12am();
+        CurrentExpensesRate cer = currentExpensesRateService.findLastEntry(user);
+        if (cer != null) {
+            switch (month) {
+                case 1:
+                    return cer.getM1am();
+                case 2:
+                    return cer.getM2am();
+                case 3:
+                    return cer.getM3am();
+                case 4:
+                    return cer.getM4am();
+                case 5:
+                    return cer.getM5am();
+                case 6:
+                    return cer.getM6am();
+                case 7:
+                    return cer.getM7am();
+                case 8:
+                    return cer.getM8am();
+                case 9:
+                    return cer.getM9am();
+                case 10:
+                    return cer.getM10am();
+                case 11:
+                    return cer.getM11am();
+                case 12:
+                    return cer.getM12am();
+            }
         }
         return 0;
     }
