@@ -3,6 +3,8 @@ package mainpackage;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.currentexpenses.CurrentExpenses;
+import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
@@ -59,6 +61,8 @@ public class AnalysisController {
     private CurrentExpensesRateService currentExpensesRateService;
     @Autowired
     private DebtService debtService;
+    @Autowired
+    private CurrentExpensesService currentExpensesService;
 
     @RequestMapping("/current_exp_calculation")
     public String dataGetting() {
@@ -73,7 +77,7 @@ public class AnalysisController {
         try {
             dfactAmount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "Number format error. " + "Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
@@ -87,27 +91,12 @@ public class AnalysisController {
         byte curMonthNumber = (byte) (gcalendar.get(Calendar.MONTH) + 1);
         byte curDayNumber = (byte) (gcalendar.get(Calendar.DAY_OF_MONTH));
         byte prevMonthNumber = (byte) (curMonthNumber - 1);
-        double charityAm = 0;
-        double healthAm = 0;
-        double kidsAndPetsAm = 0;
-        double otherCapitalOutlaysAm = 0;
-        double recreationAm = 0;
-        double reserveAm = 0;
-        if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
-        if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
-        if (kidsAndPetsService.findLastEntry(dbUser) != null) kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
-        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null) otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
-        if (recreationService.findLastEntry(dbUser) != null) recreationAm = recreationService.findLastEntry(dbUser).getAmount();
-        if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
-        if (curMonthNumber == 0) prevMonthNumber = 12;
+        if (prevMonthNumber == 0) prevMonthNumber = 12;
         if (!effectiveDebtsList.isEmpty()) {
             for (Debt d : effectiveDebtsList) debtsTotAmount += d.getAmount();
         }
-        double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + getCurrentExpRate(dbUser, curMonthNumber) * (1 - (1.0*curDayNumber / 30)) - dfactAmount;
-        double totalCurExp = getCurrentExpRate(dbUser, prevMonthNumber) + dif;
-        model.addAttribute("calculation_result", totalCurExp);
-        model.addAttribute("difference", dif);
+        this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
+        dfactAmount, date, model);
         return "/current_exp_calculation_result";
     }
 
@@ -144,10 +133,38 @@ public class AnalysisController {
         return 0;
     }
 
+    private void currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
+                                double debtsTotAmount, double dfactAmount, Date date, Model model) {
+        double charityAm = 0;
+        double healthAm = 0;
+        double kidsAndPetsAm = 0;
+        double otherCapitalOutlaysAm = 0;
+        double recreationAm = 0;
+        double reserveAm = 0;
+        if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
+        if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
+        if (kidsAndPetsService.findLastEntry(dbUser) != null) kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null) otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
+        if (recreationService.findLastEntry(dbUser) != null) recreationAm = recreationService.findLastEntry(dbUser).getAmount();
+        if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
+        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
+        double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
+        double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
+                debtsTotAmount + currentExpRate * (1 - (1.0*curDayNumber / 30)) - dfactAmount;
+        double totalCurExp = currentExpRatePrev + dif;
+        currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
+                prevMonthNumber, date));
+        model.addAttribute("calculation_result", totalCurExp);
+        model.addAttribute("difference", dif);
+    }
+
+
     private CustomUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         return userService.getUserByLogin(login);
     }
+
+
 
 }

@@ -14,4 +14,7 @@ public interface CurrentExpensesRepository extends JpaRepository<CurrentExpenses
     @Query("SELECT c FROM CurrentExpenses c WHERE c.date >= :date AND c.user = :user ORDER BY c.id ASC")
     List<CurrentExpenses> findEntriesFromDate(@Param("user") CustomUser user, @Param("date") Date date);
 
+    @Query("SELECT c FROM CurrentExpenses c WHERE c.id = (SELECT MAX(c.id) FROM CurrentExpenses c WHERE c.user = :user)")
+    CurrentExpenses findLastEntry(@Param("user") CustomUser user);
+
 }

@@ -37,4 +37,8 @@ public class CurrentExpensesServiceImpl implements CurrentExpensesService {
         return currentExpensesRepository.findEntriesFromDate(user, date);
     }
 
+    public CurrentExpenses findLastEntry(CustomUser user) {
+        return currentExpensesRepository.findLastEntry(user);
+    }
+
 }

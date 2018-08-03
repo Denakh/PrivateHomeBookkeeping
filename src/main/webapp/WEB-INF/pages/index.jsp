@@ -21,8 +21,13 @@
     <c:url value="/logout" var="logoutUrl"/>
     <p>Click to logout: <a href="${logoutUrl}">LOGOUT</a></p>
 
-    <p><a href="/current_exp_calculation">Monthly current expanses calculation</a></p>
-
+    <c:if test="${need_cur_exp_renew == true}">
+        <h2> You have to update(calculate) current expanses amount for last month: </h2>
+        <h2> please click on reference at the next line </h2>
+        <p><a href="/current_exp_calculation">Monthly current expanses calculation</a></p>
+    </c:if>
+    <br/>
+    <br/>
     <p><a href="/income_fixation">Income fixation</a></p>
     <p><a href="/expense_fixation">Expense fixation (not current)</a></p>
     <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>

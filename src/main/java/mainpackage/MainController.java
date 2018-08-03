@@ -1,5 +1,7 @@
 package mainpackage;
 
+import mainpackage.entities.currentexpenses.CurrentExpenses;
+import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
@@ -13,23 +15,38 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 @Controller
 public class MainController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private CurrentExpensesService currentExpensesService;
 
     @RequestMapping("/")
     public String index(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
-
         CustomUser dbUser = userService.getUserByLogin(login);
-
+        CurrentExpenses ceLast = currentExpensesService.findLastEntry(dbUser);
+        boolean needCERenew = false;
+        Date date = new Date();
+        GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
+        gcalendar.setTime(date);
+        byte prevMonthNumber = (byte) (gcalendar.get(Calendar.MONTH));
+        if (prevMonthNumber == 0) prevMonthNumber = 12;
+        if (ceLast != null) {
+            if (prevMonthNumber > ceLast.getMonth() || date.getTime()-ceLast.getDate().getTime() > 2678400000L) needCERenew = true;
+        }
+        else needCERenew = true;
+        model.addAttribute("need_cur_exp_renew", needCERenew);
         model.addAttribute("login", login);
         model.addAttribute("roles", user.getAuthorities());
         model.addAttribute("email", dbUser.getEmail());
         model.addAttribute("phone", dbUser.getPhone());
-
         return "index";
     }
 

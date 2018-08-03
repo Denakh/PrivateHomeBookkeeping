@@ -7,9 +7,10 @@
 <body>
 <div align="center">
 
-    <h2> ${calculation_result} </h2>
+    <h2> Total current expenses for previous month: ${calculation_result} hrn </h2>
 
-    <h2> ${difference} </h2>
+    <h2> Difference between calculated total current expenses
+        and standard rate for previous month: ${difference} hrn </h2>
 
     <h2><p><a href="/">Main menu</a></p></h2>
 </div>

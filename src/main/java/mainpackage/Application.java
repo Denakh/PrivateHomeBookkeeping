@@ -41,7 +41,7 @@ public class Application {
                         30.0, 10.0, 10.0));
                 currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(user, date, 8000, 8000, 8000, 8000,
                         7000, 6000, 6000, 6000, 6000, 6000, 7000, 8000));
-                debtService.addDebt(new Debt(user, 1000, date, "test", false, 10.1, 1000));
+                debtService.addDebt(new Debt(user, 1000, date, "test", false, 10.1, 0));
             }
         };
     }

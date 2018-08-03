@@ -16,4 +16,6 @@ public interface CurrentExpensesService {
 
     List<CurrentExpenses> findEntriesFromDate(CustomUser user, Date date);
 
+    CurrentExpenses findLastEntry(CustomUser user);
+
 }

@@ -17,11 +17,22 @@ public class CurrentExpenses {
     private CustomUser user;
 
     private double estimatedAmount;
+    private double standardAmount;
+
+    private byte month;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
     public CurrentExpenses() {
+    }
+
+    public CurrentExpenses(CustomUser user, double estimatedAmount, double standardAmount, byte month, Date date) {
+        this.user = user;
+        this.estimatedAmount = estimatedAmount;
+        this.standardAmount = standardAmount;
+        this.month = month;
+        this.date = date;
     }
 
     public long getId() {
@@ -46,6 +57,22 @@ public class CurrentExpenses {
 
     public void setEstimatedAmount(double estimatedAmount) {
         this.estimatedAmount = estimatedAmount;
+    }
+
+    public double getStandardAmount() {
+        return standardAmount;
+    }
+
+    public void setStandardAmount(double standardAmount) {
+        this.standardAmount = standardAmount;
+    }
+
+    public byte getMonth() {
+        return month;
+    }
+
+    public void setMonth(byte month) {
+        this.month = month;
     }
 
     public Date getDate() {
