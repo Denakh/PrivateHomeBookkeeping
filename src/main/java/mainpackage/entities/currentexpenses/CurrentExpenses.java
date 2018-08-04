@@ -18,6 +18,7 @@ public class CurrentExpenses {
 
     private double estimatedAmount;
     private double standardAmount;
+    private double difference;
 
     private byte month;
 
@@ -27,10 +28,11 @@ public class CurrentExpenses {
     public CurrentExpenses() {
     }
 
-    public CurrentExpenses(CustomUser user, double estimatedAmount, double standardAmount, byte month, Date date) {
+    public CurrentExpenses(CustomUser user, double estimatedAmount, double standardAmount, double difference, byte month, Date date) {
         this.user = user;
         this.estimatedAmount = estimatedAmount;
         this.standardAmount = standardAmount;
+        this.difference = difference;
         this.month = month;
         this.date = date;
     }
@@ -65,6 +67,14 @@ public class CurrentExpenses {
 
     public void setStandardAmount(double standardAmount) {
         this.standardAmount = standardAmount;
+    }
+
+    public double getDifference() {
+        return difference;
+    }
+
+    public void setDifference(double difference) {
+        this.difference = difference;
     }
 
     public byte getMonth() {

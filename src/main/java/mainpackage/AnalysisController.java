@@ -158,7 +158,7 @@ public class AnalysisController {
                 debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30)) - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
         currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
-                prevMonthNumber, date));
+                totalCurExp - currentExpRatePrev, prevMonthNumber, date));
         model.addAttribute("calculation_result", totalCurExp);
         model.addAttribute("difference", dif);
     }

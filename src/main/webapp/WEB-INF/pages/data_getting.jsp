@@ -28,6 +28,16 @@
     <br/><input type="submit"/>
 </form>
 
+<form action="/ce_data_getting_execute" method="POST">
+    Current expenses for periodicity:
+    <br/><input type="radio" name="periodicity" value="3_months"/> 3 months
+    <br/><input type="radio" name="periodicity" value="6_months"/> 6 months
+    <br/><input type="radio" name="periodicity" value="year"/> year
+    <br/><input type="radio" name="periodicity" value="all_time"/> all time
+
+    <br/><input type="submit"/>
+</form>
+
 <p><a href="/financial_analysis">Financial analysis</a></p>
 
 

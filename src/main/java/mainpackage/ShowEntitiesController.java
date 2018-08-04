@@ -3,6 +3,7 @@ package mainpackage;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.health.Health;
@@ -56,6 +57,8 @@ public class ShowEntitiesController {
     private CurrentExpensesRateService currentExpensesRateService;
     @Autowired
     private DebtService debtService;
+    @Autowired
+    private CurrentExpensesService currentExpensesService;
 
     @RequestMapping("/data_getting")
     public String dataGetting() {
@@ -79,8 +82,23 @@ public class ShowEntitiesController {
         long period = getPeriod(periodicity);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
-        entitiesShow(purpose, dbUser, dateFrom, model);
+        this.entitiesShow(purpose, dbUser, dateFrom, model);
         return "main_expenses_data_show";
+    }
+
+    @RequestMapping("/ce_data_getting_execute")
+    public String curExpDataGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+                                 Model model) {
+        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(periodicity);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        this.curExpShow(dbUser, dateFrom, model);
+        return "current_expenses_data_show";
     }
 
     @RequestMapping("/debt_show")
@@ -94,7 +112,7 @@ public class ShowEntitiesController {
         long period = getPeriod(periodicity);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
-        debtsShow(dbUser, dateFrom, model);
+        this.debtsShow(dbUser, dateFrom, model);
         return "debt_show";
     }
 
@@ -109,7 +127,7 @@ public class ShowEntitiesController {
         long period = getPeriod(periodicity);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
-        incomsShow(dbUser, dateFrom, model);
+        this.incomsShow(dbUser, dateFrom, model);
         return "income_show";
     }
 
@@ -164,6 +182,10 @@ public class ShowEntitiesController {
                 model.addAttribute("expEntityName", "reserve");
                 break;
         }
+    }
+
+    private void curExpShow(CustomUser dbUser, Date date, Model model) {
+        model.addAttribute("curExpEntityList", currentExpensesService.findEntriesFromDate(dbUser, date));
     }
 
     private void debtsShow(CustomUser dbUser, Date date, Model model) {
