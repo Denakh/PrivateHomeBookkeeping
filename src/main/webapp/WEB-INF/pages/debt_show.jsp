@@ -18,6 +18,7 @@
         <td><b>Percent for initial (true)
             or remaining amount</b></td>
         <td><b>Remaining sum</b></td>
+        <td><b>Debt id for change (if need)</b></td>
     </tr>
     </thead>
     <c:choose>
@@ -31,6 +32,7 @@
                     <td>${debt.percent}</td>
                     <td>${debt.percentForInitialAm}</td>
                     <td>${debt.remainingSum}</td>
+                    <td>${debt.idDebtForChange}</td>
                 </tr>
             </c:forEach>
         </c:when>

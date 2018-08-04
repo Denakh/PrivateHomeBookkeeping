@@ -34,6 +34,14 @@ public class Debt {
     public Debt() {
     }
 
+    public Debt(CustomUser user, double amount, Date date, String description, long idDebtForChange) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+        this.idDebtForChange = idDebtForChange;
+    }
+
     public Debt(CustomUser user, double amount, Date date, String description, boolean percentForInitialAm, double percent,
                 double remainingSum) {
         this.user = user;

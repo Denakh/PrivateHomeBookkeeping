@@ -96,7 +96,9 @@ public class AnalysisController {
             for (Debt d : effectiveDebtsList) debtsTotAmount += d.getAmount();
         }
         this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
-        dfactAmount, date, model);
+                dfactAmount, date, model);
+        List<Debt> efDebtsList = debtService.findEffectiveDebtsList(dbUser);
+        if (efDebtsList != null || !efDebtsList.isEmpty()) this.accruedInterest(efDebtsList, dbUser, date);
         return "/current_exp_calculation_result";
     }
 
@@ -134,7 +136,7 @@ public class AnalysisController {
     }
 
     private void currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
-                                double debtsTotAmount, double dfactAmount, Date date, Model model) {
+                                     double debtsTotAmount, double dfactAmount, Date date, Model model) {
         double charityAm = 0;
         double healthAm = 0;
         double kidsAndPetsAm = 0;
@@ -143,14 +145,17 @@ public class AnalysisController {
         double reserveAm = 0;
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
-        if (kidsAndPetsService.findLastEntry(dbUser) != null) kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
-        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null) otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
-        if (recreationService.findLastEntry(dbUser) != null) recreationAm = recreationService.findLastEntry(dbUser).getAmount();
+        if (kidsAndPetsService.findLastEntry(dbUser) != null)
+            kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null)
+            otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
+        if (recreationService.findLastEntry(dbUser) != null)
+            recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
         double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
         double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
         double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + currentExpRate * (1 - (1.0*curDayNumber / 30)) - dfactAmount;
+                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30)) - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
         currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
                 prevMonthNumber, date));
@@ -158,13 +163,27 @@ public class AnalysisController {
         model.addAttribute("difference", dif);
     }
 
+    private void accruedInterest(List<Debt> efDebtsList, CustomUser dbUser, Date date) {
+        for (Debt d : efDebtsList) {
+            if (d.getPercent() > 0) {
+                double remSumCh = 0;
+                if (d.isPercentForInitialAm()) {
+                    remSumCh = d.getAmount() * 0.01 * d.getPercent();
+                } else {
+                    remSumCh = d.getRemainingSum() * 0.01 * d.getPercent();
+                }
+                d.setRemainingSum(d.getRemainingSum() + remSumCh);
+                debtService.updateDebt(d);
+                debtService.addDebt(new Debt(dbUser, remSumCh, date, "accrued interest", d.getId()));
+            }
+        }
+    }
 
     private CustomUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         return userService.getUserByLogin(login);
     }
-
 
 
 }
