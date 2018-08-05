@@ -21,6 +21,19 @@
     <c:url value="/logout" var="logoutUrl"/>
     <p>Click to logout: <a href="${logoutUrl}">LOGOUT</a></p>
 
+    <c:if test="${need_alloc_of_prof == true}">
+        <h2> You have to setup allocation of profits (excess over current expanses cover)
+            rates for correct application operations: </h2>
+        <h2> please click on reference at the next line </h2>
+        <p><a href="/allocation_of_profits">Setup allocation of profits</a></p>
+    </c:if>
+    <c:if test="${need_cur_exp_rate == true}">
+        <h2> You have to setup current expanses monthly rates for correct application operations: </h2>
+        <h2> please click on reference at the next line </h2>
+        <p><a href="/current_expenses_rate">Setup current expanses monthly rates</a></p>
+    </c:if>
+    <br/>
+    <br/>
     <c:if test="${need_cur_exp_renew == true}">
         <h2> You have to update(calculate) current expanses amount for last month and </h2>
         <h2> debt data with percents(interests on loans) accounting (if exist) </h2>

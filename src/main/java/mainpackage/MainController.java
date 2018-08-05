@@ -1,7 +1,9 @@
 package mainpackage;
 
+import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
+import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
@@ -25,6 +27,10 @@ public class MainController {
     private UserService userService;
     @Autowired
     private CurrentExpensesService currentExpensesService;
+    @Autowired
+    private CurrentExpensesRateService currentExpensesRateService;
+    @Autowired
+    private AllocationOfProfitsService allocationOfProfitsService;
 
     @RequestMapping("/")
     public String index(Model model) {
@@ -33,6 +39,8 @@ public class MainController {
         CustomUser dbUser = userService.getUserByLogin(login);
         CurrentExpenses ceLast = currentExpensesService.findLastEntry(dbUser);
         boolean needCERenew = false;
+        boolean needAllocOfProfSetup = false;
+        boolean needCurExpRateSetup = false;
         Date date = new Date();
         GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
         gcalendar.setTime(date);
@@ -42,6 +50,10 @@ public class MainController {
             if (prevMonthNumber > ceLast.getMonth() || date.getTime()-ceLast.getDate().getTime() > 2678400000L) needCERenew = true;
         }
         else needCERenew = true;
+        if (allocationOfProfitsService.findLastEntry(dbUser) == null) needAllocOfProfSetup = true;
+        if (currentExpensesRateService.findLastEntry(dbUser) == null) needCurExpRateSetup = true;
+        model.addAttribute("need_alloc_of_prof", needAllocOfProfSetup);
+        model.addAttribute("need_cur_exp_rate", needCurExpRateSetup);
         model.addAttribute("need_cur_exp_renew", needCERenew);
         model.addAttribute("login", login);
         model.addAttribute("roles", user.getAuthorities());
