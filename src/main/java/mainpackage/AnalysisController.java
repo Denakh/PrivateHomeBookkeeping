@@ -155,7 +155,7 @@ public class AnalysisController {
         double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
         double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
         double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30)) - dfactAmount;
+                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
         currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
                 totalCurExp - currentExpRatePrev, prevMonthNumber, date));
