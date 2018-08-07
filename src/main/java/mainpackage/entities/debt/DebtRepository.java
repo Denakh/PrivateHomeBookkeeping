@@ -16,7 +16,7 @@ public interface DebtRepository extends JpaRepository<Debt, Long> {
     @Query("SELECT d FROM Debt d where d.user = :user AND d.id = :id")
     Debt findEntryById(@Param("user") CustomUser user, @Param("id") long id);
 
-    @Query("SELECT d FROM Debt d WHERE d.idDebtForChange = 0 AND d.remainingSum > 0 AND d.user = :user ORDER BY d.id ASC")
+    @Query("SELECT d FROM Debt d WHERE d.idDebtForChange = 0 AND d.remainingSum <> 0 AND d.user = :user ORDER BY d.id ASC")
     List<Debt> findEffectiveDebtsList(@Param("user") CustomUser user);
 
     @Query("SELECT d FROM Debt d WHERE d.date >= :date AND d.user = :user ORDER BY d.id ASC")

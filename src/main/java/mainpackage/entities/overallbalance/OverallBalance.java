@@ -20,11 +20,34 @@ public class OverallBalance {
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
 
-    private double factualBalance;
+    private double balanceLiq;
+    private double balanceWithDep;
+    private double differenceLiq;
+    private double differenceWithDep;
 
-    private double intriesBalance;
+    @Enumerated(EnumType.STRING)
+    private BalanceType balanceType;
 
     public OverallBalance() {
+    }
+
+    public OverallBalance(CustomUser user, Date date, double balanceLiq, double balanceWithDep, BalanceType balanceType) {
+        this.user = user;
+        this.date = date;
+        this.balanceLiq = balanceLiq;
+        this.balanceWithDep = balanceWithDep;
+        this.balanceType = balanceType;
+    }
+
+    public OverallBalance(CustomUser user, Date date, double balanceLiq, double balanceWithDep, double differenceLiq,
+                          double differenceWithDep, BalanceType balanceType) {
+        this.user = user;
+        this.date = date;
+        this.balanceLiq = balanceLiq;
+        this.balanceWithDep = balanceWithDep;
+        this.differenceLiq = differenceLiq;
+        this.differenceWithDep = differenceWithDep;
+        this.balanceType = balanceType;
     }
 
     public long getId() {
@@ -51,20 +74,43 @@ public class OverallBalance {
         this.date = date;
     }
 
-    public double getFactualBalance() {
-        return factualBalance;
+    public double getBalanceLiq() {
+        return balanceLiq;
     }
 
-    public void setFactualBalance(double factualBalance) {
-        this.factualBalance = factualBalance;
+    public void setBalanceLiq(double balanceLiq) {
+        this.balanceLiq = balanceLiq;
     }
 
-    public double getIntriesBalance() {
-        return intriesBalance;
+    public double getBalanceWithDep() {
+        return balanceWithDep;
     }
 
-    public void setIntriesBalance(double intriesBalance) {
-        this.intriesBalance = intriesBalance;
+    public void setBalanceWithDep(double balanceWithDep) {
+        this.balanceWithDep = balanceWithDep;
     }
 
+    public double getDifferenceLiq() {
+        return differenceLiq;
+    }
+
+    public void setDifferenceLiq(double differenceLiq) {
+        this.differenceLiq = differenceLiq;
+    }
+
+    public double getDifferenceWithDep() {
+        return differenceWithDep;
+    }
+
+    public void setDifferenceWithDep(double differenceWithDep) {
+        this.differenceWithDep = differenceWithDep;
+    }
+
+    public BalanceType getBalanceType() {
+        return balanceType;
+    }
+
+    public void setBalanceType(BalanceType balanceType) {
+        this.balanceType = balanceType;
+    }
 }

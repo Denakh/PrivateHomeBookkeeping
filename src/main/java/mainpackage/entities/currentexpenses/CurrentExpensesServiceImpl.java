@@ -1,6 +1,5 @@
 package mainpackage.entities.currentexpenses;
 
-import mainpackage.entities.charity.Charity;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

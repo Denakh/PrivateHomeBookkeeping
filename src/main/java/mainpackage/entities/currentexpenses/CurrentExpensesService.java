@@ -1,6 +1,5 @@
 package mainpackage.entities.currentexpenses;
 
-import mainpackage.entities.charity.Charity;
 import mainpackage.entities.users.CustomUser;
 
 import java.util.Date;

@@ -47,9 +47,9 @@ public class MainController {
         byte prevMonthNumber = (byte) (gcalendar.get(Calendar.MONTH));
         if (prevMonthNumber == 0) prevMonthNumber = 12;
         if (ceLast != null) {
-            if (prevMonthNumber > ceLast.getMonth() || date.getTime()-ceLast.getDate().getTime() > 2678400000L) needCERenew = true;
-        }
-        else needCERenew = true;
+            if (prevMonthNumber > ceLast.getMonth() || date.getTime() - ceLast.getDate().getTime() > 2678400000L)
+                needCERenew = true;
+        } else needCERenew = true;
         if (allocationOfProfitsService.findLastEntry(dbUser) == null) needAllocOfProfSetup = true;
         if (currentExpensesRateService.findLastEntry(dbUser) == null) needCurExpRateSetup = true;
         model.addAttribute("need_alloc_of_prof", needAllocOfProfSetup);

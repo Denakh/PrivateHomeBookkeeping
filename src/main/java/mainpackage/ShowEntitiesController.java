@@ -1,22 +1,16 @@
 package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
-import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
-import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.income.IncomeService;
-import mainpackage.entities.kidsandpets.KidsAndPets;
 import mainpackage.entities.kidsandpets.KidsAndPetsService;
-import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
-import mainpackage.entities.recreation.Recreation;
 import mainpackage.entities.recreation.RecreationService;
-import mainpackage.entities.reserve.Reserve;
 import mainpackage.entities.reserve.ReserveService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserService;
@@ -88,7 +82,7 @@ public class ShowEntitiesController {
 
     @RequestMapping("/ce_data_getting_execute")
     public String curExpDataGettingExe(@RequestParam(defaultValue = "0") String periodicity,
-                                 Model model) {
+                                       Model model) {
         if (periodicity.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();

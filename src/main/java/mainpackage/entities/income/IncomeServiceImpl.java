@@ -1,6 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.debt.Debt;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +40,11 @@ public class IncomeServiceImpl implements IncomeService {
     @Override
     public List<Income> findEntriesFromDate(CustomUser user, Date date) {
         return incomeRepository.findEntriesFromDate(user, date);
+    }
+
+    @Override
+    public List<Income> findEntriesBetweenDates(CustomUser user, Date dateFrom, Date dateTo) {
+        return incomeRepository.findEntriesBetweenDates(user, dateFrom, dateTo);
     }
 
 }

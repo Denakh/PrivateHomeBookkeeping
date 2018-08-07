@@ -1,7 +1,6 @@
 package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
-import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
@@ -9,19 +8,18 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
-import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncomeService;
+import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
-import mainpackage.entities.kidsandpets.KidsAndPets;
 import mainpackage.entities.kidsandpets.KidsAndPetsService;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
-import mainpackage.entities.recreation.Recreation;
+import mainpackage.entities.overallbalance.BalanceType;
+import mainpackage.entities.overallbalance.OverallBalance;
+import mainpackage.entities.overallbalance.OverallBalanceService;
 import mainpackage.entities.recreation.RecreationService;
-import mainpackage.entities.reserve.Reserve;
 import mainpackage.entities.reserve.ReserveService;
-import mainpackage.entities.income.Income;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +61,8 @@ public class AnalysisController {
     private DebtService debtService;
     @Autowired
     private CurrentExpensesService currentExpensesService;
+    @Autowired
+    private OverallBalanceService overallBalanceService;
 
     @RequestMapping("/current_exp_calculation")
     public String dataGetting() {
@@ -93,12 +93,13 @@ public class AnalysisController {
         byte prevMonthNumber = (byte) (curMonthNumber - 1);
         if (prevMonthNumber == 0) prevMonthNumber = 12;
         if (!effectiveDebtsList.isEmpty()) {
-            for (Debt d : effectiveDebtsList) debtsTotAmount += d.getAmount();
+            for (Debt d : effectiveDebtsList) {
+                if (d.getRemainingSum() > 0) debtsTotAmount += d.getRemainingSum();
+            }
         }
         this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
                 dfactAmount, date, model);
-        List<Debt> efDebtsList = debtService.findEffectiveDebtsList(dbUser);
-        if (efDebtsList != null || !efDebtsList.isEmpty()) this.accruedInterest(efDebtsList, dbUser, date);
+        if (effectiveDebtsList.isEmpty()) this.accruedInterest(effectiveDebtsList, dbUser, date);
         return "/current_exp_calculation_result";
     }
 
@@ -143,12 +144,13 @@ public class AnalysisController {
         double otherCapitalOutlaysAm = 0;
         double recreationAm = 0;
         double reserveAm = 0;
+        OtherCapitalOutlays otherCapitalOutlays = otherCapitalOutlaysService.findLastEntry(dbUser);
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
         if (kidsAndPetsService.findLastEntry(dbUser) != null)
             kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
-        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null)
-            otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlays != null)
+            otherCapitalOutlaysAm = otherCapitalOutlays.getAmount();
         if (recreationService.findLastEntry(dbUser) != null)
             recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
@@ -158,7 +160,9 @@ public class AnalysisController {
                 debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
         currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
-                totalCurExp - currentExpRatePrev, prevMonthNumber, date));
+                dif, prevMonthNumber, date));
+        otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, -dif, date,
+                "current expenses excess compensation", otherCapitalOutlaysAm - dif));
         model.addAttribute("calculation_result", totalCurExp);
         model.addAttribute("difference", dif);
     }
@@ -183,6 +187,85 @@ public class AnalysisController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         return userService.getUserByLogin(login);
+    }
+
+    private void factualBalanceAdd(CustomUser dbUser, Date date, double dfactAmount, List<Debt> effectiveDebtsList) {
+        double depositsAm = 0;
+        double obFactPrevLiq = 0;
+        double obFactPrevWD = 0;
+        boolean prevEnt = false;
+        if (!effectiveDebtsList.isEmpty()) {
+            for (Debt d : effectiveDebtsList) {
+                if (d.getAmount() < 0) depositsAm += -d.getAmount();
+            }
+        }
+        OverallBalance obFactPrev = overallBalanceService.findLastEntry(dbUser, BalanceType.FACTUAL);
+        if (obFactPrev != null) {
+            obFactPrevLiq = obFactPrev.getBalanceLiq();
+            obFactPrevWD = obFactPrev.getBalanceWithDep();
+            prevEnt = true;
+        }
+        if (prevEnt) overallBalanceService.addOverallBalance(new OverallBalance(dbUser, date, dfactAmount,
+                dfactAmount + depositsAm, dfactAmount - obFactPrevLiq,
+                dfactAmount + depositsAm - obFactPrevWD, BalanceType.FACTUAL));
+        else overallBalanceService.addOverallBalance(new OverallBalance(dbUser, date, dfactAmount,
+                dfactAmount + depositsAm, 0,
+                0, BalanceType.FACTUAL));
+    }
+
+
+    private OverallBalance getCalculatedBalance(CustomUser dbUser, byte curMonthNumber, byte curDayNumber,
+                                                double debtsTotAmount, Date date, List<Debt> effectiveDebtsList) {
+        double calcBalanceLiq = 0;
+        double calcBalanceWithDep = 0;
+        double charityAm = 0;
+        double healthAm = 0;
+        double kidsAndPetsAm = 0;
+        double otherCapitalOutlaysAm = 0;
+        double recreationAm = 0;
+        double reserveAm = 0;
+        double depositsAm = 0;
+        if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
+        if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
+        if (kidsAndPetsService.findLastEntry(dbUser) != null)
+            kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlaysService.findLastEntry(dbUser) != null)
+            otherCapitalOutlaysAm = otherCapitalOutlaysService.findLastEntry(dbUser).getAmount();
+        if (recreationService.findLastEntry(dbUser) != null)
+            recreationAm = recreationService.findLastEntry(dbUser).getAmount();
+        if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
+        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
+        if (!effectiveDebtsList.isEmpty()) {
+            for (Debt d : effectiveDebtsList) {
+                if (d.getAmount() < 0) depositsAm += -d.getAmount();
+            }
+        }
+        calcBalanceLiq = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
+                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417));
+        calcBalanceWithDep = calcBalanceLiq + depositsAm;
+        return new OverallBalance(dbUser, date, calcBalanceLiq, calcBalanceWithDep, BalanceType.CALCULATED);
+    }
+
+    private double getExpansesToIncomeRatio(CustomUser dbUser, Date dateFrom, Date dateTo) {
+        double expIncRatio = 0;
+        double totalIncome = 0;
+        double totalExpenses = 0;
+        OverallBalance obCur = null;
+        List<OverallBalance> obCurList = overallBalanceService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
+        List<Income> incomesByDate = incomeService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
+        for (Income i : incomesByDate) totalIncome += i.getAmount();
+        for (int i = 0; i < obCurList.size(); i += 1) {
+            OverallBalance ob = obCurList.get(i);
+            if (ob.getBalanceType() == BalanceType.FACTUAL) {
+                obCur = ob;
+                break;
+            }
+        }
+        if (obCur != null) {
+            totalExpenses = -obCur.getDifferenceWithDep() + totalIncome;
+            expIncRatio = totalExpenses / totalIncome;
+        }
+        return expIncRatio;
     }
 
 

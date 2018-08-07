@@ -1,6 +1,5 @@
 package mainpackage.entities.income;
 
-import mainpackage.entities.debt.Debt;
 import mainpackage.entities.users.CustomUser;
 
 import java.util.Date;
@@ -17,5 +16,7 @@ public interface IncomeService {
     List<Income> getIncome();
 
     List<Income> findEntriesFromDate(CustomUser user, Date date);
+
+    List<Income> findEntriesBetweenDates(CustomUser user, Date dateFrom, Date dateTo);
 
 }
