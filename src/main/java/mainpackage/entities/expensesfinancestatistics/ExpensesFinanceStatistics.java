@@ -16,14 +16,6 @@ public class ExpensesFinanceStatistics {
     @JoinColumn(name = "user_id")
     private CustomUser user;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerQuarter_id")
-    private TotalExpensesPerQuarter totalExpensesPerQuarter;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "expensesPerMonth_id")
-    private TotalExpensesPerMonth totalExpensesPerMonth;
-
     //@Column(name = "msg_date")
     @Temporal(value = TemporalType.TIMESTAMP)
     private Date date;
@@ -61,22 +53,6 @@ public class ExpensesFinanceStatistics {
 
     public void setUser(CustomUser user) {
         this.user = user;
-    }
-
-    public TotalExpensesPerQuarter getTotalExpensesPerQuarter() {
-        return totalExpensesPerQuarter;
-    }
-
-    public void setTotalExpensesPerQuarter(TotalExpensesPerQuarter totalExpensesPerQuarter) {
-        this.totalExpensesPerQuarter = totalExpensesPerQuarter;
-    }
-
-    public TotalExpensesPerMonth getTotalExpensesPerMonth() {
-        return totalExpensesPerMonth;
-    }
-
-    public void setTotalExpensesPerMonth(TotalExpensesPerMonth totalExpensesPerMonth) {
-        this.totalExpensesPerMonth = totalExpensesPerMonth;
     }
 
     public Date getDate() {

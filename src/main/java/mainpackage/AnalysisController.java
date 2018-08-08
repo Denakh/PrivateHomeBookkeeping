@@ -1,6 +1,8 @@
 package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
+import mainpackage.entities.balancestatistics.FinancialCondition;
+import mainpackage.entities.balancestatistics.MainFinanceStatistic;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
@@ -97,9 +99,10 @@ public class AnalysisController {
                 if (d.getRemainingSum() > 0) debtsTotAmount += d.getRemainingSum();
             }
         }
-        this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
+        double totalCurExp = this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
                 dfactAmount, date, model);
-        if (effectiveDebtsList.isEmpty()) this.accruedInterest(effectiveDebtsList, dbUser, date);
+        OverallBalance obnew = this.factualBalanceAdd(dbUser, date, dfactAmount, effectiveDebtsList);
+        if (!effectiveDebtsList.isEmpty()) this.accruedInterest(effectiveDebtsList, dbUser, date);
         return "/current_exp_calculation_result";
     }
 
@@ -136,8 +139,8 @@ public class AnalysisController {
         return 0;
     }
 
-    private void currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
-                                     double debtsTotAmount, double dfactAmount, Date date, Model model) {
+    private double currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
+                                       double debtsTotAmount, double dfactAmount, Date date, Model model) {
         double charityAm = 0;
         double healthAm = 0;
         double kidsAndPetsAm = 0;
@@ -165,6 +168,7 @@ public class AnalysisController {
                 "current expenses excess compensation", otherCapitalOutlaysAm - dif));
         model.addAttribute("calculation_result", totalCurExp);
         model.addAttribute("difference", dif);
+        return totalCurExp;
     }
 
     private void accruedInterest(List<Debt> efDebtsList, CustomUser dbUser, Date date) {
@@ -189,11 +193,12 @@ public class AnalysisController {
         return userService.getUserByLogin(login);
     }
 
-    private void factualBalanceAdd(CustomUser dbUser, Date date, double dfactAmount, List<Debt> effectiveDebtsList) {
+    private OverallBalance factualBalanceAdd(CustomUser dbUser, Date date, double dfactAmount, List<Debt> effectiveDebtsList) {
         double depositsAm = 0;
         double obFactPrevLiq = 0;
         double obFactPrevWD = 0;
         boolean prevEnt = false;
+        OverallBalance obFactNew = null;
         if (!effectiveDebtsList.isEmpty()) {
             for (Debt d : effectiveDebtsList) {
                 if (d.getAmount() < 0) depositsAm += -d.getAmount();
@@ -205,12 +210,14 @@ public class AnalysisController {
             obFactPrevWD = obFactPrev.getBalanceWithDep();
             prevEnt = true;
         }
-        if (prevEnt) overallBalanceService.addOverallBalance(new OverallBalance(dbUser, date, dfactAmount,
+        if (prevEnt) obFactNew = new OverallBalance(dbUser, date, dfactAmount,
                 dfactAmount + depositsAm, dfactAmount - obFactPrevLiq,
-                dfactAmount + depositsAm - obFactPrevWD, BalanceType.FACTUAL));
-        else overallBalanceService.addOverallBalance(new OverallBalance(dbUser, date, dfactAmount,
+                dfactAmount + depositsAm - obFactPrevWD, BalanceType.FACTUAL);
+        else obFactNew = new OverallBalance(dbUser, date, dfactAmount,
                 dfactAmount + depositsAm, 0,
-                0, BalanceType.FACTUAL));
+                0, BalanceType.FACTUAL);
+        overallBalanceService.addOverallBalance(obFactNew);
+        return obFactNew;
     }
 
 
@@ -246,10 +253,56 @@ public class AnalysisController {
         return new OverallBalance(dbUser, date, calcBalanceLiq, calcBalanceWithDep, BalanceType.CALCULATED);
     }
 
-    private double getExpansesToIncomeRatio(CustomUser dbUser, Date dateFrom, Date dateTo) {
+    private MainFinanceStatistic getExpansesToIncomeRatio(CustomUser dbUser, Date dateFrom, Date dateTo,
+                                                          MainFinanceStatistic mfs, OverallBalance obCur) {
         double expIncRatio = 0;
         double totalIncome = 0;
         double totalExpenses = 0;
+        List<Income> incomesByDate = incomeService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
+        for (Income i : incomesByDate) totalIncome += i.getAmount();
+        if (obCur != null) {
+            totalExpenses = -obCur.getDifferenceWithDep() + totalIncome;
+            expIncRatio = totalExpenses / totalIncome;
+        }
+        mfs.setTotalIncome(totalIncome);
+        mfs.setTotalExpenses(totalExpenses);
+        mfs.setExpToIncRatio(expIncRatio);
+        return mfs;
+    }
+
+    private MainFinanceStatistic getCurExpansesCoverByIncome(MainFinanceStatistic mfs, double totalCurExp) {
+        double totalIncome = mfs.getTotalIncome();
+        double expCover = totalCurExp / totalIncome;
+        FinancialCondition fc;
+        if (expCover < 0.50) fc = FinancialCondition.EXCELLENT;
+        else if (expCover >= 0.50 && expCover < 0.75) fc = FinancialCondition.GOOD;
+        else if (expCover >= 0.75 && expCover < 1.00) fc = FinancialCondition.SATISFACTORY;
+        else if (expCover >= 1.00 && expCover < 2.00) fc = FinancialCondition.UNSATISFACTORY;
+        else fc = FinancialCondition.DANGEROUS;
+        mfs.setCurrentExpenses(totalCurExp);
+        mfs.setCurExpensesCoverByIncome(expCover);
+        mfs.setFcByCurExpCover(fc);
+        return mfs;
+    }
+
+    private MainFinanceStatistic getPassDebtsToOBRatio(double debtsTotAmount, MainFinanceStatistic mfs,
+                                                       OverallBalance obCur) {
+        double passDebtsToOBRatio = debtsTotAmount / obCur.getBalanceWithDep();
+        FinancialCondition fc;
+        if (passDebtsToOBRatio == 0.00) fc = FinancialCondition.EXCELLENT;
+        else if (passDebtsToOBRatio > 0.00 && passDebtsToOBRatio < 0.25) fc = FinancialCondition.GOOD;
+        else if (passDebtsToOBRatio >= 0.25 && passDebtsToOBRatio < 0.50) fc = FinancialCondition.SATISFACTORY;
+        else if (passDebtsToOBRatio >= 0.50 && passDebtsToOBRatio < 0.75) fc = FinancialCondition.UNSATISFACTORY;
+        else fc = FinancialCondition.DANGEROUS;
+        mfs.setPassiveDebts(debtsTotAmount);
+        mfs.setOverallBalanceWD(obCur.getBalanceWithDep());
+        mfs.setFcByDebtsToOBRatio(fc);
+        return mfs;
+    }
+
+
+}
+/*
         OverallBalance obCur = null;
         List<OverallBalance> obCurList = overallBalanceService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
         List<Income> incomesByDate = incomeService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
@@ -261,12 +314,4 @@ public class AnalysisController {
                 break;
             }
         }
-        if (obCur != null) {
-            totalExpenses = -obCur.getDifferenceWithDep() + totalIncome;
-            expIncRatio = totalExpenses / totalIncome;
-        }
-        return expIncRatio;
-    }
-
-
-}
+        */

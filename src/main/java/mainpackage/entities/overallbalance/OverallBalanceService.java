@@ -17,4 +17,6 @@ public interface OverallBalanceService {
 
     OverallBalance findLastEntry(CustomUser user, BalanceType btype);
 
+    List<OverallBalance> findEntriesFromDate(CustomUser user, Date date);
+
 }

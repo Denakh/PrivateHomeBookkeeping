@@ -1,7 +1,7 @@
 package mainpackage.entities.balancestatistics;
 
-public enum FinancialConditionBal {
-    EXCELLENT, GOOD, SATISFACTORY, POOR, DANGEROUS;
+public enum FinancialCondition {
+    EXCELLENT, GOOD, SATISFACTORY, UNSATISFACTORY, DANGEROUS;
 
     //@Override
     //public String toString() {

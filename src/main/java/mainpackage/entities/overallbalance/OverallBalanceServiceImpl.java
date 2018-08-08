@@ -41,4 +41,9 @@ public class OverallBalanceServiceImpl implements OverallBalanceService {
         return overallBalanceRepository.findLastEntry(user, btype);
     }
 
+    @Override
+    public List<OverallBalance> findEntriesFromDate(CustomUser user, Date date) {
+        return overallBalanceRepository.findEntriesFromDate(user, date);
+    }
+
 }

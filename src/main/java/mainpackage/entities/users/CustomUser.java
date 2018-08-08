@@ -1,7 +1,7 @@
 package mainpackage.entities.users;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
-import mainpackage.entities.balancestatistics.BallanceStatistics;
+import mainpackage.entities.balancestatistics.MainFinanceStatistic;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.communalpaystatistics.CommunalPayStatistics;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
@@ -44,7 +44,7 @@ public class CustomUser {
     private List<AllocationOfProfits> allocationOfProfits = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<BallanceStatistics> ballanceStatistics = new ArrayList<>();
+    private List<MainFinanceStatistic> ballanceStatistics = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Charity> charity = new ArrayList<>();
@@ -174,11 +174,11 @@ public class CustomUser {
         this.allocationOfProfits = allocationOfProfits;
     }
 
-    public List<BallanceStatistics> getBallanceStatistics() {
+    public List<MainFinanceStatistic> getBallanceStatistics() {
         return ballanceStatistics;
     }
 
-    public void setBallanceStatistics(List<BallanceStatistics> ballanceStatistics) {
+    public void setBallanceStatistics(List<MainFinanceStatistic> ballanceStatistics) {
         this.ballanceStatistics = ballanceStatistics;
     }
 
