@@ -1,4 +1,4 @@
-package mainpackage.entities.balancestatistics;
+package mainpackage.entities.mainfinancestatistic;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,19 +11,19 @@ public class MainFinanceStatisticServiceImpl implements MainFinanceStatisticServ
 
     @Override
     @Transactional
-    public void addCharity(MainFinanceStatistic mainFinanceStatistic) {
+    public void addMainFinanceStatistic(MainFinanceStatistic mainFinanceStatistic) {
         mainFinanceStatisticRepository.save(mainFinanceStatistic);
     }
 
     @Override
     @Transactional
-    public void updateCharity(MainFinanceStatistic mainFinanceStatistic) {
+    public void updateMainFinanceStatistic(MainFinanceStatistic mainFinanceStatistic) {
         mainFinanceStatisticRepository.save(mainFinanceStatistic);
     }
 
     @Override
     @Transactional
-    public void deleteCharity(Long id) {
+    public void deleteMainFinanceStatistic(Long id) {
         mainFinanceStatisticRepository.delete(id);
     }
 

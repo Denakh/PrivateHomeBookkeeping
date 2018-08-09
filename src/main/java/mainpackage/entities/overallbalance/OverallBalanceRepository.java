@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OverallBalanceRepository extends JpaRepository<OverallBalance, Long> {
 
-    @Query("SELECT o FROM OverallBalance o WHERE o.date > :datefrom AND o.date <= :dateto AND o.user = :user ORDER BY o.id ASC")
+    @Query("SELECT o FROM OverallBalance o WHERE o.date >= :datefrom AND o.date < :dateto AND o.user = :user ORDER BY o.id ASC")
     List<OverallBalance> findEntriesBetweenDates(@Param("user") CustomUser user, @Param("datefrom") Date dateFrom,
                                                  @Param("dateto") Date dateTo);
 

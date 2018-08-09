@@ -1,8 +1,8 @@
 package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
-import mainpackage.entities.balancestatistics.FinancialCondition;
-import mainpackage.entities.balancestatistics.MainFinanceStatistic;
+import mainpackage.entities.mainfinancestatistic.FinancialCondition;
+import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
@@ -15,6 +15,7 @@ import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.kidsandpets.KidsAndPetsService;
+import mainpackage.entities.mainfinancestatistic.MainFinanceStatisticService;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
 import mainpackage.entities.overallbalance.BalanceType;
@@ -32,6 +33,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -65,6 +69,8 @@ public class AnalysisController {
     private CurrentExpensesService currentExpensesService;
     @Autowired
     private OverallBalanceService overallBalanceService;
+    @Autowired
+    private MainFinanceStatisticService mainFinanceStatisticService;
 
     @RequestMapping("/current_exp_calculation")
     public String dataGetting() {
@@ -99,10 +105,11 @@ public class AnalysisController {
                 if (d.getRemainingSum() > 0) debtsTotAmount += d.getRemainingSum();
             }
         }
-        double totalCurExp = this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
+        CurrentExpenses ce = this.currentExpensesCalc(dbUser, curMonthNumber, prevMonthNumber, curDayNumber, debtsTotAmount,
                 dfactAmount, date, model);
         OverallBalance obnew = this.factualBalanceAdd(dbUser, date, dfactAmount, effectiveDebtsList);
         if (!effectiveDebtsList.isEmpty()) this.accruedInterest(effectiveDebtsList, dbUser, date);
+        this.createMainFinStatEntity(dbUser, prevMonthNumber, curMonthNumber, debtsTotAmount, gcalendar, obnew, ce);
         return "/current_exp_calculation_result";
     }
 
@@ -139,7 +146,7 @@ public class AnalysisController {
         return 0;
     }
 
-    private double currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
+    private CurrentExpenses currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
                                        double debtsTotAmount, double dfactAmount, Date date, Model model) {
         double charityAm = 0;
         double healthAm = 0;
@@ -147,6 +154,7 @@ public class AnalysisController {
         double otherCapitalOutlaysAm = 0;
         double recreationAm = 0;
         double reserveAm = 0;
+        CurrentExpenses ce;
         OtherCapitalOutlays otherCapitalOutlays = otherCapitalOutlaysService.findLastEntry(dbUser);
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
@@ -162,13 +170,13 @@ public class AnalysisController {
         double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
                 debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
-        currentExpensesService.addCurrentExpenses(new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev,
-                dif, prevMonthNumber, date));
+        ce = new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev, dif, prevMonthNumber, date);
+        currentExpensesService.addCurrentExpenses(ce);
         otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, -dif, date,
                 "current expenses excess compensation", otherCapitalOutlaysAm - dif));
         model.addAttribute("calculation_result", totalCurExp);
         model.addAttribute("difference", dif);
-        return totalCurExp;
+        return ce;
     }
 
     private void accruedInterest(List<Debt> efDebtsList, CustomUser dbUser, Date date) {
@@ -220,7 +228,6 @@ public class AnalysisController {
         return obFactNew;
     }
 
-
     private OverallBalance getCalculatedBalance(CustomUser dbUser, byte curMonthNumber, byte curDayNumber,
                                                 double debtsTotAmount, Date date, List<Debt> effectiveDebtsList) {
         double calcBalanceLiq = 0;
@@ -253,6 +260,34 @@ public class AnalysisController {
         return new OverallBalance(dbUser, date, calcBalanceLiq, calcBalanceWithDep, BalanceType.CALCULATED);
     }
 
+    private void createMainFinStatEntity(CustomUser dbUser, byte prevMonthNumber, byte curMonthNumber, double debtsTotAmount,
+                                         GregorianCalendar gcalendar, OverallBalance obCur, CurrentExpenses ce) {
+        int curYear = gcalendar.get(Calendar.YEAR);
+        int prevDateYear = curYear;
+        if (curMonthNumber == 1) prevDateYear -= 1;
+        String dateFromStr = "01." + prevMonthNumber + "." + prevDateYear + " 00:00:01";
+        String dateToStr = "01." + curMonthNumber + "." + curYear + " 00:00:01";
+
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        Date dateFrom = null;
+        Date dateTo = null;
+        try {
+            dateFrom = df.parse(dateFromStr);
+            dateTo = df.parse(dateToStr);
+        } catch (ParseException e) {
+            e.getStackTrace();
+        }
+        MainFinanceStatistic mfs = new MainFinanceStatistic();
+        mfs = this.getExpansesToIncomeRatio(dbUser, dateFrom, dateTo, mfs, obCur);
+        mfs = this.getCurExpansesCoverByIncome(mfs, ce.getEstimatedAmount());
+        mfs = this.getPassDebtsToOBRatio(debtsTotAmount, mfs, obCur);
+        mfs.setCurExpFactStandDif(ce.getDifference());
+        mfs.setMonth(prevMonthNumber);
+        mfs.setUser(dbUser);
+        mainFinanceStatisticService.addMainFinanceStatistic(mfs);
+        //model.addAttribute("mfs", mfs);
+    }
+
     private MainFinanceStatistic getExpansesToIncomeRatio(CustomUser dbUser, Date dateFrom, Date dateTo,
                                                           MainFinanceStatistic mfs, OverallBalance obCur) {
         double expIncRatio = 0;
@@ -260,6 +295,7 @@ public class AnalysisController {
         double totalExpenses = 0;
         List<Income> incomesByDate = incomeService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
         for (Income i : incomesByDate) totalIncome += i.getAmount();
+        if (totalIncome == 0) totalIncome = 0.001;
         if (obCur != null) {
             totalExpenses = -obCur.getDifferenceWithDep() + totalIncome;
             expIncRatio = totalExpenses / totalIncome;
@@ -300,7 +336,6 @@ public class AnalysisController {
         return mfs;
     }
 
-
 }
 /*
         OverallBalance obCur = null;
@@ -314,4 +349,22 @@ public class AnalysisController {
                 break;
             }
         }
+
+        <br/>
+<br/> id ${mfs.id}
+<br/> user ${mfs.user}
+<br/> month ${mfs.month}
+<br/> totalIncome ${mfs.totalIncome}
+<br/> totalExpenses ${mfs.totalExpenses}
+<br/> expToIncRatio ${mfs.expToIncRatio}
+<br/> currentExpenses ${mfs.currentExpenses}
+<br/> curExpensesCoverByIncome ${mfs.curExpensesCoverByIncome}
+<br/> passiveDebts ${mfs.passiveDebts}
+<br/> overallBalanceWD ${mfs.overallBalanceWD}
+<br/> passDebtsToOBRatio ${mfs.passDebtsToOBRatio}
+<br/> curExpFactStandDif ${mfs.curExpFactStandDif}
+<br/> fcByCurExpCover ${mfs.fcByCurExpCover}
+<br/> fcByDebtsToOBRatio ${mfs.fcByDebtsToOBRatio}
+
+
         */

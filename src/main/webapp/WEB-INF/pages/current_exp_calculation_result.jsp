@@ -12,7 +12,9 @@
     <h2> Difference between calculated total current expenses
         and standard rate for previous month: ${difference} hrn </h2>
 
+
     <h2><p><a href="/">Main menu</a></p></h2>
 </div>
 </body>
 </html>
+

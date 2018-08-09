@@ -1,4 +1,4 @@
-package mainpackage.entities.balancestatistics;
+package mainpackage.entities.mainfinancestatistic;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

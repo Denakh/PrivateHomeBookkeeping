@@ -1,4 +1,4 @@
-package mainpackage.entities.balancestatistics;
+package mainpackage.entities.mainfinancestatistic;
 
 import mainpackage.entities.users.CustomUser;
 
@@ -24,6 +24,7 @@ public class MainFinanceStatistic {
     private double passiveDebts;
     private double overallBalanceWD;
     private double passDebtsToOBRatio;
+    private double curExpFactStandDif;
 
     @Enumerated(EnumType.STRING)
     private FinancialCondition fcByCurExpCover;
@@ -119,6 +120,14 @@ public class MainFinanceStatistic {
 
     public void setPassDebtsToOBRatio(double passDebtsToOBRatio) {
         this.passDebtsToOBRatio = passDebtsToOBRatio;
+    }
+
+    public double getCurExpFactStandDif() {
+        return curExpFactStandDif;
+    }
+
+    public void setCurExpFactStandDif(double curExpFactStandDif) {
+        this.curExpFactStandDif = curExpFactStandDif;
     }
 
     public FinancialCondition getFcByCurExpCover() {
