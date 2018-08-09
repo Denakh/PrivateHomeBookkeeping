@@ -1,7 +1,6 @@
 package mainpackage.entities.users;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
-import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.communalpaystatistics.CommunalPayStatistics;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
@@ -16,6 +15,7 @@ import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.incomefinancestatistics.IncomeFinanceStatistics;
 import mainpackage.entities.kidsandpets.KidsAndPets;
+import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.overallbalance.OverallBalance;
 import mainpackage.entities.recreation.Recreation;

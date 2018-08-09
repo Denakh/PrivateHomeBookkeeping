@@ -1,8 +1,6 @@
 package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
-import mainpackage.entities.mainfinancestatistic.FinancialCondition;
-import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
@@ -11,10 +9,13 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.health.HealthService;
+import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.income.Income;
 import mainpackage.entities.income.IncomeService;
 import mainpackage.entities.kidsandpets.KidsAndPetsService;
+import mainpackage.entities.mainfinancestatistic.FinancialCondition;
+import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.mainfinancestatistic.MainFinanceStatisticService;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlays;
 import mainpackage.entities.othercapitaloutlays.OtherCapitalOutlaysService;
@@ -147,15 +148,21 @@ public class AnalysisController {
     }
 
     private CurrentExpenses currentExpensesCalc(CustomUser dbUser, byte curMonthNumber, byte prevMonthNumber, byte curDayNumber,
-                                       double debtsTotAmount, double dfactAmount, Date date, Model model) {
+                                                double debtsTotAmount, double dfactAmount, Date date, Model model) {
         double charityAm = 0;
         double healthAm = 0;
         double kidsAndPetsAm = 0;
         double otherCapitalOutlaysAm = 0;
         double recreationAm = 0;
         double reserveAm = 0;
-        CurrentExpenses ce;
+        double noCurExpCoverAm = 0;
         OtherCapitalOutlays otherCapitalOutlays = otherCapitalOutlaysService.findLastEntry(dbUser);
+        GeneralIncome gi = generalIncomeService.findLastEntry(dbUser);
+        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
+        double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
+        boolean dateCheck = gi.getDate().getTime() < date.getTime();
+        if (gi.getMonthNumber() <= curMonthNumber || (gi.getMonthNumber() > curMonthNumber && dateCheck))
+            noCurExpCoverAm = gi.getAccumulation() - currentExpRate;
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
         if (kidsAndPetsService.findLastEntry(dbUser) != null)
@@ -165,12 +172,10 @@ public class AnalysisController {
         if (recreationService.findLastEntry(dbUser) != null)
             recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
-        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
-        double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
         double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) - dfactAmount;
+                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) + noCurExpCoverAm - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
-        ce = new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev, dif, prevMonthNumber, date);
+        CurrentExpenses ce = new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev, dif, prevMonthNumber, date);
         currentExpensesService.addCurrentExpenses(ce);
         otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, -dif, date,
                 "current expenses excess compensation", otherCapitalOutlaysAm - dif));
