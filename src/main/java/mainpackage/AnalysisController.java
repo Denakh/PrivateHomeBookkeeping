@@ -160,17 +160,16 @@ public class AnalysisController {
         GeneralIncome gi = generalIncomeService.findLastEntry(dbUser);
         double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
         double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
-        boolean dateCheck = gi.getDate().getTime() < date.getTime();
-        if (gi.getMonthNumber() <= curMonthNumber || (gi.getMonthNumber() > curMonthNumber && dateCheck))
-            noCurExpCoverAm = gi.getAccumulation() - currentExpRate;
+        if (gi != null) {
+            boolean dateCheck = gi.getDate().getTime() < date.getTime();
+            if (gi.getMonthNumber() <= curMonthNumber || (gi.getMonthNumber() > curMonthNumber && dateCheck))
+                noCurExpCoverAm = gi.getAccumulation() - currentExpRate;
+        }
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
-        if (kidsAndPetsService.findLastEntry(dbUser) != null)
-            kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
-        if (otherCapitalOutlays != null)
-            otherCapitalOutlaysAm = otherCapitalOutlays.getAmount();
-        if (recreationService.findLastEntry(dbUser) != null)
-            recreationAm = recreationService.findLastEntry(dbUser).getAmount();
+        if (kidsAndPetsService.findLastEntry(dbUser) != null) kidsAndPetsAm = kidsAndPetsService.findLastEntry(dbUser).getAmount();
+        if (otherCapitalOutlays != null) otherCapitalOutlaysAm = otherCapitalOutlays.getAmount();
+        if (recreationService.findLastEntry(dbUser) != null) recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
         double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
                 debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) + noCurExpCoverAm - dfactAmount;
