@@ -66,14 +66,14 @@ public class ShowEntitiesController {
 
     @RequestMapping("/data_getting_execute")
     public String dataGettingExe(@RequestParam(defaultValue = "0") String purpose,
-                                 @RequestParam(defaultValue = "0") String periodicity,
+                                 @RequestParam(defaultValue = "0") String per,
                                  Model model) {
-        if (purpose.equals("0") || periodicity.equals("0")) return this.errorEmptyStr(model);
+        if (purpose.equals("0") || per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         Date dateFrom;
         long curTime = date.getTime();
-        long period = getPeriod(periodicity);
+        long period = getPeriod(per);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
         this.entitiesShow(purpose, dbUser, dateFrom, model);
@@ -81,14 +81,14 @@ public class ShowEntitiesController {
     }
 
     @RequestMapping("/ce_data_getting_execute")
-    public String curExpDataGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+    public String curExpDataGettingExe(@RequestParam(defaultValue = "0") String per,
                                        Model model) {
-        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        if (per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         Date dateFrom;
         long curTime = date.getTime();
-        long period = getPeriod(periodicity);
+        long period = getPeriod(per);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
         this.curExpShow(dbUser, dateFrom, model);
@@ -96,14 +96,14 @@ public class ShowEntitiesController {
     }
 
     @RequestMapping("/debt_show")
-    public String debtGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+    public String debtGettingExe(@RequestParam(defaultValue = "0") String per,
                                  Model model) {
-        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        if (per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         Date dateFrom;
         long curTime = date.getTime();
-        long period = getPeriod(periodicity);
+        long period = getPeriod(per);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
         this.debtsShow(dbUser, dateFrom, model);
@@ -111,14 +111,14 @@ public class ShowEntitiesController {
     }
 
     @RequestMapping("/income_show")
-    public String incomeGettingExe(@RequestParam(defaultValue = "0") String periodicity,
+    public String incomeGettingExe(@RequestParam(defaultValue = "0") String per,
                                    Model model) {
-        if (periodicity.equals("0")) return this.errorEmptyStr(model);
+        if (per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         Date dateFrom;
         long curTime = date.getTime();
-        long period = getPeriod(periodicity);
+        long period = getPeriod(per);
         if (period == -1) dateFrom = new Date(0);
         else dateFrom = new Date(curTime - period);
         this.incomsShow(dbUser, dateFrom, model);
@@ -188,11 +188,12 @@ public class ShowEntitiesController {
 
     private void incomsShow(CustomUser dbUser, Date date, Model model) {
         model.addAttribute("incomeEntityList", incomeService.findEntriesFromDate(dbUser, date));
+        model.addAttribute("gIncomeEntityList", generalIncomeService.findEntriesFromDate(dbUser, date));
     }
 
-    private long getPeriod(String periodicity) {
+    private long getPeriod(String per) {
         long period = -1;
-        switch (periodicity) {
+        switch (per) {
             case "1_month":
                 period = 2592000000L;
                 break;

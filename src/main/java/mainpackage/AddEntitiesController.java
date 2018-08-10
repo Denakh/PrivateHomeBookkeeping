@@ -312,10 +312,11 @@ public class AddEntitiesController {
         CurrentExpensesRate currentExpensesRate = currentExpensesRateService.findLastEntry(dbUser);
         GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
         gcalendar.setTime(date);
+        if (generalIncomePrev == null) generalIncomePrev = this.getServGenIncObj(damount, gcalendar);
         byte monthNumber = generalIncomePrev.getMonthNumber();
-        double dcurrentExpensesRate = CurrentExpensesRate.getExpRateForMonthNum(monthNumber, currentExpensesRate);
         double accumulation = generalIncomePrev.getAccumulation() + damount;
         double excessForAllocationPrev = generalIncomePrev.getExcessForAllocation();
+        double dcurrentExpensesRate = CurrentExpensesRate.getExpRateForMonthNum(monthNumber, currentExpensesRate);
         double excessForAllocationRest = 0;
         boolean monthCheck1 = gcalendar.get(Calendar.MONTH) + 1 < monthNumber;
         boolean monthCheck2 = gcalendar.get(Calendar.MONTH) + 1 >= 11 && monthNumber <= 2;
@@ -343,6 +344,14 @@ public class AddEntitiesController {
         if (excessForAllocationRest > 0) {
             this.allocationOfProfitsExe(dbUser, excessForAllocationRest, date, description);
         }
+    }
+
+    private GeneralIncome getServGenIncObj(double damount, GregorianCalendar gcalendar) {
+        GeneralIncome generalIncomePrev = new GeneralIncome();
+        generalIncomePrev.setMonthNumber((byte) (gcalendar.get(Calendar.MONTH) + 1));
+        generalIncomePrev.setAccumulation(damount);
+        generalIncomePrev.setExcessForAllocation(0.01);
+        return generalIncomePrev;
     }
 
     private void allocationOfProfitsExe(CustomUser dbUser, double excessForAllocationRest, Date date, String description) {
