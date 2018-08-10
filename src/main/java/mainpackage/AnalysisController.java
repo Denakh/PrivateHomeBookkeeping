@@ -155,16 +155,11 @@ public class AnalysisController {
         double otherCapitalOutlaysAm = 0;
         double recreationAm = 0;
         double reserveAm = 0;
-        double noCurExpCoverAm = 0;
         OtherCapitalOutlays otherCapitalOutlays = otherCapitalOutlaysService.findLastEntry(dbUser);
-        GeneralIncome gi = generalIncomeService.findLastEntry(dbUser);
         double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
         double currentExpRatePrev = getCurrentExpRate(dbUser, prevMonthNumber);
-        if (gi != null) {
-            boolean dateCheck = gi.getDate().getTime() < date.getTime();
-            if (gi.getMonthNumber() <= curMonthNumber || (gi.getMonthNumber() > curMonthNumber && dateCheck))
-                noCurExpCoverAm = gi.getAccumulation() - currentExpRate;
-        }
+        double noCurExpCoverAm = this.getNoCurExpCoverAm(dbUser, curMonthNumber, currentExpRate);
+        double genIncomeAmountForCurExp = this.getGenIncomeAmountForCurExp(dbUser, curMonthNumber);
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
         if (kidsAndPetsService.findLastEntry(dbUser) != null)
@@ -173,8 +168,8 @@ public class AnalysisController {
         if (recreationService.findLastEntry(dbUser) != null)
             recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
-        double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) + noCurExpCoverAm - dfactAmount;
+        double dif = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm + debtsTotAmount +
+                currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) + noCurExpCoverAm + genIncomeAmountForCurExp - dfactAmount;
         double totalCurExp = currentExpRatePrev + dif;
         CurrentExpenses ce = new CurrentExpenses(dbUser, totalCurExp, currentExpRatePrev, dif, prevMonthNumber, date);
         currentExpensesService.addCurrentExpenses(ce);
@@ -183,6 +178,26 @@ public class AnalysisController {
         model.addAttribute("calculation_result", totalCurExp);
         model.addAttribute("difference", dif);
         return ce;
+    }
+
+    private double getGenIncomeAmountForCurExp(CustomUser dbUser, byte curMonthNumber) {
+        double genIncomeAmountForCurExp = 0;
+        GeneralIncome gi = generalIncomeService.findLastEntry(dbUser);
+        if (gi != null) {
+            if (gi.getMonthNumber() > curMonthNumber || (curMonthNumber >= 11 && gi.getMonthNumber() <= 2))
+                genIncomeAmountForCurExp = gi.getAccumulation() - gi.getExcessForAllocation();
+        }
+        return genIncomeAmountForCurExp;
+    }
+
+    private double getNoCurExpCoverAm(CustomUser dbUser, byte curMonthNumber, double currentExpRate) {
+        double noCurExpCoverAm = 0;
+        GeneralIncome gi = generalIncomeService.findLastEntry(dbUser);
+        if (gi != null) {
+            if (gi.getMonthNumber() <= curMonthNumber || (gi.getMonthNumber() >= 11 && curMonthNumber <= 2))
+                noCurExpCoverAm = gi.getAccumulation() - currentExpRate;
+        }
+        return noCurExpCoverAm;
     }
 
     private void accruedInterest(List<Debt> efDebtsList, CustomUser dbUser, Date date) {
@@ -245,6 +260,9 @@ public class AnalysisController {
         double recreationAm = 0;
         double reserveAm = 0;
         double depositsAm = 0;
+        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
+        double noCurExpCoverAm = this.getNoCurExpCoverAm(dbUser, curMonthNumber, currentExpRate);
+        double genIncomeAmountForCurExp = this.getGenIncomeAmountForCurExp(dbUser, curMonthNumber);
         if (charityService.findLastEntry(dbUser) != null) charityAm = charityService.findLastEntry(dbUser).getAmount();
         if (healthService.findLastEntry(dbUser) != null) healthAm = healthService.findLastEntry(dbUser).getAmount();
         if (kidsAndPetsService.findLastEntry(dbUser) != null)
@@ -254,14 +272,13 @@ public class AnalysisController {
         if (recreationService.findLastEntry(dbUser) != null)
             recreationAm = recreationService.findLastEntry(dbUser).getAmount();
         if (reserveService.findLastEntry(dbUser) != null) reserveAm = reserveService.findLastEntry(dbUser).getAmount();
-        double currentExpRate = getCurrentExpRate(dbUser, curMonthNumber);
         if (!effectiveDebtsList.isEmpty()) {
             for (Debt d : effectiveDebtsList) {
                 if (d.getAmount() < 0) depositsAm += -d.getAmount();
             }
         }
         calcBalanceLiq = charityAm + healthAm + kidsAndPetsAm + otherCapitalOutlaysAm + recreationAm + reserveAm +
-                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417));
+                debtsTotAmount + currentExpRate * (1 - (1.0 * curDayNumber / 30.417)) + noCurExpCoverAm + genIncomeAmountForCurExp;
         calcBalanceWithDep = calcBalanceLiq + depositsAm;
         return new OverallBalance(dbUser, date, calcBalanceLiq, calcBalanceWithDep, BalanceType.CALCULATED);
     }
@@ -372,5 +389,7 @@ public class AnalysisController {
 <br/> fcByCurExpCover ${mfs.fcByCurExpCover}
 <br/> fcByDebtsToOBRatio ${mfs.fcByDebtsToOBRatio}
 
-
+String str = " " + charityAm + " " + healthAm + " " + kidsAndPetsAm + " " + otherCapitalOutlaysAm + " " + recreationAm + " " + reserveAm + " " +
+                debtsTotAmount + " " + (currentExpRate * (1 - (1.0 * curDayNumber / 30.417))) + " " + noCurExpCoverAm + " " + genIncomeAmountForCurExp + " " + (-dfactAmount);
+        model.addAttribute("str", str);
         */

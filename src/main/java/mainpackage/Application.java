@@ -24,7 +24,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    //@Bean
+    @Bean
     public CommandLineRunner demo(final UserService userService, final GeneralIncomeService generalIncomeService,
                                   final AllocationOfProfitsService allocationOfProfitsService,
                                   final CurrentExpensesRateService currentExpensesRateService,
@@ -36,7 +36,6 @@ public class Application {
                 CustomUser user = new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER);
                 userService.addUser(new CustomUser("admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
                 userService.addUser(user);
-                //generalIncomeService.addGeneralIncome(new GeneralIncome(user, 100, date, (byte) 6, 3000, 0));
                 allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(user, date, 10.0, 10.0, 30.0,
                         30.0, 10.0, 10.0));
                 currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(user, date, 8000, 8000, 8000, 8000,
