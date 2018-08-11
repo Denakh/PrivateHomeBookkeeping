@@ -34,6 +34,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -78,6 +80,74 @@ public class AnalysisController {
         return "current_exp_calculation";
     }
 
+    @RequestMapping("/financial_analysis_execute")
+    public String finAnalysisExe(@RequestParam(defaultValue = "0") String per,
+                                 @RequestParam(defaultValue = "0") String periodicity,
+                                 Model model) {
+        if (periodicity.equals("0") || per.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        List<MainFinanceStatistic> mfsList;
+        List<MainFinanceStatistic> mfsListEf = new ArrayList<>();
+        mfsList = mainFinanceStatisticService.findAllEntries(dbUser);
+        int mfsEntriesQ = mfsList.size();
+        if (mfsEntriesQ < 2) mfsEntriesQ = 0;
+        if (mfsEntriesQ == 0) return this.errorEmptyStr(model);
+        int periodQ = mfsEntriesQ;
+        int periodicityQ = 1;
+        if (per.equals("year") && mfsEntriesQ > 12) periodQ = 12;
+        switch (periodicity) {
+                case "3_months":
+                    periodicityQ = 3;
+                    break;
+                case "6_months":
+                    periodicityQ = 6;
+                    break;
+                case "year":
+                    periodicityQ = 12;
+                    break;
+        }
+        int pQ = periodQ/periodicityQ;
+        for (int i = mfsEntriesQ - periodQ; i < mfsEntriesQ; i += 1) mfsListEf.add(mfsList.get(i));
+        if (periodicityQ > 1) mfsListEf = this.getMFSPerPeriodList(mfsListEf, periodicityQ, pQ);
+        double overallBalanceWDFLast = mfsList.get(mfsList.size()-1).getOverallBalanceWD();
+
+        Date date = new Date();
+        List<Debt> effectiveDebtsList = debtService.findEffectiveDebtsList(dbUser);
+        double debtsTotAmount = 0;
+        GregorianCalendar gcalendar = (GregorianCalendar) GregorianCalendar.getInstance();
+        gcalendar.setTime(date);
+        byte curMonthNumber = (byte) (gcalendar.get(Calendar.MONTH) + 1);
+        byte curDayNumber = (byte) (gcalendar.get(Calendar.DAY_OF_MONTH));
+        if (!effectiveDebtsList.isEmpty()) {
+            for (Debt d : effectiveDebtsList) {
+                if (d.getRemainingSum() > 0) debtsTotAmount += d.getRemainingSum();
+            }
+        }
+        OverallBalance obCulc = getCalculatedBalance(dbUser, curMonthNumber, curDayNumber,
+                debtsTotAmount, date, effectiveDebtsList);
+
+        double overallBalanceWDCLast = obCulc.getBalanceWithDep();
+
+        double currentExpensesSum = 0;
+        double totalIncomeSum = 0;
+        double totalExpensesSum = 0;
+        double passDebtsToOBRatio = 0;
+        int firstSt = mfsList.size() - 3;
+        if (firstSt < 0) firstSt = 0;
+        for (int i = firstSt; i < mfsList.size(); i += 1) {
+            currentExpensesSum += mfsList.get(i).getCurrentExpenses();
+            totalIncomeSum += mfsList.get(i).getTotalIncome();
+            totalExpensesSum += mfsList.get(i).getTotalExpenses();
+            if (i == mfsList.size()-1) passDebtsToOBRatio = mfsList.get(i).getPassDebtsToOBRatio();
+        }
+        double curExpensesCoverByIncome = currentExpensesSum/totalIncomeSum;
+        double expToIncRatio = currentExpensesSum/totalIncomeSum;
+
+
+        return "/...";
+    }
+
+
     @RequestMapping("/current_exp_calculation_execute")
     public String incomeFixationExecute(@RequestParam String amount,
                                         Model model) {
@@ -112,6 +182,44 @@ public class AnalysisController {
         if (!effectiveDebtsList.isEmpty()) this.accruedInterest(effectiveDebtsList, dbUser, date);
         this.createMainFinStatEntity(dbUser, prevMonthNumber, curMonthNumber, debtsTotAmount, gcalendar, obnew, ce);
         return "/current_exp_calculation_result";
+    }
+
+    private List<MainFinanceStatistic> getMFSPerPeriodList(List<MainFinanceStatistic> mfsListEf, int periodicityQ, int pQ){
+        List<MainFinanceStatistic> mfsListEfnew = new ArrayList<>();
+        int servV = mfsListEf.size() - periodicityQ*pQ;
+        for (int i = 0; i < pQ; i += 1) {
+            byte month = 0;
+            int year = 0;
+            double totalIncome = 0;
+            double totalExpenses = 0;
+            double currentExpenses = 0;
+            double passiveDebtsSum = 0;
+            double overallBalanceWDSum = 0;
+            double curExpFactStandDifSum = 0;
+            byte monthLast = 0;
+            int yearLast = 0;
+            for (int j = servV + i*periodicityQ; j < servV + (i+1)*periodicityQ; j += 1) {
+                MainFinanceStatistic mfsEf = mfsListEf.get(j);
+                if (j == servV + i*periodicityQ) month = mfsEf.getMonth();
+                if (j == servV + i*periodicityQ) year = mfsEf.getYear();
+                if (j == servV + (i+1)*periodicityQ - 1) monthLast = mfsEf.getMonth();
+                if (j == servV + (i+1)*periodicityQ - 1) yearLast = mfsEf.getYear();
+                totalIncome += mfsEf.getTotalIncome();
+                totalExpenses += mfsEf.getTotalExpenses();
+                currentExpenses += mfsEf.getCurrentExpenses();
+                passiveDebtsSum += mfsEf.getPassiveDebts();
+                overallBalanceWDSum += mfsEf.getOverallBalanceWD();
+                curExpFactStandDifSum += mfsEf.getCurExpFactStandDif();
+            }
+            MainFinanceStatistic mfsEfnew = new MainFinanceStatistic(month, year, totalIncome, totalExpenses,
+            totalExpenses/totalIncome, currentExpenses, currentExpenses/totalIncome,
+                    passiveDebtsSum/periodicityQ, overallBalanceWDSum/periodicityQ,
+                    passiveDebtsSum/overallBalanceWDSum, curExpFactStandDifSum/periodicityQ,
+            this.getFCByCurExpansesCover(currentExpenses/totalIncome),
+            this.getFCBypassDebtsToOBRatio(passiveDebtsSum/overallBalanceWDSum), monthLast, yearLast);
+            mfsListEfnew.add(mfsEfnew);
+        }
+       return mfsListEfnew;
     }
 
     private double getCurrentExpRate(CustomUser user, Byte month) {
@@ -290,7 +398,6 @@ public class AnalysisController {
         if (curMonthNumber == 1) prevDateYear -= 1;
         String dateFromStr = "01." + prevMonthNumber + "." + prevDateYear + " 00:00:01";
         String dateToStr = "01." + curMonthNumber + "." + curYear + " 00:00:01";
-
         DateFormat df = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         Date dateFrom = null;
         Date dateTo = null;
@@ -307,6 +414,9 @@ public class AnalysisController {
         mfs.setCurExpFactStandDif(ce.getDifference());
         mfs.setMonth(prevMonthNumber);
         mfs.setUser(dbUser);
+        mfs.setYear(prevDateYear);
+        mfs.setMonthLast(mfs.getMonth());
+        mfs.setYearLast(mfs.getYear());
         mainFinanceStatisticService.addMainFinanceStatistic(mfs);
         //model.addAttribute("mfs", mfs);
     }
@@ -332,31 +442,54 @@ public class AnalysisController {
     private MainFinanceStatistic getCurExpansesCoverByIncome(MainFinanceStatistic mfs, double totalCurExp) {
         double totalIncome = mfs.getTotalIncome();
         double expCover = totalCurExp / totalIncome;
-        FinancialCondition fc;
-        if (expCover < 0.50) fc = FinancialCondition.EXCELLENT;
-        else if (expCover >= 0.50 && expCover < 0.75) fc = FinancialCondition.GOOD;
-        else if (expCover >= 0.75 && expCover < 1.00) fc = FinancialCondition.SATISFACTORY;
-        else if (expCover >= 1.00 && expCover < 2.00) fc = FinancialCondition.UNSATISFACTORY;
-        else fc = FinancialCondition.DANGEROUS;
+        FinancialCondition fc = this.getFCByCurExpansesCover(expCover);
         mfs.setCurrentExpenses(totalCurExp);
         mfs.setCurExpensesCoverByIncome(expCover);
         mfs.setFcByCurExpCover(fc);
         return mfs;
     }
 
+    private FinancialCondition getFCByCurExpansesCover(double expCover) {
+        FinancialCondition fc;
+        if (expCover < 0.50) fc = FinancialCondition.EXCELLENT;
+        else if (expCover >= 0.50 && expCover < 0.75) fc = FinancialCondition.GOOD;
+        else if (expCover >= 0.75 && expCover < 1.00) fc = FinancialCondition.SATISFACTORY;
+        else if (expCover >= 1.00 && expCover < 2.00) fc = FinancialCondition.UNSATISFACTORY;
+        else fc = FinancialCondition.DANGEROUS;
+        return fc;
+    }
+
     private MainFinanceStatistic getPassDebtsToOBRatio(double debtsTotAmount, MainFinanceStatistic mfs,
                                                        OverallBalance obCur) {
         double passDebtsToOBRatio = debtsTotAmount / obCur.getBalanceWithDep();
+        FinancialCondition fc = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
+        mfs.setPassiveDebts(debtsTotAmount);
+        mfs.setOverallBalanceWD(obCur.getBalanceWithDep());
+        mfs.setFcByDebtsToOBRatio(fc);
+        return mfs;
+    }
+
+    private FinancialCondition getFCBypassDebtsToOBRatio(double passDebtsToOBRatio) {
         FinancialCondition fc;
         if (passDebtsToOBRatio == 0.00) fc = FinancialCondition.EXCELLENT;
         else if (passDebtsToOBRatio > 0.00 && passDebtsToOBRatio < 0.25) fc = FinancialCondition.GOOD;
         else if (passDebtsToOBRatio >= 0.25 && passDebtsToOBRatio < 0.50) fc = FinancialCondition.SATISFACTORY;
         else if (passDebtsToOBRatio >= 0.50 && passDebtsToOBRatio < 0.75) fc = FinancialCondition.UNSATISFACTORY;
         else fc = FinancialCondition.DANGEROUS;
-        mfs.setPassiveDebts(debtsTotAmount);
-        mfs.setOverallBalanceWD(obCur.getBalanceWithDep());
-        mfs.setFcByDebtsToOBRatio(fc);
-        return mfs;
+        return fc;
+    }
+
+    private String errorEmptyStr(Model model) {
+        String errorStr = "Not choose variant in list. Try again";
+        model.addAttribute("error_message", errorStr);
+        return "/input_error";
+    }
+
+    private String errorDataLacking(Model model) {
+        String errorStr = "You have to have at least 2 months of home finance data accumulation " +
+                "for correct finance analysis getting";
+        model.addAttribute("error_message", errorStr);
+        return "/input_error";
     }
 
 }

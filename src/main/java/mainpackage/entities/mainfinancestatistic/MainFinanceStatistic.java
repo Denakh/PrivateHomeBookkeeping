@@ -16,6 +16,7 @@ public class MainFinanceStatistic {
     private CustomUser user;
 
     private byte month;
+    private int year;
     private double totalIncome;
     private double totalExpenses;
     private double expToIncRatio;
@@ -31,7 +32,31 @@ public class MainFinanceStatistic {
     @Enumerated(EnumType.STRING)
     private FinancialCondition fcByDebtsToOBRatio;
 
+    private byte monthLast;
+    private int yearLast;
+
     public MainFinanceStatistic() {
+    }
+
+    public MainFinanceStatistic(byte month, int year, double totalIncome, double totalExpenses, double expToIncRatio,
+                                double currentExpenses, double curExpensesCoverByIncome, double passiveDebts,
+                                double overallBalanceWD, double passDebtsToOBRatio, double curExpFactStandDif,
+                                FinancialCondition fcByCurExpCover, FinancialCondition fcByDebtsToOBRatio, byte monthLast, int yearLast) {
+        this.month = month;
+        this.year = year;
+        this.totalIncome = totalIncome;
+        this.totalExpenses = totalExpenses;
+        this.expToIncRatio = expToIncRatio;
+        this.currentExpenses = currentExpenses;
+        this.curExpensesCoverByIncome = curExpensesCoverByIncome;
+        this.passiveDebts = passiveDebts;
+        this.overallBalanceWD = overallBalanceWD;
+        this.passDebtsToOBRatio = passDebtsToOBRatio;
+        this.curExpFactStandDif = curExpFactStandDif;
+        this.fcByCurExpCover = fcByCurExpCover;
+        this.fcByDebtsToOBRatio = fcByDebtsToOBRatio;
+        this.monthLast = monthLast;
+        this.yearLast = yearLast;
     }
 
     public long getId() {
@@ -56,6 +81,14 @@ public class MainFinanceStatistic {
 
     public void setMonth(byte month) {
         this.month = month;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public double getTotalIncome() {
@@ -146,4 +179,19 @@ public class MainFinanceStatistic {
         this.fcByDebtsToOBRatio = fcByDebtsToOBRatio;
     }
 
+    public byte getMonthLast() {
+        return monthLast;
+    }
+
+    public void setMonthLast(byte monthLast) {
+        this.monthLast = monthLast;
+    }
+
+    public int getYearLast() {
+        return yearLast;
+    }
+
+    public void setYearLast(int yearLast) {
+        this.yearLast = yearLast;
+    }
 }
