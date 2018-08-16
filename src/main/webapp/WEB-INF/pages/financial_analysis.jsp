@@ -20,7 +20,6 @@
     <br/><input type="submit"/>
 </form>
 
-
 <p><a href="/data_getting">Previously menu</a></p>
 
 <p><a href="/">Main menu</a></p>

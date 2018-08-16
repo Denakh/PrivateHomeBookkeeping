@@ -31,6 +31,8 @@ public class MainFinanceStatistic {
     private FinancialCondition fcByCurExpCover;
     @Enumerated(EnumType.STRING)
     private FinancialCondition fcByDebtsToOBRatio;
+    @Enumerated(EnumType.STRING)
+    private FinancialCondition fcResult;
 
     private byte monthLast;
     private int yearLast;
@@ -177,6 +179,14 @@ public class MainFinanceStatistic {
 
     public void setFcByDebtsToOBRatio(FinancialCondition fcByDebtsToOBRatio) {
         this.fcByDebtsToOBRatio = fcByDebtsToOBRatio;
+    }
+
+    public FinancialCondition getFcResult() {
+        return fcResult;
+    }
+
+    public void setFcResult(FinancialCondition fcResult) {
+        this.fcResult = fcResult;
     }
 
     public byte getMonthLast() {

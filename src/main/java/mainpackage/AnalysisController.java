@@ -132,19 +132,34 @@ public class AnalysisController {
         double totalIncomeSum = 0;
         double totalExpensesSum = 0;
         double passDebtsToOBRatio = 0;
+        double curExpFactStandDifSum = 0;
+        double curExpRateSum = 0;
         int firstSt = mfsList.size() - 3;
         if (firstSt < 0) firstSt = 0;
         for (int i = firstSt; i < mfsList.size(); i += 1) {
             currentExpensesSum += mfsList.get(i).getCurrentExpenses();
             totalIncomeSum += mfsList.get(i).getTotalIncome();
             totalExpensesSum += mfsList.get(i).getTotalExpenses();
+            curExpFactStandDifSum += mfsList.get(i).getCurExpFactStandDif();
+            byte monthNum = mfsList.get(i).getMonth();
+            curExpRateSum += getCurrentExpRate(dbUser, monthNum);
             if (i == mfsList.size()-1) passDebtsToOBRatio = mfsList.get(i).getPassDebtsToOBRatio();
         }
         double curExpensesCoverByIncome = currentExpensesSum/totalIncomeSum;
-        double expToIncRatio = currentExpensesSum/totalIncomeSum;
+        double expToIncRatio = totalExpensesSum/totalIncomeSum;
+        double relationalCEFactStandDif = 100*curExpFactStandDifSum/curExpRateSum;
+        double recCERchanging = curExpFactStandDifSum/3;
+        FinancialCondition fcByCurExpansesCover = this.getFCByCurExpansesCover(curExpensesCoverByIncome);
+        FinancialCondition fcByPassDebtsToOBRatio = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
+        List<FinancialCondition> fcl = new ArrayList<>();
+        fcl.add(fcByCurExpansesCover);
+        fcl.add(fcByPassDebtsToOBRatio);
+        FinancialCondition fcRes = this.getResultFinCondition(fcl);
+        String advices = this.getAdvices(curExpensesCoverByIncome, passDebtsToOBRatio, relationalCEFactStandDif,
+        recCERchanging);
 
 
-        return "/...";
+        return "/financial_analysis_results";
     }
 
 
@@ -217,6 +232,10 @@ public class AnalysisController {
                     passiveDebtsSum/overallBalanceWDSum, curExpFactStandDifSum/periodicityQ,
             this.getFCByCurExpansesCover(currentExpenses/totalIncome),
             this.getFCBypassDebtsToOBRatio(passiveDebtsSum/overallBalanceWDSum), monthLast, yearLast);
+            List<FinancialCondition> fcl = new ArrayList<>();
+            fcl.add(mfsEfnew.getFcByCurExpCover());
+            fcl.add(mfsEfnew.getFcByDebtsToOBRatio());
+            mfsEfnew.setFcResult(this.getResultFinCondition(fcl));
             mfsListEfnew.add(mfsEfnew);
         }
        return mfsListEfnew;
@@ -417,6 +436,10 @@ public class AnalysisController {
         mfs.setYear(prevDateYear);
         mfs.setMonthLast(mfs.getMonth());
         mfs.setYearLast(mfs.getYear());
+        List<FinancialCondition> fcl = new ArrayList<>();
+        fcl.add(mfs.getFcByCurExpCover());
+        fcl.add(mfs.getFcByDebtsToOBRatio());
+        mfs.setFcResult(this.getResultFinCondition(fcl));
         mainFinanceStatisticService.addMainFinanceStatistic(mfs);
         //model.addAttribute("mfs", mfs);
     }
@@ -490,6 +513,58 @@ public class AnalysisController {
                 "for correct finance analysis getting";
         model.addAttribute("error_message", errorStr);
         return "/input_error";
+    }
+
+    private String getAdvices(double curExpensesCoverByIncome, double passDebtsToOBRatio, double relationalCEFactStandDif,
+                              double recCERchanging) {
+        String advices = "No advices";
+        FinancialCondition fcByCurExpansesCover = this.getFCByCurExpansesCover(curExpensesCoverByIncome);
+        FinancialCondition fcByPassDebtsToOBRatio = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
+        String advCase11 = "It is necessary to minimize expenses and urgently seek new sources of income. ";
+        String advCase12 = "It is necessary to increase income and/or reduce current expenses. ";
+        String advCase13 = "It is recommended to increase income and/or reduce current expenses. ";
+        String advCase152425 = "It is recommended to make long-term savings (for investment or expensive purchases). ";
+        String advCase21 = "It is necessary to restructure debts (extend the payment and/or partially write off), " +
+                "additional debts can be taken only in extreme cases. ";
+        String advCase22 = "It is necessary to avoid taking additional debts. ";
+        String advCase23 = "It is recommended not to lend extra money. ";
+        String advCase31 = "It is recommended to increase the rate of current expenses: ";
+        String advCase32 = "It is recommended to reduce the rate of current expenses: ";
+        if (fcByPassDebtsToOBRatio == FinancialCondition.DANGEROUS) {
+            advices = advCase21 + advCase11;
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            return advices;
+        }
+        if (fcByPassDebtsToOBRatio == FinancialCondition.UNSATISFACTORY) {
+            if (fcByCurExpansesCover == FinancialCondition.DANGEROUS) advices = advCase22 + advCase11;
+            else advices = advCase22 + " " + advCase12;
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            return advices;
+        }
+        if (fcByPassDebtsToOBRatio == FinancialCondition.SATISFACTORY) {
+            if (fcByCurExpansesCover == FinancialCondition.DANGEROUS) advices = advCase23 + advCase11;
+            else if (fcByCurExpansesCover == FinancialCondition.UNSATISFACTORY) advices = advCase23 + advCase12;
+            else advices = advCase23 + advCase13;
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            return advices;
+        }
+        if (fcByCurExpansesCover == FinancialCondition.EXCELLENT) {
+            advices = advCase152425;
+            if (relationalCEFactStandDif > 10.0) advices = advices + advCase31 + recCERchanging + " hrn";
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            return advices;
+        }
+        if (relationalCEFactStandDif > 10.0) advices = advCase31 + recCERchanging + " hrn";
+        if (relationalCEFactStandDif < -10.0) advices = advCase32 + recCERchanging + " hrn";
+        return advices;
+    }
+
+    private FinancialCondition getResultFinCondition(List<FinancialCondition> fcl) {
+        FinancialCondition worstFC = fcl.get(0);
+        for (FinancialCondition fc : fcl) {
+            if (fc.ordinal() > worstFC.ordinal()) worstFC = fc;
+        }
+        return worstFC;
     }
 
 }
