@@ -79,7 +79,7 @@
         <td colspan="6"> Overall current financial condition: ${fcRes} </td>
     </tr>
     <tr>
-        <td> Recommendations: </td>
+        <td> Recommendations:</td>
         <td colspan="5"> ${advices} </td>
     </tr>
 </table>
