@@ -6,28 +6,6 @@
 </head>
 <body>
 
-
-private byte month;
-private int year;
-private double totalIncome;
-private double totalExpenses;
-private double expToIncRatio;
-private double currentExpenses;
-private double curExpensesCoverByIncome;
-private double passiveDebts;
-private double overallBalanceWD;
-private double passDebtsToOBRatio;
-private double curExpFactStandDif;
-
-@Enumerated(EnumType.STRING)
-private FinancialCondition fcByCurExpCover;
-@Enumerated(EnumType.STRING)
-private FinancialCondition fcByDebtsToOBRatio;
-
-private byte monthLast;
-private int yearLast;
-
-
 <h2> Main financial characteristics list </h2>
 <table border="1">
     <thead>
@@ -49,24 +27,64 @@ private int yearLast;
     </tr>
     </thead>
     <c:choose>
-        <c:when test="${not empty curExpEntityList}">
-            <c:forEach items="${curExpEntityList}" var="curexp">
+        <c:when test="${not empty mfsListEf}">
+            <c:forEach items="${mfsListEf}" var="mfs">
                 <tr>
-                    <td>${curexp.month}</td>
-                    <td>${curexp.estimatedAmount}</td>
-                    <td>${curexp.standardAmount}</td>
-                    <td>${curexp.difference}</td>
-                    <td>${curexp.date}</td>
+                    <td>${mfs.month}</td>
+                    <td>${mfs.year}</td>
+                    <td>${mfs.monthLast}</td>
+                    <td>${mfs.yearLast}</td>
+                    <td>${mfs.totalIncome}</td>
+                    <td>${mfs.totalExpenses}</td>
+                    <td>${mfs.currentExpenses}</td>
+                    <td>${mfs.curExpFactStandDif}</td>
+                    <td>${mfs.passiveDebts}</td>
+                    <td>${mfs.overallBalanceWD}</td>
+                    <td>${mfs.expToIncRatio}</td>
+                    <td>${mfs.curExpensesCoverByIncome}</td>
+                    <td>${mfs.passDebtsToOBRatio}</td>
+                    <td>${mfs.fcResult}</td>
                 </tr>
             </c:forEach>
         </c:when>
         <c:otherwise>
             <tr>
-                <td colspan="5">Effective entries don't exist</td>
+                <td colspan="14">Effective entries don't exist</td>
             </tr>
         </c:otherwise>
     </c:choose>
 </table>
+
+<h2> Current financial condition </h2>
+<table border="1">
+    <thead>
+    <tr>
+        <td><b>Overall last factual balance with deposits</b></td>
+        <td><b>Overall current calculated balance with deposits</b></td>
+        <td><b>Cur.expenses cover by incomes</b></td>
+        <td><b>Expenses to incomes ratio</b></td>
+        <td><b>Pass.debts to ov.bal. ratio</b></td>
+        <td><b>Cur.expenses fact.and rate dif.(%)</b></td>
+    </tr>
+    </thead>
+    <tr>
+        <td>${overallBalanceWDFLast}</td>
+        <td>${overallBalanceWDCLast}</td>
+        <td>${curExpensesCoverByIncome}</td>
+        <td>${expToIncRatio}</td>
+        <td>${passDebtsToOBRatio}</td>
+        <td>${relationalCEFactStandDif}</td>
+    </tr>
+    <tr>
+        <td colspan="6"> Overall current financial condition: ${fcRes} </td>
+    </tr>
+    <tr>
+        <td> Recommendations: </td>
+        <td colspan="5"> ${advices} </td>
+    </tr>
+</table>
+
+<p><a href="/financial_analysis">Previously menu</a></p>
 
 <h2><p><a href="/">Main menu</a></p></h2>
 

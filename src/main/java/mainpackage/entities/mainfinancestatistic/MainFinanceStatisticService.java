@@ -1,7 +1,6 @@
 package mainpackage.entities.mainfinancestatistic;
 
 import mainpackage.entities.users.CustomUser;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 

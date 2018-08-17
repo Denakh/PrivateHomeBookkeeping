@@ -34,8 +34,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -86,31 +84,12 @@ public class AnalysisController {
                                  Model model) {
         if (periodicity.equals("0") || per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
-        List<MainFinanceStatistic> mfsList;
-        List<MainFinanceStatistic> mfsListEf = new ArrayList<>();
-        mfsList = mainFinanceStatisticService.findAllEntries(dbUser);
+        List<MainFinanceStatistic> mfsList = mainFinanceStatisticService.findAllEntries(dbUser);
         int mfsEntriesQ = mfsList.size();
         if (mfsEntriesQ < 2) mfsEntriesQ = 0;
-        if (mfsEntriesQ == 0) return this.errorEmptyStr(model);
-        int periodQ = mfsEntriesQ;
-        int periodicityQ = 1;
-        if (per.equals("year") && mfsEntriesQ > 12) periodQ = 12;
-        switch (periodicity) {
-                case "3_months":
-                    periodicityQ = 3;
-                    break;
-                case "6_months":
-                    periodicityQ = 6;
-                    break;
-                case "year":
-                    periodicityQ = 12;
-                    break;
-        }
-        int pQ = periodQ/periodicityQ;
-        for (int i = mfsEntriesQ - periodQ; i < mfsEntriesQ; i += 1) mfsListEf.add(mfsList.get(i));
-        if (periodicityQ > 1) mfsListEf = this.getMFSPerPeriodList(mfsListEf, periodicityQ, pQ);
-        double overallBalanceWDFLast = mfsList.get(mfsList.size()-1).getOverallBalanceWD();
-
+        if (mfsEntriesQ == 0) return this.errorDataLacking(model);
+        List<MainFinanceStatistic> mfsListEf = this.getMFSEffList(mfsList, per, periodicity, mfsEntriesQ);
+        double overallBalanceWDFLast = mfsList.get(mfsList.size() - 1).getOverallBalanceWD();
         Date date = new Date();
         List<Debt> effectiveDebtsList = debtService.findEffectiveDebtsList(dbUser);
         double debtsTotAmount = 0;
@@ -125,40 +104,8 @@ public class AnalysisController {
         }
         OverallBalance obCulc = getCalculatedBalance(dbUser, curMonthNumber, curDayNumber,
                 debtsTotAmount, date, effectiveDebtsList);
-
         double overallBalanceWDCLast = obCulc.getBalanceWithDep();
-
-        double currentExpensesSum = 0;
-        double totalIncomeSum = 0;
-        double totalExpensesSum = 0;
-        double passDebtsToOBRatio = 0;
-        double curExpFactStandDifSum = 0;
-        double curExpRateSum = 0;
-        int firstSt = mfsList.size() - 3;
-        if (firstSt < 0) firstSt = 0;
-        for (int i = firstSt; i < mfsList.size(); i += 1) {
-            currentExpensesSum += mfsList.get(i).getCurrentExpenses();
-            totalIncomeSum += mfsList.get(i).getTotalIncome();
-            totalExpensesSum += mfsList.get(i).getTotalExpenses();
-            curExpFactStandDifSum += mfsList.get(i).getCurExpFactStandDif();
-            byte monthNum = mfsList.get(i).getMonth();
-            curExpRateSum += getCurrentExpRate(dbUser, monthNum);
-            if (i == mfsList.size()-1) passDebtsToOBRatio = mfsList.get(i).getPassDebtsToOBRatio();
-        }
-        double curExpensesCoverByIncome = currentExpensesSum/totalIncomeSum;
-        double expToIncRatio = totalExpensesSum/totalIncomeSum;
-        double relationalCEFactStandDif = 100*curExpFactStandDifSum/curExpRateSum;
-        double recCERchanging = curExpFactStandDifSum/3;
-        FinancialCondition fcByCurExpansesCover = this.getFCByCurExpansesCover(curExpensesCoverByIncome);
-        FinancialCondition fcByPassDebtsToOBRatio = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
-        List<FinancialCondition> fcl = new ArrayList<>();
-        fcl.add(fcByCurExpansesCover);
-        fcl.add(fcByPassDebtsToOBRatio);
-        FinancialCondition fcRes = this.getResultFinCondition(fcl);
-        String advices = this.getAdvices(curExpensesCoverByIncome, passDebtsToOBRatio, relationalCEFactStandDif,
-        recCERchanging);
-
-
+        this.finAnalysisExeFin(mfsList, mfsListEf, dbUser, overallBalanceWDFLast, overallBalanceWDCLast, model);
         return "/financial_analysis_results";
     }
 
@@ -199,9 +146,33 @@ public class AnalysisController {
         return "/current_exp_calculation_result";
     }
 
-    private List<MainFinanceStatistic> getMFSPerPeriodList(List<MainFinanceStatistic> mfsListEf, int periodicityQ, int pQ){
+
+    private List<MainFinanceStatistic> getMFSEffList(List<MainFinanceStatistic> mfsList, String per, String periodicity,
+                                                     int mfsEntriesQ) {
+        List<MainFinanceStatistic> mfsListEf = new ArrayList<>();
+        int periodQ = mfsEntriesQ;
+        int periodicityQ = 1;
+        if (per.equals("year") && mfsEntriesQ > 12) periodQ = 12;
+        switch (periodicity) {
+            case "3_months":
+                periodicityQ = 3;
+                break;
+            case "6_months":
+                periodicityQ = 6;
+                break;
+            case "year":
+                periodicityQ = 12;
+                break;
+        }
+        int pQ = periodQ / periodicityQ;
+        for (int i = mfsEntriesQ - periodQ; i < mfsEntriesQ; i += 1) mfsListEf.add(mfsList.get(i));
+        if (periodicityQ > 1) mfsListEf = this.getMFSPerPeriodList(mfsListEf, periodicityQ, pQ);
+        return mfsListEf;
+    }
+
+    private List<MainFinanceStatistic> getMFSPerPeriodList(List<MainFinanceStatistic> mfsListEf, int periodicityQ, int pQ) {
         List<MainFinanceStatistic> mfsListEfnew = new ArrayList<>();
-        int servV = mfsListEf.size() - periodicityQ*pQ;
+        int servV = mfsListEf.size() - periodicityQ * pQ;
         for (int i = 0; i < pQ; i += 1) {
             byte month = 0;
             int year = 0;
@@ -213,12 +184,12 @@ public class AnalysisController {
             double curExpFactStandDifSum = 0;
             byte monthLast = 0;
             int yearLast = 0;
-            for (int j = servV + i*periodicityQ; j < servV + (i+1)*periodicityQ; j += 1) {
+            for (int j = servV + i * periodicityQ; j < servV + (i + 1) * periodicityQ; j += 1) {
                 MainFinanceStatistic mfsEf = mfsListEf.get(j);
-                if (j == servV + i*periodicityQ) month = mfsEf.getMonth();
-                if (j == servV + i*periodicityQ) year = mfsEf.getYear();
-                if (j == servV + (i+1)*periodicityQ - 1) monthLast = mfsEf.getMonth();
-                if (j == servV + (i+1)*periodicityQ - 1) yearLast = mfsEf.getYear();
+                if (j == servV + i * periodicityQ) month = mfsEf.getMonth();
+                if (j == servV + i * periodicityQ) year = mfsEf.getYear();
+                if (j == servV + (i + 1) * periodicityQ - 1) monthLast = mfsEf.getMonth();
+                if (j == servV + (i + 1) * periodicityQ - 1) yearLast = mfsEf.getYear();
                 totalIncome += mfsEf.getTotalIncome();
                 totalExpenses += mfsEf.getTotalExpenses();
                 currentExpenses += mfsEf.getCurrentExpenses();
@@ -226,19 +197,77 @@ public class AnalysisController {
                 overallBalanceWDSum += mfsEf.getOverallBalanceWD();
                 curExpFactStandDifSum += mfsEf.getCurExpFactStandDif();
             }
-            MainFinanceStatistic mfsEfnew = new MainFinanceStatistic(month, year, totalIncome, totalExpenses,
-            totalExpenses/totalIncome, currentExpenses, currentExpenses/totalIncome,
-                    passiveDebtsSum/periodicityQ, overallBalanceWDSum/periodicityQ,
-                    passiveDebtsSum/overallBalanceWDSum, curExpFactStandDifSum/periodicityQ,
-            this.getFCByCurExpansesCover(currentExpenses/totalIncome),
-            this.getFCBypassDebtsToOBRatio(passiveDebtsSum/overallBalanceWDSum), monthLast, yearLast);
-            List<FinancialCondition> fcl = new ArrayList<>();
-            fcl.add(mfsEfnew.getFcByCurExpCover());
-            fcl.add(mfsEfnew.getFcByDebtsToOBRatio());
-            mfsEfnew.setFcResult(this.getResultFinCondition(fcl));
+            MainFinanceStatistic mfsEfnew = this.getMainFinanceStatisticEfnew(month, year, totalIncome, totalExpenses,
+                    currentExpenses, passiveDebtsSum, periodicityQ, overallBalanceWDSum, curExpFactStandDifSum, monthLast, yearLast);
             mfsListEfnew.add(mfsEfnew);
         }
-       return mfsListEfnew;
+        return mfsListEfnew;
+    }
+
+    private MainFinanceStatistic getMainFinanceStatisticEfnew(byte month, int year, double totalIncome, double totalExpenses,
+                                                              double currentExpenses, double passiveDebtsSum, double periodicityQ,
+                                                              double overallBalanceWDSum, double curExpFactStandDifSum,
+                                                              byte monthLast, int yearLast) {
+        MainFinanceStatistic mfsEfnew = new MainFinanceStatistic(month, year, totalIncome, totalExpenses, totalExpenses / totalIncome,
+                currentExpenses, currentExpenses / totalIncome, passiveDebtsSum / periodicityQ,
+                overallBalanceWDSum / periodicityQ, passiveDebtsSum / overallBalanceWDSum, curExpFactStandDifSum / periodicityQ,
+                this.getFCByCurExpansesCover(currentExpenses / totalIncome), this.getFCBypassDebtsToOBRatio(passiveDebtsSum / overallBalanceWDSum), monthLast, yearLast);
+        List<FinancialCondition> fcl = new ArrayList<>();
+        fcl.add(mfsEfnew.getFcByCurExpCover());
+        fcl.add(mfsEfnew.getFcByDebtsToOBRatio());
+        mfsEfnew.setFcResult(this.getResultFinCondition(fcl));
+        return mfsEfnew;
+    }
+
+    private void finAnalysisExeFin(List<MainFinanceStatistic> mfsList, List<MainFinanceStatistic> mfsListEf,
+                                   CustomUser dbUser, double overallBalanceWDFLast, double overallBalanceWDCLast,
+                                   Model model) {
+        double currentExpensesSum = 0;
+        double totalIncomeSum = 0;
+        double totalExpensesSum = 0;
+        double passDebtsToOBRatio = 0;
+        double curExpFactStandDifSum = 0;
+        double curExpRateSum = 0;
+        int firstSt = mfsList.size() - 3;
+        if (firstSt < 0) firstSt = 0;
+        for (int i = firstSt; i < mfsList.size(); i += 1) {
+            currentExpensesSum += mfsList.get(i).getCurrentExpenses();
+            totalIncomeSum += mfsList.get(i).getTotalIncome();
+            totalExpensesSum += mfsList.get(i).getTotalExpenses();
+            curExpFactStandDifSum += mfsList.get(i).getCurExpFactStandDif();
+            byte monthNum = mfsList.get(i).getMonth();
+            curExpRateSum += getCurrentExpRate(dbUser, monthNum);
+            if (i == mfsList.size() - 1) passDebtsToOBRatio = mfsList.get(i).getPassDebtsToOBRatio();
+        }
+        double curExpensesCoverByIncome = currentExpensesSum / totalIncomeSum;
+        double expToIncRatio = totalExpensesSum / totalIncomeSum;
+        double relationalCEFactStandDif = 100 * curExpFactStandDifSum / curExpRateSum;
+        double recCERchanging = curExpFactStandDifSum / 3;
+        FinancialCondition fcByCurExpansesCover = this.getFCByCurExpansesCover(curExpensesCoverByIncome);
+        FinancialCondition fcByPassDebtsToOBRatio = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
+        List<FinancialCondition> fcl = new ArrayList<>();
+        fcl.add(fcByCurExpansesCover);
+        fcl.add(fcByPassDebtsToOBRatio);
+        FinancialCondition fcRes = this.getResultFinCondition(fcl);
+        String advices = this.getAdvices(curExpensesCoverByIncome, passDebtsToOBRatio, relationalCEFactStandDif,
+                recCERchanging);
+        this.finAnalysisExeModAddAtt(mfsListEf, overallBalanceWDFLast, overallBalanceWDCLast, curExpensesCoverByIncome,
+                expToIncRatio, passDebtsToOBRatio, relationalCEFactStandDif, fcRes, advices, model);
+    }
+
+    private void finAnalysisExeModAddAtt(List<MainFinanceStatistic> mfsListEf, double overallBalanceWDFLast,
+                                         double overallBalanceWDCLast, double curExpensesCoverByIncome,
+                                         double expToIncRatio, double passDebtsToOBRatio, double relationalCEFactStandDif,
+                                         FinancialCondition fcRes, String advices, Model model) {
+        model.addAttribute("mfsListEf", mfsListEf);
+        model.addAttribute("overallBalanceWDFLast", overallBalanceWDFLast);
+        model.addAttribute("overallBalanceWDCLast", overallBalanceWDCLast);
+        model.addAttribute("curExpensesCoverByIncome", curExpensesCoverByIncome);
+        model.addAttribute("expToIncRatio", expToIncRatio);
+        model.addAttribute("passDebtsToOBRatio", passDebtsToOBRatio);
+        model.addAttribute("relationalCEFactStandDif", relationalCEFactStandDif);
+        model.addAttribute("fcRes", fcRes);
+        model.addAttribute("advices", advices);
     }
 
     private double getCurrentExpRate(CustomUser user, Byte month) {
@@ -441,7 +470,6 @@ public class AnalysisController {
         fcl.add(mfs.getFcByDebtsToOBRatio());
         mfs.setFcResult(this.getResultFinCondition(fcl));
         mainFinanceStatisticService.addMainFinanceStatistic(mfs);
-        //model.addAttribute("mfs", mfs);
     }
 
     private MainFinanceStatistic getExpansesToIncomeRatio(CustomUser dbUser, Date dateFrom, Date dateTo,
@@ -517,7 +545,6 @@ public class AnalysisController {
 
     private String getAdvices(double curExpensesCoverByIncome, double passDebtsToOBRatio, double relationalCEFactStandDif,
                               double recCERchanging) {
-        String advices = "No advices";
         FinancialCondition fcByCurExpansesCover = this.getFCByCurExpansesCover(curExpensesCoverByIncome);
         FinancialCondition fcByPassDebtsToOBRatio = this.getFCBypassDebtsToOBRatio(passDebtsToOBRatio);
         String advCase11 = "It is necessary to minimize expenses and urgently seek new sources of income. ";
@@ -530,6 +557,15 @@ public class AnalysisController {
         String advCase23 = "It is recommended not to lend extra money. ";
         String advCase31 = "It is recommended to increase the rate of current expenses: ";
         String advCase32 = "It is recommended to reduce the rate of current expenses: ";
+        return this.getAdvicesFin(fcByCurExpansesCover, fcByPassDebtsToOBRatio, relationalCEFactStandDif, recCERchanging,
+                advCase11, advCase12, advCase13, advCase152425, advCase21, advCase22, advCase23, advCase31, advCase32);
+    }
+
+    private String getAdvicesFin(FinancialCondition fcByCurExpansesCover, FinancialCondition fcByPassDebtsToOBRatio,
+                                 double relationalCEFactStandDif, double recCERchanging, String advCase11, String advCase12,
+                                 String advCase13, String advCase152425, String advCase21, String advCase22,
+                                 String advCase23, String advCase31, String advCase32) {
+        String advices = "No advices";
         if (fcByPassDebtsToOBRatio == FinancialCondition.DANGEROUS) {
             advices = advCase21 + advCase11;
             if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
@@ -568,36 +604,3 @@ public class AnalysisController {
     }
 
 }
-/*
-        OverallBalance obCur = null;
-        List<OverallBalance> obCurList = overallBalanceService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
-        List<Income> incomesByDate = incomeService.findEntriesBetweenDates(dbUser, dateFrom, dateTo);
-        for (Income i : incomesByDate) totalIncome += i.getAmount();
-        for (int i = 0; i < obCurList.size(); i += 1) {
-            OverallBalance ob = obCurList.get(i);
-            if (ob.getBalanceType() == BalanceType.FACTUAL) {
-                obCur = ob;
-                break;
-            }
-        }
-
-        <br/>
-<br/> id ${mfs.id}
-<br/> user ${mfs.user}
-<br/> month ${mfs.month}
-<br/> totalIncome ${mfs.totalIncome}
-<br/> totalExpenses ${mfs.totalExpenses}
-<br/> expToIncRatio ${mfs.expToIncRatio}
-<br/> currentExpenses ${mfs.currentExpenses}
-<br/> curExpensesCoverByIncome ${mfs.curExpensesCoverByIncome}
-<br/> passiveDebts ${mfs.passiveDebts}
-<br/> overallBalanceWD ${mfs.overallBalanceWD}
-<br/> passDebtsToOBRatio ${mfs.passDebtsToOBRatio}
-<br/> curExpFactStandDif ${mfs.curExpFactStandDif}
-<br/> fcByCurExpCover ${mfs.fcByCurExpCover}
-<br/> fcByDebtsToOBRatio ${mfs.fcByDebtsToOBRatio}
-
-String str = " " + charityAm + " " + healthAm + " " + kidsAndPetsAm + " " + otherCapitalOutlaysAm + " " + recreationAm + " " + reserveAm + " " +
-                debtsTotAmount + " " + (currentExpRate * (1 - (1.0 * curDayNumber / 30.417))) + " " + noCurExpCoverAm + " " + genIncomeAmountForCurExp + " " + (-dfactAmount);
-        model.addAttribute("str", str);
-        */
