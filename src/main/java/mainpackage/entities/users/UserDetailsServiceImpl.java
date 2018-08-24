@@ -1,4 +1,4 @@
-package mainpackage;
+package mainpackage.entities.users;
 
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserService;
