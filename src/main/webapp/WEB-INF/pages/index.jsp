@@ -28,8 +28,9 @@
 </h3>
 <div class="alerts">
     <h2 class="h2-al">Alerts</h2>
+    <h3 class="h2-al">(executing order top-down has been kept):</h3>
     <c:if test="${need_alloc_of_prof == false && need_cur_exp_rate == false && need_cur_exp_renew == false}">
-                <h3 class="h2-al">No alerts!</h3>
+        <h3 class="h2-al">No alerts!</h3>
     </c:if>
     <c:if test="${need_alloc_of_prof == true}">
         <p class="p1">You have to setup allocation of profits (excess over current expanses cover)
@@ -40,31 +41,32 @@
     <c:if test="${need_cur_exp_rate == true}">
         <p class="p1">You have to setup current expanses monthly rates for correct application operations,
             please click on reference at the next line:</p>
-    <h3><p><a href="/current_expenses_rate">Setup current expanses monthly rates</a></p></h3>
+        <h3><p><a href="/current_expenses_rate">Setup current expanses monthly rates</a></p></h3>
     </c:if>
     <br/>
     <c:if test="${need_cur_exp_renew == true}">
         <p class="p1">You have to update(calculate) current expanses amount for last month and
-        debt data with percents(interests on loans) accounting (if exist), please click on reference at the next line:</p>
-    <h3><p><a href="/current_exp_calculation">Monthly data calculation</a></p></h3>
+            debt data with percents(interests on loans) accounting (if exist), please click on reference at the next
+            line:</p>
+        <h3><p><a href="/current_exp_calculation">Monthly data calculation</a></p></h3>
     </c:if>
 </div>
 <h3>
-<div class="hrefs">
-    <h2 class="h2-al">Your operations</h2>
-    <p><a href="/income_fixation">Income fixation</a></p>
-    <p><a href="/expense_fixation">Expense fixation (not current)</a></p>
-    <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>
-    <p><a href="/deferral_fixation">Deferrals (expenses) fixation</a></p>
-    <p><a href="/communal_pays_fixation">Communal pays fixation</a></p>
-    <p><a href="/data_getting">Main data getting</a></p>
-    <p><a href="/current_expenses_rate">Current expenses rate</a></p>
-    <p><a href="/foreign_currencies">Foreign currencies operations</a></p>
-    <p><a href="/allocation_of_profits">Allocation of profits</a></p>
-</div>
-    </h3>
+    <div class="hrefs">
+        <p class="op-h">Your operations</p>
+        <p><a href="/income_fixation">Income fixation</a></p>
+        <p><a href="/expense_fixation">Expense fixation (not current)</a></p>
+        <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>
+        <p><a href="/deferral_fixation">Deferrals (expenses) fixation</a></p>
+        <p><a href="/communal_pays_fixation">Communal pays fixation</a></p>
+        <p><a href="/data_getting">Main data getting</a></p>
+        <p><a href="/current_expenses_rate">Current expenses rate</a></p>
+        <p><a href="/foreign_currencies">Foreign currencies operations</a></p>
+        <p><a href="/allocation_of_profits">Allocation of profits</a></p>
+    </div>
+</h3>
 <div class="hrefs2">
-    <p class="p1">!Only for users for admin roles!</p>
+    <p class="p1">!Only for users with admin roles!</p>
     <h3><p><a href="/get_users">Get users list</a></p></h3>
 </div>
 </body>

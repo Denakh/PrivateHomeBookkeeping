@@ -2,8 +2,8 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: center;
-    padding: 10px;
-    width: 100%;
+    padding: 1%;
+    width: 97.7%;
     float: left;
 }
 
@@ -15,19 +15,24 @@
     width: 48%;
     float: right;
     font-weight: bold;
-    clear: both;
+    //clear: both;
 }
 
 .h2-al {
     text-align: center;
 }
 
+.op-h {
+    text-align: center;
+    font-size: 125%;
+}
+
 .hrefs {
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: left;
-    padding: 10px;
-    width: 47%;
+    //padding: 10px;
+    width: 48%;
     float: left;
     padding-left: 2%;
 }
@@ -36,12 +41,60 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: center;
-    padding: 10px;
-    width: 48%;
+    //padding: 10px;
+    width: 50%;
+    float: left;
+    //clear: both;
+}
+
+.hrefs3 {
+    border: 2px solid #cccccc;
+    background-color: #62cccb;
+    text-align: center;
+    width: 99.7%;
+    float: left;
+}
+
+.hrefs4 {
+    border: 2px solid #cccccc;
+    background-color: #62cccb;
+    text-align: center;
+    width: 40%;
     float: right;
+    clear: right;
 }
 
 .p1 {
     font-size: 110%;
+    font-weight: bold;
+}
+
+.tables {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: left;
+    width: 57.4%;
+    float: left;
+    padding-left: 2%;
+    padding-bottom: 9%;
+}
+
+.new_data {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: right;
+    padding-right: 7%;
+    width: 33%;
+    float: right;
+    font-weight: bold;
+}
+
+.show_data {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: left;
+    padding-left: 3%;
+    width: 25%;
+    float: left;
     font-weight: bold;
 }

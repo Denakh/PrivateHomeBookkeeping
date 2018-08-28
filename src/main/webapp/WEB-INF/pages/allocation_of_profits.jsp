@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<div class="tables">
 <h2> Current percent(%) for allocation of profits </h2>
 <table border="1">
     <thead>
@@ -41,8 +42,9 @@
         </c:otherwise>
     </c:choose>
 </table>
+    </div>
 
-
+<div class="new_data">
 <h2> New allocation of profits values </h2>
 <form action="/allocation_of_profits_execute" method="POST">
     Percent for charity: <input type="text" name="charity_percent"><br>
@@ -54,8 +56,11 @@
 
     <br/><input type="submit"/>
 </form>
+    </div>
 
-<h2><p><a href="/">Main menu</a></p></h2>
+<div class="hrefs4">
+    <h3><p><a href="/">Main menu</a></p></h3>
+</div>
 
 </body>
 </html>

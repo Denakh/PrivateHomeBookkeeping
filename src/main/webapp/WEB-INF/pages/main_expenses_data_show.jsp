@@ -38,7 +38,9 @@
     </c:choose>
 </table>
 
-<h2><p><a href="/">Main menu</a></p></h2>
+<div class="hrefs3">
+    <h3><p><a href="/">Main menu</a></p></h3>
+</div>
 
 </body>
 </html>

@@ -11,13 +11,13 @@
 
 <form action="/communalpay_fixation_execute" method="POST">
     Amount, hrn: <input type="text" name="amount"><br>
-    Description: <input type="text" name="description"><br>
+    Description : <input type="text" name="description"><br>
 
     <br/><input type="submit"/>
 </form>
 
+    Show communal pay statistic:
 
-Show communal pay statistic:
 <form action="/communalpay_statistic_show" method="POST">
     Last period:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
@@ -33,7 +33,8 @@ Show communal pay statistic:
 </form>
 
 
-<p><a href="/">Main menu</a></p>
+    <h3><p><a href="/">Main menu</a></p></h3>
+
 
 </body>
 </html>

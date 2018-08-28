@@ -44,7 +44,9 @@
 <p><a href="/financial_analysis">Financial analysis</a></p>
 
 
-<p><a href="/">Main menu</a></p>
+<div class="hrefs3">
+    <h3><p><a href="/">Main menu</a></p></h3>
+</div>
 
 </body>
 </html>
