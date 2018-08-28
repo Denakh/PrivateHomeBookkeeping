@@ -1,0 +1,47 @@
+.head {
+    border: 2px solid #cccccc;
+    background-color: #62cccb;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    float: left;
+}
+
+.alerts {
+    border: 2px solid #cccccc;
+    background-color: #cca2b3;
+    text-align: left;
+    padding: 10px;
+    width: 48%;
+    float: right;
+    font-weight: bold;
+    clear: both;
+}
+
+.h2-al {
+    text-align: center;
+}
+
+.hrefs {
+    border: 2px solid #cccccc;
+    background-color: #62cccb;
+    text-align: left;
+    padding: 10px;
+    width: 47%;
+    float: left;
+    padding-left: 2%;
+}
+
+.hrefs2 {
+    border: 2px solid #cccccc;
+    background-color: #62cccb;
+    text-align: center;
+    padding: 10px;
+    width: 48%;
+    float: right;
+}
+
+.p1 {
+    font-size: 110%;
+    font-weight: bold;
+}

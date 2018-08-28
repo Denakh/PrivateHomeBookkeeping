@@ -3,6 +3,9 @@
 <html>
 <head>
     <title>Private Home Bookkeeping</title>
+    <style type="text/css">
+        <%@include file="/WEB-INF/pages/styles/style.css"%>
+    </style>
 </head>
 <body>
 
