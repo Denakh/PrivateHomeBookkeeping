@@ -79,6 +79,16 @@
     padding-bottom: 9%;
 }
 
+.tables-fw {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: left;
+    width: 99.7%;
+    float: left;
+    padding-left: 2%;
+    padding-bottom: 2%;
+}
+
 .new_data {
     border: 2px solid #cccccc;
     background-color: #a9c9cc;
@@ -108,3 +118,37 @@
     float: left;
     font-weight: bold;
 }
+
+.add_cer {
+    padding-bottom: 18%;
+}
+
+.dge {
+    background-color: #a9c9cc;
+    width: 44.7%;
+    padding-left: 5%;
+    font-weight: bold;
+}
+
+.cdge {
+    background-color: #a9c9cc;
+    width: 44.7%;
+    padding-left: 5%;
+    font-weight: bold;
+    float: right;
+    padding-top: 3.6%;
+    padding-bottom: 3.7%;
+}
+
+.fa {
+    width: 49.7%;
+    background-color: #a9c9cc;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.mm {
+    width: 49.7%;
+}
+
+

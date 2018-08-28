@@ -8,11 +8,15 @@
     </style>
 </head>
 <body>
-<div align="center">
+
     <h1>Access denied for ${login}!</h1>
 
+    <div class="hrefs3">
+        <h3><p><a href="/">Main menu</a></p></h3>
+    </div>
+
     <c:url value="/logout" var="logoutUrl"/>
-    <p>Click to logout: <a href="${logoutUrl}">LOGOUT</a></p>
-</div>
+    <p>Click to logout: <a href="${logoutUrl}">Logout</a></p>
+
 </body>
 </html>

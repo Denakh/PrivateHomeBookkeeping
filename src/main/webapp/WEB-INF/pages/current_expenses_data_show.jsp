@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<div class="tables-fw">
 <h2> Current expenses list </h2>
 <table border="1">
     <thead>
@@ -39,6 +40,7 @@
         </c:otherwise>
     </c:choose>
 </table>
+    </div>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>

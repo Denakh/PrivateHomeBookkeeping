@@ -28,7 +28,7 @@
 </h3>
 <div class="alerts">
     <h2 class="h2-al">Alerts</h2>
-    <h3 class="h2-al">(executing order top-down has been kept):</h3>
+    <h3 class="h2-al">(executing order top-down has to be kept):</h3>
     <c:if test="${need_alloc_of_prof == false && need_cur_exp_rate == false && need_cur_exp_renew == false}">
         <h3 class="h2-al">No alerts!</h3>
     </c:if>
