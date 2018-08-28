@@ -10,10 +10,13 @@
 <body>
 
 <form action="/current_exp_calculation_execute" method="POST">
+    <h3>
+        <div class="new_data_fw">
+            Total factual amount available, hrn: <input type="text" name="amount"><br>
+            <br/><input type="submit"/>
+        </div>
+    </h3>
 
-    Total factual amount available, hrn: <input type="text" name="amount"><br>
-
-    <br/><input type="submit"/>
 </form>
 
 
