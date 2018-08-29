@@ -16,7 +16,7 @@
     <br/><input type="submit"/>
 </form>
 
-    Show communal pay statistic:
+Show communal pay statistic:
 
 <form action="/communalpay_statistic_show" method="POST">
     Last period:
@@ -33,7 +33,7 @@
 </form>
 
 
-    <h3><p><a href="/">Main menu</a></p></h3>
+<h3><p><a href="/">Main menu</a></p></h3>
 
 
 </body>

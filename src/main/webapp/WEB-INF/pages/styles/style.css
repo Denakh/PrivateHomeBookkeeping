@@ -15,7 +15,7 @@
     width: 48%;
     float: right;
     font-weight: bold;
-    //clear: both;
+/ / clear: both;
 }
 
 .h2-al {
@@ -31,7 +31,6 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: left;
-    //padding: 10px;
     width: 48%;
     float: left;
     padding-left: 2%;
@@ -41,10 +40,8 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: center;
-    //padding: 10px;
     width: 50%;
     float: left;
-    //clear: both;
 }
 
 .hrefs3 {
@@ -123,10 +120,11 @@
     border: 2px solid #cccccc;
     background-color: #a9c9cc;
     text-align: left;
-    padding-left: 3%;
-    width: 15%;
+    padding-left: 5%;
+    width: 30%;
     float: right;
     font-weight: bold;
+    clear: both;
 }
 
 .add_cer {
@@ -166,8 +164,112 @@
 }
 
 .debt_table {
-    padding-left: 0%;
-    width: 40%;
+    padding-left: 2%;
+    width: 62.43%;
 }
 
+.debt_fix {
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 33%;
+    float: right;
+}
 
+.t-l {
+    text-align: left;
+}
+
+.mmd {
+    width: 35%;
+    float: right;
+    clear: both;
+}
+
+.dfs {
+    padding-left: 14%;
+    padding-right: 14%;
+    width: 71.7%;
+}
+
+.efe {
+    text-align: left;
+    width: 49.7%;
+    padding-left: 40%;
+    padding-right: 10%;
+}
+
+.dget {
+    background-color: #a9c9cc;
+}
+
+.dget2 {
+    background-color: #b799cc;
+}
+
+.finan {
+    text-align: left;
+    width: 49.7%;
+    padding-left: 40%;
+    padding-right: 10%;
+    background-color: #b799cc;
+}
+
+.fae {
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 97.7%;
+    text-align: center;
+    background-color: #b7a7cc;
+}
+
+.incsht_l {
+    padding-left: 2%;
+    padding-right: 1.44%;
+    width: 25%;
+    text-align: center;
+    background-color: #a9c9cc;
+    float: left;
+}
+
+.incsht_r {
+    padding-left: 2%;
+    padding-right: 1%;
+    width: 68%;
+    text-align: center;
+    background-color: #a9c9cc;
+    float: right;
+}
+
+.in_fix_exe {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: left;
+    padding-left: 16.04%;
+    width: 33.4%;
+    float: left;
+    font-weight: bold;
+}
+
+.inc_sh {
+    border: 2px solid #cccccc;
+    background-color: #a9c9cc;
+    text-align: left;
+    padding-left: 19%;
+    padding-bottom: 2.85%;
+    width: 31%;
+    float: right;
+    font-weight: bold;
+}
+
+.mel {
+    background-color: #a9c9cc;
+}
+
+.regist {
+    background-color: #c8ccbf;
+    font-weight: bold;
+}
+
+.ac_d {
+    background-color: #cca2b3;
+}

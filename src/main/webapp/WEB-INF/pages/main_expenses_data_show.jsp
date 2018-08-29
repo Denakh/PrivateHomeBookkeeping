@@ -9,34 +9,36 @@
 </head>
 <body>
 
-<h2> Main expenses list for ${expEntityName} </h2>
-<table border="1">
-    <thead>
-    <tr>
-        <td><b>Amount change</b></td>
-        <td><b>Entry date</b></td>
-        <td><b>Description</b></td>
-        <td><b>Amount</b></td>
-    </tr>
-    </thead>
-    <c:choose>
-        <c:when test="${not empty expEntityList}">
-            <c:forEach items="${expEntityList}" var="expEntity">
+<div class="tables-fw fae mel">
+    <h2> Main expenses list for ${expEntityName} </h2>
+    <table border="1">
+        <thead>
+        <tr>
+            <td><b>Amount change</b></td>
+            <td><b>Entry date</b></td>
+            <td><b>Description</b></td>
+            <td><b>Amount</b></td>
+        </tr>
+        </thead>
+        <c:choose>
+            <c:when test="${not empty expEntityList}">
+                <c:forEach items="${expEntityList}" var="expEntity">
+                    <tr>
+                        <td>${expEntity.amountChange}</td>
+                        <td>${expEntity.date}</td>
+                        <td>${expEntity.description}</td>
+                        <td>${expEntity.amount}</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
                 <tr>
-                    <td>${expEntity.amountChange}</td>
-                    <td>${expEntity.date}</td>
-                    <td>${expEntity.description}</td>
-                    <td>${expEntity.amount}</td>
+                    <td colspan="4">Effective entries don't exist</td>
                 </tr>
-            </c:forEach>
-        </c:when>
-        <c:otherwise>
-            <tr>
-                <td colspan="4">Effective entries don't exist</td>
-            </tr>
-        </c:otherwise>
-    </c:choose>
-</table>
+            </c:otherwise>
+        </c:choose>
+    </table>
+</div>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>

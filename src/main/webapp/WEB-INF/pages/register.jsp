@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-<div align="center">
+<div align="center" class="regist">
     <c:url value="/newuser" var="regUrl"/>
 
     <form action="${regUrl}" method="POST">

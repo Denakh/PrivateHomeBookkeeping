@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-<div align="center">
+<div align="center" class="regist">
     <c:url value="/j_spring_security_check" var="loginUrl"/>
 
     <form action="${loginUrl}" method="POST">
@@ -16,14 +16,14 @@
         Password:<br/><input type="password" name="j_password"><br/>
         <input type="submit"/>
 
-        <p><a href="/register">Register new user</a></p>
+        <h3><p><a href="/register">Register new user</a></p></h3>
 
         <c:if test="${param.error ne null}">
             <p>Wrong login or password!</p>
         </c:if>
 
         <c:if test="${param.logout ne null}">
-            <p>Chao!</p>
+            <h3><p>Chao!</p></h3>
         </c:if>
     </form>
 </div>

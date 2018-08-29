@@ -9,7 +9,12 @@
 </head>
 <body>
 <div align="center">
-    <h2> ${error_message} </h2>
+
+    <h3>
+        <div class="new_data_fw">
+            ${error_message}
+        </div>
+    </h3>
 
     <div class="hrefs3">
         <h3><p><a href="/">Main menu</a></p></h3>

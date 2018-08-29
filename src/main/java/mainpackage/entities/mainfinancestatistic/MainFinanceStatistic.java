@@ -61,6 +61,26 @@ public class MainFinanceStatistic {
         this.yearLast = yearLast;
     }
 
+    public MainFinanceStatistic(CustomUser user, byte month, int year, double totalIncome, double totalExpenses, double expToIncRatio, double currentExpenses, double curExpensesCoverByIncome, double passiveDebts, double overallBalanceWD, double passDebtsToOBRatio, double curExpFactStandDif, FinancialCondition fcByCurExpCover, FinancialCondition fcByDebtsToOBRatio, FinancialCondition fcResult, byte monthLast, int yearLast) {
+        this.user = user;
+        this.month = month;
+        this.year = year;
+        this.totalIncome = totalIncome;
+        this.totalExpenses = totalExpenses;
+        this.expToIncRatio = expToIncRatio;
+        this.currentExpenses = currentExpenses;
+        this.curExpensesCoverByIncome = curExpensesCoverByIncome;
+        this.passiveDebts = passiveDebts;
+        this.overallBalanceWD = overallBalanceWD;
+        this.passDebtsToOBRatio = passDebtsToOBRatio;
+        this.curExpFactStandDif = curExpFactStandDif;
+        this.fcByCurExpCover = fcByCurExpCover;
+        this.fcByDebtsToOBRatio = fcByDebtsToOBRatio;
+        this.fcResult = fcResult;
+        this.monthLast = monthLast;
+        this.yearLast = yearLast;
+    }
+
     public long getId() {
         return id;
     }

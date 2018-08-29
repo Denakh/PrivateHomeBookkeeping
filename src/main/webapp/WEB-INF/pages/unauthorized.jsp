@@ -9,14 +9,13 @@
 </head>
 <body>
 
-    <h1>Access denied for ${login}!</h1>
+<div class="hrefs3 ac_d">
+    <h2>Access denied for ${login}!</h2>
 
-    <div class="hrefs3">
-        <h3><p><a href="/">Main menu</a></p></h3>
-    </div>
+    <h3><p><a href="/">Main menu</a></p></h3>
 
     <c:url value="/logout" var="logoutUrl"/>
-    <p>Click to logout: <a href="${logoutUrl}">Logout</a></p>
-
+    <h3><p>Click to logout: <a href="${logoutUrl}">Logout</a></p></h3>
+</div>
 </body>
 </html>

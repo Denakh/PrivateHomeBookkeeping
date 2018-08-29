@@ -9,13 +9,13 @@
 </head>
 <body>
 <h3>
-<div class="head">
-    Page for admins
+    <div class="head">
+        Page for admins
 
-    <c:url value="/logout" var="logoutUrl"/>
-    <p>Click to logout: <a href="${logoutUrl}">Logout</a></p>
-</div>
-    </h3>
+        <c:url value="/logout" var="logoutUrl"/>
+        <p>Click to logout: <a href="${logoutUrl}">Logout</a></p>
+    </div>
+</h3>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>
