@@ -9,6 +9,7 @@
 </head>
 <body>
 
+
 <form action="/debt_fixation_execute" method="POST">
     Amount, hrn: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
@@ -27,7 +28,9 @@
     <br/><input type="submit"/>
 </form>
 
-<table border="1">
+<div class="tables debt_table">
+    <h2> Effective debts list </h2>
+<table border="1" class="debts">
     <thead>
     <tr>
         <td><b>Debt id</b></td>
@@ -61,11 +64,13 @@
         </c:otherwise>
     </c:choose>
 </table>
+</div>
 
-<br>Show debt statistic:
+<div class="show_data_ds">
+    <h2> Show debt statistic </h2>
 <form action="/debt_show" method="POST">
-    Last period:
-    <br/><input type="radio" name="per" value="1_month"/> 1 month
+    <h3> Last period: </h3>
+    <input type="radio" name="per" value="1_month"/> 1 month
     <br/><input type="radio" name="per" value="2_months"/> 2 months
     <br/><input type="radio" name="per" value="3_months"/> 3 months
     <br/><input type="radio" name="per" value="4_months"/> 4 months
@@ -76,7 +81,7 @@
 
     <br/><input type="submit"/>
 </form>
-
+    </div>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>
