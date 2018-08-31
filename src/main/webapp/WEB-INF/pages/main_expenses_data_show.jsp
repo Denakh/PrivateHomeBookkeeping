@@ -25,7 +25,8 @@
             <c:when test="${not empty expEntityList}">
                 <c:forEach items="${expEntityList}" var="expEntity">
                     <tr>
-                        <td><fmt:formatNumber value="${expEntity.amountChange}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${expEntity.amountChange}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
                         <td>${expEntity.date}</td>
                         <td>${expEntity.description}</td>
                         <td><fmt:formatNumber value="${expEntity.amount}" pattern="###.00" minIntegerDigits="1"/></td>

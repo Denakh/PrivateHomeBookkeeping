@@ -41,13 +41,18 @@
                         <td>${mfs.yearLast}</td>
                         <td><fmt:formatNumber value="${mfs.totalIncome}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td><fmt:formatNumber value="${mfs.totalExpenses}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${mfs.currentExpenses}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${mfs.curExpFactStandDif}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.currentExpenses}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpFactStandDif}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
                         <td><fmt:formatNumber value="${mfs.passiveDebts}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${mfs.overallBalanceWD}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.overallBalanceWD}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
                         <td><fmt:formatNumber value="${mfs.expToIncRatio}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${mfs.curExpensesCoverByIncome}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${mfs.passDebtsToOBRatio}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpensesCoverByIncome}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.passDebtsToOBRatio}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
                         <td>${mfs.fcResult}</td>
                     </tr>
                 </c:forEach>
