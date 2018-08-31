@@ -11,7 +11,7 @@
 
 <div class="tables add_cer">
     <h2> Actual current expenses rate(%) for month number </h2>
-    <table border="1">
+    <table border="1" class="h2-al">
         <thead>
         <tr>
             <td><b>1</b></td>

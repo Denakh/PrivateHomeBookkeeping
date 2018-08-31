@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -11,7 +12,7 @@
 
 <div class="tables-fw">
     <h2> Current expenses list </h2>
-    <table border="1">
+    <table border="1" class="h2-al">
         <thead>
         <tr>
             <td><b>Month number</b></td>
@@ -26,9 +27,9 @@
                 <c:forEach items="${curExpEntityList}" var="curexp">
                     <tr>
                         <td>${curexp.month}</td>
-                        <td>${curexp.estimatedAmount}</td>
-                        <td>${curexp.standardAmount}</td>
-                        <td>${curexp.difference}</td>
+                        <td><fmt:formatNumber value="${curexp.estimatedAmount}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${curexp.standardAmount}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${curexp.difference}" pattern="###.00"/></td>
                         <td>${curexp.date}</td>
                     </tr>
                 </c:forEach>

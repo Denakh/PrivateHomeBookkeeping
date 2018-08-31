@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -38,15 +39,15 @@
                         <td>${mfs.year}</td>
                         <td>${mfs.monthLast}</td>
                         <td>${mfs.yearLast}</td>
-                        <td>${mfs.totalIncome}</td>
-                        <td>${mfs.totalExpenses}</td>
-                        <td>${mfs.currentExpenses}</td>
-                        <td>${mfs.curExpFactStandDif}</td>
-                        <td>${mfs.passiveDebts}</td>
-                        <td>${mfs.overallBalanceWD}</td>
-                        <td>${mfs.expToIncRatio}</td>
-                        <td>${mfs.curExpensesCoverByIncome}</td>
-                        <td>${mfs.passDebtsToOBRatio}</td>
+                        <td><fmt:formatNumber value="${mfs.totalIncome}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.totalExpenses}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.currentExpenses}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpFactStandDif}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.passiveDebts}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.overallBalanceWD}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.expToIncRatio}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpensesCoverByIncome}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.passDebtsToOBRatio}" pattern="###.00"/></td>
                         <td>${mfs.fcResult}</td>
                     </tr>
                 </c:forEach>
@@ -74,12 +75,12 @@
         </tr>
         </thead>
         <tr>
-            <td>${overallBalanceWDFLast}</td>
-            <td>${overallBalanceWDCLast}</td>
-            <td>${curExpensesCoverByIncome}</td>
-            <td>${expToIncRatio}</td>
-            <td>${passDebtsToOBRatio}</td>
-            <td>${relationalCEFactStandDif}</td>
+            <td><fmt:formatNumber value="${overallBalanceWDFLast}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${overallBalanceWDCLast}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${curExpensesCoverByIncome}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${expToIncRatio}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${passDebtsToOBRatio}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${relationalCEFactStandDif}" pattern="###.00"/></td>
         </tr>
         <tr>
             <td colspan="6"> Overall current financial condition: ${fcRes} </td>

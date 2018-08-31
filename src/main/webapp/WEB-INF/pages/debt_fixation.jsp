@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -54,12 +55,12 @@
                 <c:forEach items="${debts}" var="debt">
                     <tr>
                         <td>${debt.id}</td>
-                        <td>${debt.amount}</td>
+                        <td><fmt:formatNumber value="${debt.amount}" pattern="###.00"/></td>
                         <td>${debt.date}</td>
                         <td>${debt.description}</td>
                         <td>${debt.percent}</td>
                         <td>${debt.percentForInitialAm}</td>
-                        <td>${debt.remainingSum}</td>
+                        <td><fmt:formatNumber value="${debt.remainingSum}" pattern="###.00"/></td>
                     </tr>
                 </c:forEach>
             </c:when>

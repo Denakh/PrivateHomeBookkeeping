@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -24,10 +25,10 @@
             <c:when test="${not empty expEntityList}">
                 <c:forEach items="${expEntityList}" var="expEntity">
                     <tr>
-                        <td>${expEntity.amountChange}</td>
+                        <td><fmt:formatNumber value="${expEntity.amountChange}" pattern="###.00"/></td>
                         <td>${expEntity.date}</td>
                         <td>${expEntity.description}</td>
-                        <td>${expEntity.amount}</td>
+                        <td><fmt:formatNumber value="${expEntity.amount}" pattern="###.00"/></td>
                     </tr>
                 </c:forEach>
             </c:when>
