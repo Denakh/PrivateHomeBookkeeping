@@ -10,8 +10,8 @@
 </head>
 <body>
 
-<div class="tables-fw">
-    <h2> Current expenses list </h2>
+<div class="tables-fw celist">
+    <h2 class="h2-al"> Current expenses list </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>
