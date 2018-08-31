@@ -19,11 +19,15 @@
         <h3><p><a href="/register">Register new user</a></p></h3>
 
         <c:if test="${param.error ne null}">
-            <p>Wrong login or password!</p>
+            <p>Wrong login or password, or this login has been already authenticated by other user!</p>
         </c:if>
 
         <c:if test="${param.logout ne null}">
             <h3><p>Chao!</p></h3>
+        </c:if>
+
+        <c:if test="${param.concses ne null}">
+            <h3><p>This login has been already authenticated by other user!</p></h3>
         </c:if>
     </form>
 </div>

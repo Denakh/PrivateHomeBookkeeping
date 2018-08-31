@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ShowEntitiesController {
@@ -123,6 +124,13 @@ public class ShowEntitiesController {
         else dateFrom = new Date(curTime - period);
         this.incomsShow(dbUser, dateFrom, model);
         return "income_show";
+    }
+
+    @RequestMapping("/get_users_jsp")
+    public String usersGettingExe(Model model) {
+        List<CustomUser> users = userService.getUsers();
+        model.addAttribute("usersList", users);
+        return "users_show";
     }
 
     /*

@@ -67,7 +67,7 @@
 </h3>
 <div class="hrefs2">
     <p class="p1">!Only for users with admin roles!</p>
-    <h3><p><a href="/get_users">Get users list</a></p></h3>
+    <h3><p><a href="/get_users_jsp">Get users list</a></p></h3>
 </div>
 </body>
 </html>

@@ -10,6 +10,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -71,6 +72,11 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     private Properties additionalProperties() {

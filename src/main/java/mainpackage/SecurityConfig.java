@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/get_users").hasRole("ADMIN")
+                .antMatchers("/get_users_jsp").hasRole("ADMIN")
                 .antMatchers("/register").permitAll()
                 .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized")
@@ -46,7 +47,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login?logout")
-                .invalidateHttpSession(true);
+                .invalidateHttpSession(true)
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+                .expiredUrl("/login?concses");
     }
 
     private ShaPasswordEncoder getShaPasswordEncoder() {

@@ -10,7 +10,7 @@
 <body>
 
 <div class="hrefs3 ac_d">
-    <h2>Access denied for ${login}!</h2>
+    <h2>Access denied for ${login} (only for admin role users)!</h2>
 
     <h3><p><a href="/">Main menu</a></p></h3>
 
