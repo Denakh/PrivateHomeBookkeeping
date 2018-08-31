@@ -25,7 +25,7 @@
             <c:when test="${not empty incomeEntityList}">
                 <c:forEach items="${incomeEntityList}" var="income">
                     <tr>
-                        <td><fmt:formatNumber value="${income.amount}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${income.amount}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${income.date}</td>
                         <td>${income.purpose}</td>
                         <td>${income.description}</td>
@@ -57,11 +57,11 @@
             <c:when test="${not empty gIncomeEntityList}">
                 <c:forEach items="${gIncomeEntityList}" var="gincome">
                     <tr>
-                        <td>${gincome.amount} <fmt:formatNumber value="${gincome.amount}" pattern="###.00"/></td>
+                        <td>${gincome.amount} <fmt:formatNumber value="${gincome.amount}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${gincome.date}</td>
                         <td>${gincome.monthNumber}</td>
-                        <td>${gincome.accumulation} <fmt:formatNumber value="${gincome.accumulation}" pattern="###.00"/></td>
-                        <td>${gincome.excessForAllocation} <fmt:formatNumber value="${gincome.excessForAllocation}" pattern="###.00"/></td>
+                        <td>${gincome.accumulation} <fmt:formatNumber value="${gincome.accumulation}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td>${gincome.excessForAllocation} <fmt:formatNumber value="${gincome.excessForAllocation}" pattern="###.00" minIntegerDigits="1"/></td>
                     </tr>
                 </c:forEach>
             </c:when>

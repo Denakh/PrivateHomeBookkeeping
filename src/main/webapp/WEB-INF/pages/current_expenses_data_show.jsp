@@ -27,9 +27,9 @@
                 <c:forEach items="${curExpEntityList}" var="curexp">
                     <tr>
                         <td>${curexp.month}</td>
-                        <td><fmt:formatNumber value="${curexp.estimatedAmount}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${curexp.standardAmount}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${curexp.difference}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${curexp.estimatedAmount}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${curexp.standardAmount}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${curexp.difference}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${curexp.date}</td>
                     </tr>
                 </c:forEach>

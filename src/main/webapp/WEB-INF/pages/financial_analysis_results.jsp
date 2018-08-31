@@ -39,15 +39,15 @@
                         <td>${mfs.year}</td>
                         <td>${mfs.monthLast}</td>
                         <td>${mfs.yearLast}</td>
-                        <td><fmt:formatNumber value="${mfs.totalIncome}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.totalExpenses}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.currentExpenses}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.curExpFactStandDif}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.passiveDebts}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.overallBalanceWD}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.expToIncRatio}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.curExpensesCoverByIncome}" pattern="###.00"/></td>
-                        <td><fmt:formatNumber value="${mfs.passDebtsToOBRatio}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${mfs.totalIncome}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.totalExpenses}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.currentExpenses}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpFactStandDif}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.passiveDebts}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.overallBalanceWD}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.expToIncRatio}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.curExpensesCoverByIncome}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${mfs.passDebtsToOBRatio}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${mfs.fcResult}</td>
                     </tr>
                 </c:forEach>
@@ -75,12 +75,12 @@
         </tr>
         </thead>
         <tr>
-            <td><fmt:formatNumber value="${overallBalanceWDFLast}" pattern="###.00"/></td>
-            <td><fmt:formatNumber value="${overallBalanceWDCLast}" pattern="###.00"/></td>
-            <td><fmt:formatNumber value="${curExpensesCoverByIncome}" pattern="###.00"/></td>
-            <td><fmt:formatNumber value="${expToIncRatio}" pattern="###.00"/></td>
-            <td><fmt:formatNumber value="${passDebtsToOBRatio}" pattern="###.00"/></td>
-            <td><fmt:formatNumber value="${relationalCEFactStandDif}" pattern="###.00"/></td>
+            <td><fmt:formatNumber value="${overallBalanceWDFLast}" pattern="###.00" minIntegerDigits="1"/></td>
+            <td><fmt:formatNumber value="${overallBalanceWDCLast}" pattern="###.00" minIntegerDigits="1"/></td>
+            <td><fmt:formatNumber value="${curExpensesCoverByIncome}" pattern="###.00" minIntegerDigits="1"/></td>
+            <td><fmt:formatNumber value="${expToIncRatio}" pattern="###.00" minIntegerDigits="1"/></td>
+            <td><fmt:formatNumber value="${passDebtsToOBRatio}" pattern="###.00" minIntegerDigits="1"/></td>
+            <td><fmt:formatNumber value="${relationalCEFactStandDif}" pattern="###.00" minIntegerDigits="1"/></td>
         </tr>
         <tr>
             <td colspan="6"> Overall current financial condition: ${fcRes} </td>

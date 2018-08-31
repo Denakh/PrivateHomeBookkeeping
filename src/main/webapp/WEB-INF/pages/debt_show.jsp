@@ -31,12 +31,12 @@
                 <c:forEach items="${debtEntityList}" var="debt">
                     <tr>
                         <td>${debt.id}</td>
-                        <td><fmt:formatNumber value="${debt.amount}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${debt.amount}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${debt.date}</td>
                         <td>${debt.description}</td>
                         <td>${debt.percent}</td>
                         <td>${debt.percentForInitialAm}</td>
-                        <td><fmt:formatNumber value="${debt.remainingSum}" pattern="###.00"/></td>
+                        <td><fmt:formatNumber value="${debt.remainingSum}" pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${debt.idDebtForChange}</td>
                     </tr>
                 </c:forEach>

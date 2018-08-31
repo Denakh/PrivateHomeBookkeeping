@@ -557,41 +557,42 @@ public class AnalysisController {
         String advCase23 = "It is recommended not to lend extra money. ";
         String advCase31 = "It is recommended to increase the rate of current expenses: ";
         String advCase32 = "It is recommended to reduce the rate of current expenses: ";
-        return this.getAdvicesFin(fcByCurExpansesCover, fcByPassDebtsToOBRatio, relationalCEFactStandDif, recCERchanging,
+        int recCERchangingInt = (int) recCERchanging;
+        return this.getAdvicesFin(fcByCurExpansesCover, fcByPassDebtsToOBRatio, relationalCEFactStandDif, recCERchangingInt,
                 advCase11, advCase12, advCase13, advCase152425, advCase21, advCase22, advCase23, advCase31, advCase32);
     }
 
     private String getAdvicesFin(FinancialCondition fcByCurExpansesCover, FinancialCondition fcByPassDebtsToOBRatio,
-                                 double relationalCEFactStandDif, double recCERchanging, String advCase11, String advCase12,
+                                 double relationalCEFactStandDif, int recCERchanging, String advCase11, String advCase12,
                                  String advCase13, String advCase152425, String advCase21, String advCase22,
                                  String advCase23, String advCase31, String advCase32) {
         String advices = "No advices";
         if (fcByPassDebtsToOBRatio == FinancialCondition.DANGEROUS) {
             advices = advCase21 + advCase11;
-            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
             return advices;
         }
         if (fcByPassDebtsToOBRatio == FinancialCondition.UNSATISFACTORY) {
             if (fcByCurExpansesCover == FinancialCondition.DANGEROUS) advices = advCase22 + advCase11;
             else advices = advCase22 + " " + advCase12;
-            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
             return advices;
         }
         if (fcByPassDebtsToOBRatio == FinancialCondition.SATISFACTORY) {
             if (fcByCurExpansesCover == FinancialCondition.DANGEROUS) advices = advCase23 + advCase11;
             else if (fcByCurExpansesCover == FinancialCondition.UNSATISFACTORY) advices = advCase23 + advCase12;
             else advices = advCase23 + advCase13;
-            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
             return advices;
         }
         if (fcByCurExpansesCover == FinancialCondition.EXCELLENT) {
             advices = advCase152425;
-            if (relationalCEFactStandDif > 10.0) advices = advices + advCase31 + recCERchanging + " hrn";
-            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + " hrn";
+            if (relationalCEFactStandDif > 10.0) advices = advices + advCase31 + recCERchanging + "";
+            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
             return advices;
         }
-        if (relationalCEFactStandDif > 10.0) advices = advCase31 + recCERchanging + " hrn";
-        if (relationalCEFactStandDif < -10.0) advices = advCase32 + recCERchanging + " hrn";
+        if (relationalCEFactStandDif > 10.0) advices = advCase31 + recCERchanging + "";
+        if (relationalCEFactStandDif < -10.0) advices = advCase32 + recCERchanging + "";
         return advices;
     }
 
