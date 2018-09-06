@@ -585,12 +585,10 @@ public class AnalysisController {
             if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
             return advices;
         }
-        if (fcByCurExpansesCover == FinancialCondition.EXCELLENT) {
-            advices = advCase152425;
-            if (relationalCEFactStandDif > 10.0) advices = advices + advCase31 + recCERchanging + "";
-            if (relationalCEFactStandDif < -10.0) advices = advices + advCase32 + recCERchanging + "";
-            return advices;
-        }
+        if (fcByCurExpansesCover == FinancialCondition.DANGEROUS) advices = advCase11;
+        if (fcByCurExpansesCover == FinancialCondition.UNSATISFACTORY) advices = advCase12;
+        if (fcByCurExpansesCover == FinancialCondition.SATISFACTORY) advices = advCase13;
+        if (fcByCurExpansesCover == FinancialCondition.EXCELLENT) advices = advCase152425;
         if (relationalCEFactStandDif > 10.0) advices = advCase31 + recCERchanging + "";
         if (relationalCEFactStandDif < -10.0) advices = advCase32 + recCERchanging + "";
         return advices;
