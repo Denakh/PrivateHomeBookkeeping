@@ -39,6 +39,12 @@ public class GeneralIncome {
         this.monthNumber = monthNumber;
     }
 
+    public GeneralIncome(byte monthNumber, double accumulation, double excessForAllocation) {
+        this.monthNumber = monthNumber;
+        this.accumulation = accumulation;
+        this.excessForAllocation = excessForAllocation;
+    }
+
     public GeneralIncome(double amount, Date date, byte monthNumber, double accumulation, double excessForAllocation) {
         this.amount = amount;
         this.date = date;
