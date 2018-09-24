@@ -26,6 +26,13 @@ public class CommunalPayStatistics {
     public CommunalPayStatistics() {
     }
 
+    public CommunalPayStatistics(CustomUser user, double amount, Date date, String description) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.description = description;
+    }
+
     public long getId() {
         return id;
     }
