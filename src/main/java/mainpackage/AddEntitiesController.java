@@ -4,6 +4,8 @@ import mainpackage.entities.allocationofprofits.AllocationOfProfits;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.communalpaystatistics.CommunalPayStatistics;
+import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
@@ -63,6 +65,8 @@ public class AddEntitiesController {
     private CurrentExpensesRateService currentExpensesRateService;
     @Autowired
     private DebtService debtService;
+    @Autowired
+    private CommunalPayStatisticsService communalPayStatisticsService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -268,6 +272,26 @@ public class AddEntitiesController {
         return "redirect:/";
     }
 
+    @RequestMapping("/communalpay_fixation_execute")
+    public String communalpayFixationExecute(@RequestParam String amount,
+                                        @RequestParam String description,
+                                        Model model) {
+        double damount;
+        String errorStr;
+        try {
+            damount = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error in amount. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        CommunalPayStatistics communalPayStatistics = new CommunalPayStatistics(dbUser, damount, date, description);
+        communalPayStatisticsService.addCommunalPayStatistics(communalPayStatistics);
+        return "redirect:/";
+    }
+
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
@@ -448,6 +472,5 @@ public class AddEntitiesController {
         String login = user.getUsername();
         return userService.getUserByLogin(login);
     }
-
 
 }
