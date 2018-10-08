@@ -38,11 +38,13 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
+    @Transactional
     public List<Income> findEntriesFromDate(CustomUser user, Date date) {
         return incomeRepository.findEntriesFromDate(user, date);
     }
 
     @Override
+    @Transactional
     public List<Income> findEntriesBetweenDates(CustomUser user, Date dateFrom, Date dateTo) {
         return incomeRepository.findEntriesBetweenDates(user, dateFrom, dateTo);
     }

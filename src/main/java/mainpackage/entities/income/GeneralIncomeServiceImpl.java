@@ -38,6 +38,7 @@ public class GeneralIncomeServiceImpl implements GeneralIncomeService {
     }
 
     @Override
+    @Transactional
     public List<GeneralIncome> findEntriesFromDate(CustomUser user, Date date) {
         return generalIncomeRepository.findEntriesFromDate(user, date);
     }
