@@ -1,5 +1,6 @@
 package mainpackage;
 
+import mainpackage.currentcurrenciesinfo.GetCurrentCurrenciesInfo;
 import mainpackage.entities.allocationofprofits.AllocationOfProfits;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.Charity;
@@ -67,6 +68,8 @@ public class AddEntitiesController {
     private DebtService debtService;
     @Autowired
     private CommunalPayStatisticsService communalPayStatisticsService;
+    @Autowired
+    private GetCurrentCurrenciesInfo getCurrentCurrenciesInfo;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -103,7 +106,10 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/foreign_currencies")
-    public String foreignCurrenciesOperations() {
+    public String foreignCurrenciesOperations(Model model) {
+        //String jsonString = getCurrentCurrenciesInfo.getCurrenciesInfoFromFinanceUa();
+        String jsonString = "Some info...";
+        model.addAttribute("json", jsonString);
         return "foreign_currencies_operations";
     }
 

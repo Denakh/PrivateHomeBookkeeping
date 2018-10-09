@@ -32,11 +32,13 @@ public class CharityServiceImpl implements CharityService {
     }
 
     @Override
+    @Transactional
     public List<Charity> getAllEntriesList(CustomUser user) {
         return charityRepository.getAllEntriesList(user);
     }
 
     @Override
+    @Transactional
     public List<Charity> findEntriesFromDate(CustomUser user, Date date) {
         return charityRepository.findEntriesFromDate(user, date);
     }

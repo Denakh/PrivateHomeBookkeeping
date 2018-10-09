@@ -1,5 +1,6 @@
 package mainpackage;
 
+import mainpackage.currentcurrenciesinfo.GetCurrentCurrenciesInfo;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;

@@ -9,6 +9,19 @@
 </head>
 <body>
 
+<div align="center">
+
+    <h3>
+        <div class="new_data_fw">
+            ${json}
+        </div>
+    </h3>
+
+    <div class="hrefs3">
+        <h3><p><a href="/">Main menu</a></p></h3>
+    </div>
+</div>
+
 <form action="/foreign_currencies_execute" method="POST">
     Currency:
     <br/><input type="radio" name="currency" value="usd"/> USD
