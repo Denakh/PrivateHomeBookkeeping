@@ -32,10 +32,13 @@ public class CurrentExpensesServiceImpl implements CurrentExpensesService {
     }
 
     @Override
+    @Transactional
     public List<CurrentExpenses> findEntriesFromDate(CustomUser user, Date date) {
         return currentExpensesRepository.findEntriesFromDate(user, date);
     }
 
+    @Override
+    @Transactional
     public CurrentExpenses findLastEntry(CustomUser user) {
         return currentExpensesRepository.findLastEntry(user);
     }

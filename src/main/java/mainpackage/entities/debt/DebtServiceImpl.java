@@ -44,11 +44,13 @@ public class DebtServiceImpl implements DebtService {
     }
 
     @Override
+    @Transactional
     public List<Debt> findEffectiveDebtsList(CustomUser user) {
         return debtRepository.findEffectiveDebtsList(user);
     }
 
     @Override
+    @Transactional
     public List<Debt> findEntriesFromDate(CustomUser user, Date date) {
         return debtRepository.findEntriesFromDate(user, date);
     }

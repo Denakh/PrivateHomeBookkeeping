@@ -33,6 +33,7 @@ public class CommunalPayStatisticsServiceImpl implements CommunalPayStatisticsSe
     }
 
     @Override
+    @Transactional
     public List<CommunalPayStatistics> findEntriesFromDate(CustomUser user, Date date) {
         return communalPayStatisticsRepository.findEntriesFromDate(user, date);
     }
