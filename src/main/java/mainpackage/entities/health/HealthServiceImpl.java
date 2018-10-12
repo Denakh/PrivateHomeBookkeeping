@@ -32,11 +32,13 @@ public class HealthServiceImpl implements HealthService {
     }
 
     @Override
+    @Transactional
     public List<Health> getAllEntriesList(CustomUser user) {
         return healthRepository.getAllEntriesList(user);
     }
 
     @Override
+    @Transactional
     public List<Health> findEntriesFromDate(CustomUser user, Date date) {
         return healthRepository.findEntriesFromDate(user, date);
     }

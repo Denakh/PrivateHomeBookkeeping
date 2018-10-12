@@ -32,11 +32,13 @@ public class KidsAndPetsServiceImpl implements KidsAndPetsService {
     }
 
     @Override
+    @Transactional
     public List<KidsAndPets> getAllEntriesList(CustomUser user) {
         return kidsAndPetsRepository.getAllEntriesList(user);
     }
 
     @Override
+    @Transactional
     public List<KidsAndPets> findEntriesFromDate(CustomUser user, Date date) {
         return kidsAndPetsRepository.findEntriesFromDate(user, date);
     }
