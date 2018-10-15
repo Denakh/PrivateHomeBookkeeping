@@ -32,11 +32,13 @@ public class ReserveServiceImpl implements ReserveService {
     }
 
     @Override
+    @Transactional
     public List<Reserve> getAllEntriesList(CustomUser user) {
         return reserveRepository.getAllEntriesList(user);
     }
 
     @Override
+    @Transactional
     public List<Reserve> findEntriesFromDate(CustomUser user, Date date) {
         return reserveRepository.findEntriesFromDate(user, date);
     }
