@@ -32,16 +32,19 @@ public class OverallBalanceServiceImpl implements OverallBalanceService {
     }
 
     @Override
+    @Transactional
     public List<OverallBalance> findEntriesBetweenDates(CustomUser user, Date dateFrom, Date dateTo) {
         return overallBalanceRepository.findEntriesBetweenDates(user, dateFrom, dateTo);
     }
 
     @Override
+    @Transactional
     public OverallBalance findLastEntry(CustomUser user, BalanceType btype) {
         return overallBalanceRepository.findLastEntry(user, btype);
     }
 
     @Override
+    @Transactional
     public List<OverallBalance> findEntriesFromDate(CustomUser user, Date date) {
         return overallBalanceRepository.findEntriesFromDate(user, date);
     }

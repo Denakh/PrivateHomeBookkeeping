@@ -32,11 +32,13 @@ public class RecreationServiceImpl implements RecreationService {
     }
 
     @Override
+    @Transactional
     public List<Recreation> getAllEntriesList(CustomUser user) {
         return recreationRepository.getAllEntriesList(user);
     }
 
     @Override
+    @Transactional
     public List<Recreation> findEntriesFromDate(CustomUser user, Date date) {
         return recreationRepository.findEntriesFromDate(user, date);
     }
