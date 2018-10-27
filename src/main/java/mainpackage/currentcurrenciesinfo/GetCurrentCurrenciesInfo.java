@@ -20,11 +20,19 @@ public class GetCurrentCurrenciesInfo {
 
     //@Autowired
     //private ListenedUrlService listenedUrlService;
+/*
+    public static void main(String[] args) {
 
+        System.out.println(getCurrenciesInfoFromFinanceUa());
+
+    }
+*/
     public String getCurrenciesInfoFromFinanceUa() {
 
         //https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
-        ResponseEntity<String> responseEntity = this.get("http://resources.finance.ua", "/ru/public/currency-cash.json");
+        //ResponseEntity<String> responseEntity = this.get("http://resources.finance.ua", "/ru/public/currency-cash.json");
+        ResponseEntity<String> responseEntity = get("https://bank.gov.ua",
+                "/NBUStatService/v1/statdirectory/exchange?json");
         String respBody = responseEntity.getBody();
         //Gson gson = new GsonBuilder().create();
         //JsonObject jsonObject = gson.fromJson(respBody, JsonObject.class);
