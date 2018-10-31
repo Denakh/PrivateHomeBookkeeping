@@ -3,6 +3,7 @@ package mainpackage.currentcurrenciesinfo;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import com.jayway.restassured.RestAssured;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,10 +24,15 @@ public class GetCurrentCurrenciesInfo {
 /*
     public static void main(String[] args) {
 
-        System.out.println(getCurrenciesInfoFromFinanceUa());
+        System.out.println(getByRestAssured());
 
     }
 */
+
+
+
+
+
     public String getCurrenciesInfoFromFinanceUa() {
 
         //https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
@@ -47,6 +53,14 @@ public class GetCurrentCurrenciesInfo {
         HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
         ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, String.class);
         return responseEntity;
+    }
+
+    private String getByRestAssured() {
+        Currency currency = RestAssured.
+                given().
+                get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json").
+                as(Currency.class);
+        return currency.getTxt();
     }
 
 }
