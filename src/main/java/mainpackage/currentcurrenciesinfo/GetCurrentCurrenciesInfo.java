@@ -21,47 +21,18 @@ public class GetCurrentCurrenciesInfo {
 
     //@Autowired
     //private ListenedUrlService listenedUrlService;
-/*
+
     public static void main(String[] args) {
-
-        System.out.println(getByRestAssured());
-
+        Gson gson = new Gson();
+        Currency[] array = gson.fromJson(getByRestAssured(), Currency[].class);
+        System.out.println(array.length);
     }
 
-*/
-
-
-
-
-
-    public String getCurrenciesInfoFromFinanceUa() {
-
-        //https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json
-        //ResponseEntity<String> responseEntity = this.get("http://resources.finance.ua", "/ru/public/currency-cash.json");
-        ResponseEntity<String> responseEntity = get("https://bank.gov.ua",
-                "/NBUStatService/v1/statdirectory/exchange?json");
-        String respBody = responseEntity.getBody();
-        //Gson gson = new GsonBuilder().create();
-        //JsonObject jsonObject = gson.fromJson(respBody, JsonObject.class);
-        return respBody;
-    }
-
-    private ResponseEntity<String> get(String server, String uri) {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        headers.add("Accept", "text/*");
-        RestTemplate rest = new RestTemplate();
-        HttpEntity<String> requestEntity = new HttpEntity<>("", headers);
-        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, String.class);
-        return responseEntity;
-    }
-
-    private String getByRestAssured() {
-        Currency currency = RestAssured.
+    private static String getByRestAssured() {
+       return RestAssured.
                 given().
                 get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json").
-                as(Currency.class);
-        return currency.getTxt();
+                asString();
     }
 
 }
