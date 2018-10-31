@@ -27,6 +27,7 @@ public class GetCurrentCurrenciesInfo {
         System.out.println(getByRestAssured());
 
     }
+
 */
 
 
