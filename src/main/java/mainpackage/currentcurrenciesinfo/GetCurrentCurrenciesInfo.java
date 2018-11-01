@@ -1,20 +1,13 @@
 package mainpackage.currentcurrenciesinfo;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.jayway.restassured.RestAssured;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class GetCurrentCurrenciesInfo {
@@ -24,15 +17,30 @@ public class GetCurrentCurrenciesInfo {
 
     public static void main(String[] args) {
         Gson gson = new Gson();
-        Currency[] array = gson.fromJson(getByRestAssured(), Currency[].class);
+
+        Currency[] array = gson.fromJson(getRespBodyByRestTemplate("https://bank.gov.ua",
+                "/NBUStatService/v1/statdirectory/exchange?json"), Currency[].class);
         System.out.println(array.length);
+
     }
 
+
+    private static String getRespBodyByRestTemplate(String server, String uri) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        headers.add("Accept", "text/*");
+        RestTemplate rest = new RestTemplate();
+        HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+        ResponseEntity<String> responseEntity = rest.exchange(server + uri, HttpMethod.GET, requestEntity, String.class);
+        return responseEntity.getBody();
+    }
+
+/*
     private static String getByRestAssured() {
-       return RestAssured.
+        return RestAssured.
                 given().
                 get("https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json").
                 asString();
     }
-
+*/
 }
