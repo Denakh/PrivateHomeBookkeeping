@@ -2,6 +2,8 @@ package mainpackage.currentcurrenciesinfo;
 
 import com.google.gson.Gson;
 import com.jayway.restassured.RestAssured;
+import mainpackage.entities.charity.Charity;
+import mainpackage.entities.health.Health;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -17,10 +19,19 @@ public class GetCurrentCurrenciesInfo {
 
     public static void main(String[] args) {
         Gson gson = new Gson();
-
         Currency[] array = gson.fromJson(getRespBodyByRestTemplate("https://bank.gov.ua",
                 "/NBUStatService/v1/statdirectory/exchange?json"), Currency[].class);
         System.out.println(array.length);
+        for (Currency currency : array) {
+            switch (currency.getTxt()) {
+                case "Долар США":
+                    System.out.println("USD: " + currency.getRate());
+                    break;
+                case "Євро":
+                    System.out.println("EUR: " + currency.getRate());
+                    break;
+            }
+        }
 
     }
 
