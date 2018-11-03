@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "cc",
     "exchangedate"
 })
-public class Currency {
+public class CurrencyCurrentStatNBU {
 
     @JsonProperty("r030")
     private int r030;
