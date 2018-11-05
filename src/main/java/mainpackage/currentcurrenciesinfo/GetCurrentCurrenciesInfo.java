@@ -78,6 +78,7 @@ public class GetCurrentCurrenciesInfo {
         return number;
     }
 
+
 /*
     private static String getByRestAssured() {
         return RestAssured.
