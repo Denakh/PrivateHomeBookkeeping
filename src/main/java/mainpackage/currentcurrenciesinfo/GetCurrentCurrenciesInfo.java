@@ -1,7 +1,6 @@
 package mainpackage.currentcurrenciesinfo;
 
 import com.google.gson.Gson;
-import mainpackage.currentcurrenciesinfo.currenciesinfofinanceua.Cities;
 import mainpackage.currentcurrenciesinfo.currenciesinfofinanceua.CurrencyStatsFinanceUa;
 import mainpackage.currentcurrenciesinfo.currenciesinfofinanceua.Organization;
 import org.springframework.http.HttpEntity;
@@ -50,13 +49,33 @@ public class GetCurrentCurrenciesInfo {
 
         List<Double> ratesListUSD = new ArrayList<>();
         List<Double> ratesListEUR = new ArrayList<>();
-
+        double sumUSD = 0;
+        double sumEUR = 0;
 
         for (Organization organization : organizationList) {
             if (organization.getCurrencies().getUSD() != null)
-            System.out.println(organization.getCurrencies().getUSD().getBid());
+            ratesListUSD.add(getDoubleFromString(organization.getCurrencies().getUSD().getBid()));
+            sumUSD += ratesListUSD.get(ratesListUSD.size()-1);
+            if (organization.getCurrencies().getEUR() != null)
+            ratesListEUR.add(getDoubleFromString(organization.getCurrencies().getEUR().getBid()));
+            sumEUR += ratesListEUR.get(ratesListEUR.size()-1);
         }
 
+        double averUSD = sumUSD/ratesListUSD.size();
+        double averEUR = sumEUR/ratesListEUR.size();
+
+        System.out.println("USD " + averUSD + "; " + "EUR " + averEUR);
+
+    }
+
+    private static double getDoubleFromString(String string) {
+        double number = 0;
+        try {
+            number = Double.parseDouble(string);
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+        return number;
     }
 
 /*
