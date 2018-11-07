@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -11,11 +12,33 @@
 
 <div align="center">
 
-    <h3>
-        <div class="new_data_fw">
-            ${json}
-        </div>
-    </h3>
+    <div class="tables-fw celist">
+        <h2 class="h2-al"> Current expenses list </h2>
+        <table border="1" class="h2-al">
+            <thead>
+            <tr>
+                <td><b>Currency</b></td>
+                <td><b>Amount</b></td>
+            </tr>
+            </thead>
+            <c:choose>
+                <c:when test="${not empty foreignCurrenciesList}">
+                    <c:forEach items="${foreignCurrenciesList}" var="foreignCurrency">
+                        <tr>
+                            <td>${foreignCurrency.currency}</td>
+                            <td><fmt:formatNumber value="${foreignCurrency.amount}" pattern="###.00"
+                                                  minIntegerDigits="1"/></td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <tr>
+                        <td colspan="2">There is no amount in foreign currencies</td>
+                    </tr>
+                </c:otherwise>
+            </c:choose>
+        </table>
+    </div>
 
     <div class="hrefs3">
         <h3><p><a href="/">Main menu</a></p></h3>

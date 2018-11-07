@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import mainpackage.currentcurrenciesinfo.currenciesinfofinanceua.CurrencyStatsFinanceUa;
 import mainpackage.currentcurrenciesinfo.currenciesinfofinanceua.Organization;
 import mainpackage.entities.foreigncurrencies.Currencies;
-import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -31,13 +30,13 @@ public class GetCurrentCurrenciesInfo {
         for (Organization organization : organizationList) {
             if (organization.getCurrencies().getUSD() != null)
                 ratesListUSD.add(getDoubleFromString(organization.getCurrencies().getUSD().getBid()));
-            sumUSD += ratesListUSD.get(ratesListUSD.size()-1);
+            sumUSD += ratesListUSD.get(ratesListUSD.size() - 1);
             if (organization.getCurrencies().getEUR() != null)
                 ratesListEUR.add(getDoubleFromString(organization.getCurrencies().getEUR().getBid()));
-            sumEUR += ratesListEUR.get(ratesListEUR.size()-1);
+            sumEUR += ratesListEUR.get(ratesListEUR.size() - 1);
         }
-        double averUSD = sumUSD/ratesListUSD.size();
-        double averEUR = sumEUR/ratesListEUR.size();
+        double averUSD = sumUSD / ratesListUSD.size();
+        double averEUR = sumEUR / ratesListEUR.size();
         currenciesCashBidRateMap.put(Currencies.USD, averUSD);
         currenciesCashBidRateMap.put(Currencies.EUR, averEUR);
         return currenciesCashBidRateMap;

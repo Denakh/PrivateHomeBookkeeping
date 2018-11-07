@@ -1,8 +1,11 @@
 package mainpackage.entities.foreigncurrencies;
 
+import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ForeignCurrenciesServiceImpl implements ForeignCurrenciesService {
@@ -25,6 +28,12 @@ public class ForeignCurrenciesServiceImpl implements ForeignCurrenciesService {
     @Transactional
     public void deleteForeignCurrencies(Long id) {
         foreignCurrenciesRepository.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public List<ForeignCurrencies> getAllEntriesList(CustomUser user) {
+        return foreignCurrenciesRepository.getAllEntriesList(user);
     }
 
 }

@@ -11,6 +11,8 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
+import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
+import mainpackage.entities.foreigncurrencies.ForeignCurrenciesService;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncome;
@@ -38,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 @Controller
 public class AddEntitiesController {
@@ -70,6 +73,8 @@ public class AddEntitiesController {
     private CommunalPayStatisticsService communalPayStatisticsService;
     @Autowired
     private GetCurrentCurrenciesInfo getCurrentCurrenciesInfo;
+    @Autowired
+    private ForeignCurrenciesService foreignCurrenciesService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -107,9 +112,11 @@ public class AddEntitiesController {
 
     @RequestMapping("/foreign_currencies")
     public String foreignCurrenciesOperations(Model model) {
+        CustomUser dbUser = this.getCurrentUser();
+        List<ForeignCurrencies> foreignCurrenciesList = foreignCurrenciesService.getAllEntriesList(dbUser);
         //String jsonString = getCurrentCurrenciesInfo.getCurrenciesInfoFromFinanceUa();
-        String jsonString = "Some info...";
-        model.addAttribute("json", jsonString);
+        //String jsonString = "Some info...";
+        model.addAttribute("foreignCurrenciesList", foreignCurrenciesList);
         return "foreign_currencies_operations";
     }
 

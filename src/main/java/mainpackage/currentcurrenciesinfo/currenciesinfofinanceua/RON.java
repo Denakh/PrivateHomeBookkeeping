@@ -1,4 +1,3 @@
-
 package mainpackage.currentcurrenciesinfo.currenciesinfofinanceua;
 
 import com.google.gson.annotations.Expose;

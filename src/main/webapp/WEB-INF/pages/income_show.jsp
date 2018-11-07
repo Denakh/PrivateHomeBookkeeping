@@ -58,14 +58,14 @@
                 <c:forEach items="${gIncomeEntityList}" var="gincome">
                     <tr>
                         <td><fmt:formatNumber value="${gincome.amount}" pattern="###.00"
-                                                                minIntegerDigits="1"/></td>
+                                              minIntegerDigits="1"/></td>
                         <td>${gincome.date}</td>
                         <td>${gincome.monthNumber}</td>
                         <td><fmt:formatNumber value="${gincome.accumulation}" pattern="###.00"
-                                                                      minIntegerDigits="1"/></td>
+                                              minIntegerDigits="1"/></td>
                         <td><fmt:formatNumber value="${gincome.excessForAllocation}"
-                                                                             pattern="###.00"
-                                                                             minIntegerDigits="1"/></td>
+                                              pattern="###.00"
+                                              minIntegerDigits="1"/></td>
                     </tr>
                 </c:forEach>
             </c:when>

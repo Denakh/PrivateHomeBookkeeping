@@ -1,4 +1,3 @@
-
 package mainpackage.currentcurrenciesinfo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -7,11 +6,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "r030",
-    "txt",
-    "rate",
-    "cc",
-    "exchangedate"
+        "r030",
+        "txt",
+        "rate",
+        "cc",
+        "exchangedate"
 })
 public class CurrencyCurrentStatNBU {
 
