@@ -37,6 +37,9 @@
                     </tr>
                 </c:otherwise>
             </c:choose>
+            <tr>
+                <td colspan="2">Current currencies rate: USD() ${USDRate}, EUR() ${EURRate}</td>
+            </tr>
         </table>
     </div>
 

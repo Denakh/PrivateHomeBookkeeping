@@ -11,6 +11,7 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
+import mainpackage.entities.foreigncurrencies.Currencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrenciesService;
 import mainpackage.entities.health.Health;
@@ -37,10 +38,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class AddEntitiesController {
@@ -114,9 +112,10 @@ public class AddEntitiesController {
     public String foreignCurrenciesOperations(Model model) {
         CustomUser dbUser = this.getCurrentUser();
         List<ForeignCurrencies> foreignCurrenciesList = foreignCurrenciesService.getAllEntriesList(dbUser);
-        //String jsonString = getCurrentCurrenciesInfo.getCurrenciesInfoFromFinanceUa();
-        //String jsonString = "Some info...";
+        Map<Currencies, Double> currenciesBidMap = getCurrentCurrenciesInfo.getCashBidRateWithUAHFromFinanceUa();
         model.addAttribute("foreignCurrenciesList", foreignCurrenciesList);
+        model.addAttribute("USDRate", currenciesBidMap.get(Currencies.USD));
+        model.addAttribute("EURRate", currenciesBidMap.get(Currencies.EUR));
         return "foreign_currencies_operations";
     }
 
