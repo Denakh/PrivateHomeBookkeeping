@@ -23,22 +23,30 @@ public class GetCurrentCurrenciesInfo {
         Map<Currencies, Double> currenciesCashBidRateMap = new HashMap<>();
         CurrencyStatsFinanceUa currencyStatsFinanceUa = currencyCurrentStatFromFinanceUa();
         List<Organization> organizationList = currencyStatsFinanceUa.getOrganizations();
-        List<Double> ratesListUSD = new ArrayList<>();
-        List<Double> ratesListEUR = new ArrayList<>();
-        double sumUSD = 0;
-        double sumEUR = 0;
+        List<Double> ratesListUSDAsk = new ArrayList<>();
+        List<Double> ratesListEURAsk = new ArrayList<>();
+        List<Double> ratesListUSDBid = new ArrayList<>();
+        List<Double> ratesListEURBid = new ArrayList<>();
+        double sumUSDAsk = 0;
+        double sumEURAsk = 0;
+        double sumUSDBid = 0;
+        double sumEURBid = 0;
         for (Organization organization : organizationList) {
-            if (organization.getCurrencies().getUSD() != null)
-                ratesListUSD.add(getDoubleFromString(organization.getCurrencies().getUSD().getBid()));
-            sumUSD += ratesListUSD.get(ratesListUSD.size() - 1);
-            if (organization.getCurrencies().getEUR() != null)
-                ratesListEUR.add(getDoubleFromString(organization.getCurrencies().getEUR().getBid()));
-            sumEUR += ratesListEUR.get(ratesListEUR.size() - 1);
+            if (organization.getCurrencies().getUSD() != null) {
+                ratesListUSDAsk.add(getDoubleFromString(organization.getCurrencies().getUSD().getAsk()));
+                ratesListUSDBid.add(getDoubleFromString(organization.getCurrencies().getUSD().getBid()));
+            }
+            sumUSDAsk += ratesListUSDAsk.get(ratesListUSDAsk.size() - 1);
+            if (organization.getCurrencies().getEUR() != null) {
+                ratesListEURAsk.add(getDoubleFromString(organization.getCurrencies().getEUR().getAsk()));
+                ratesListEURBid.add(getDoubleFromString(organization.getCurrencies().getEUR().getBid()));
+            }
+            sumEURAsk += ratesListEURAsk.get(ratesListEURAsk.size() - 1);
         }
-        double averUSD = sumUSD / ratesListUSD.size();
-        double averEUR = sumEUR / ratesListEUR.size();
-        currenciesCashBidRateMap.put(Currencies.USD, averUSD);
-        currenciesCashBidRateMap.put(Currencies.EUR, averEUR);
+        double averUSDAsk = sumUSDAsk / ratesListUSDAsk.size();
+        double averEURAsk = sumEURAsk / ratesListEURAsk.size();
+        currenciesCashBidRateMap.put(Currencies.USD, averUSDAsk);
+        currenciesCashBidRateMap.put(Currencies.EUR, averEURAsk);
         return currenciesCashBidRateMap;
     }
 
