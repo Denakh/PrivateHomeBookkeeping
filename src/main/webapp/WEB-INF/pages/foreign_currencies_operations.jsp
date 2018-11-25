@@ -38,7 +38,8 @@
                 </c:otherwise>
             </c:choose>
             <tr>
-                <td colspan="2">Current currencies rate: USD() ${USDRate}, EUR() ${EURRate}</td>
+                <td colspan="2">Current currencies rate: USD(bid, ask): ${USDBidRate}, ${USDAskRate};
+                    EUR(bid, ask):${EURBidRate}, ${EURAskRate};</td>
             </tr>
         </table>
     </div>

@@ -113,9 +113,12 @@ public class AddEntitiesController {
         CustomUser dbUser = this.getCurrentUser();
         List<ForeignCurrencies> foreignCurrenciesList = foreignCurrenciesService.getAllEntriesList(dbUser);
         Map<Currencies, Double> currenciesBidMap = getCurrentCurrenciesInfo.getCashBidRateWithUAHFromFinanceUa();
+        Map<Currencies, Double> currenciesAskMap = getCurrentCurrenciesInfo.getCashAskRateWithUAHFromFinanceUa();
         model.addAttribute("foreignCurrenciesList", foreignCurrenciesList);
-        model.addAttribute("USDRate", currenciesBidMap.get(Currencies.USD));
-        model.addAttribute("EURRate", currenciesBidMap.get(Currencies.EUR));
+        model.addAttribute("USDBidRate", currenciesBidMap.get(Currencies.USD));
+        model.addAttribute("EURBidRate", currenciesBidMap.get(Currencies.EUR));
+        model.addAttribute("USDAskRate", currenciesAskMap.get(Currencies.USD));
+        model.addAttribute("EURAskRate", currenciesAskMap.get(Currencies.EUR));
         return "foreign_currencies_operations";
     }
 
