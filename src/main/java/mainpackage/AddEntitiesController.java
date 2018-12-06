@@ -307,6 +307,47 @@ public class AddEntitiesController {
         return "redirect:/";
     }
 
+/*
+    Currency:
+    <br/><input type="radio" name="currency" value="usd"/> USD
+            <br/><input type="radio" name="currency" value="eur"/> EUR
+            <br>
+    Operation type:
+    <br/><input type="radio" name="type" value="buying"/> buying
+            <br/><input type="radio" name="type" value="selling"/> selling
+            <br/><input type="radio" name="type" value="income"/> income
+            <br/><input type="radio" name="type" value="expenditure"/> expenditure
+            <br>
+    Amount: <input type="text" name="amount"><br>
+    Exchange rate hrn/currency: <input type="text" name="exchange_rate"><br>
+*/
+
+
+    @RequestMapping("/foreign_currencies_execute")
+    public String foreignCurrenciesExecute(@RequestParam String currency,
+                                         @RequestParam String type,
+                                         @RequestParam(defaultValue = "0") String amount,
+                                         Model model) {
+        /*
+        double damount;
+        String errorStr = "";
+        try {
+            damount = -1 * Double.parseDouble(amount_change);
+        } catch (NumberFormatException e) {
+            errorStr = "Number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "/input_error";
+        }
+        if (purpose.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        double am = 0;
+        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+        return this.returnResPage(res, model);
+        */
+        return "";
+    }
+
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
         switch (purpose) {
             case "charity":
