@@ -12,4 +12,7 @@ public interface ForeignCurrenciesRepository extends JpaRepository<ForeignCurren
     @Query("SELECT f FROM ForeignCurrencies f WHERE f.user = :user ORDER BY f.id ASC")
     List<ForeignCurrencies> getAllEntriesList(@Param("user") CustomUser user);
 
+    @Query("SELECT f FROM ForeignCurrencies f where f.user = :user AND f.currency = :currency")
+    ForeignCurrencies findEntryByCurrency(@Param("user") CustomUser user, @Param("currency") Currencies currency);
+
 }
