@@ -14,4 +14,6 @@ public interface ForeignCurrenciesService {
 
     List<ForeignCurrencies> getAllEntriesList(CustomUser user);
 
+    ForeignCurrencies findEntryByCurrency(CustomUser user, Currencies currency);
+
 }

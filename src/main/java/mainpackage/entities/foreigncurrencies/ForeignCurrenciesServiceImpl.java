@@ -36,4 +36,10 @@ public class ForeignCurrenciesServiceImpl implements ForeignCurrenciesService {
         return foreignCurrenciesRepository.getAllEntriesList(user);
     }
 
+    @Override
+    @Transactional
+    public ForeignCurrencies findEntryByCurrency(CustomUser user, Currencies currency) {
+        return foreignCurrenciesRepository.findEntryByCurrency(user, currency);
+    }
+
 }
