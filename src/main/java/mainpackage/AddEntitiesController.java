@@ -139,7 +139,7 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "Number format error for amount. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
@@ -328,16 +328,19 @@ public class AddEntitiesController {
                                          @RequestParam String type,
                                          @RequestParam(defaultValue = "0") String amount,
                                          Model model) {
-        /*
         double damount;
         String errorStr = "";
         try {
-            damount = -1 * Double.parseDouble(amount_change);
+            damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        CustomUser dbUser = this.getCurrentUser();
+        Currencies currencyType = this.getCurrency(currency);
+        ForeignCurrencies foreignCurrencies = foreignCurrenciesService.findEntryByCurrency(dbUser, currencyType);
+        /*
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -529,4 +532,41 @@ public class AddEntitiesController {
         return userService.getUserByLogin(login);
     }
 
+    /*
+    private void foreignCurrenciesHandling(double damount, Currencies currency, String type) {
+        switch (type) {
+            case "buying":
+                Charity c = charityService.findLastEntry(dbUser);
+                if (c != null) am = c.getAmount();
+                charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+                break;
+            case "selling":
+                Health h = healthService.findLastEntry(dbUser);
+                if (h != null) am = h.getAmount();
+                healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+                break;
+            case "income":
+                KidsAndPets k = kidsAndPetsService.findLastEntry(dbUser);
+                if (k != null) am = k.getAmount();
+                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description, am + damount));
+                break;
+            case "expenditure":
+                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry(dbUser);
+                if (o != null) am = o.getAmount();
+                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date, description, am + damount));
+                break;
+            default:
+                ;
+        }
+    }
+*/
+    private Currencies getCurrency(String currency) {
+        switch (currency) {
+            case "usd":
+                return Currencies.USD;
+            case "eur":
+                return Currencies.EUR;
+        }
+        return Currencies.UAH;
+    }
 }
