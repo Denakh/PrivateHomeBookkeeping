@@ -327,13 +327,16 @@ public class AddEntitiesController {
     public String foreignCurrenciesExecute(@RequestParam String currency,
                                          @RequestParam String type,
                                          @RequestParam(defaultValue = "0") String amount,
+                                         @RequestParam(defaultValue = "0") String exchange_rate,
                                          Model model) {
         double damount;
+        double dexchange_rate;
         String errorStr = "";
         try {
             damount = Double.parseDouble(amount);
+            dexchange_rate = Double.parseDouble(exchange_rate);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "Number format error in amount or exchange rate. Try again";
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
@@ -532,8 +535,9 @@ public class AddEntitiesController {
         return userService.getUserByLogin(login);
     }
 
-    /*
-    private void foreignCurrenciesHandling(double damount, Currencies currency, String type) {
+/*
+    private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchange_rate,
+                                           ForeignCurrencies foreignCurrencies, Model model) {
         switch (type) {
             case "buying":
                 Charity c = charityService.findLastEntry(dbUser);
@@ -546,20 +550,27 @@ public class AddEntitiesController {
                 healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
                 break;
             case "income":
-                KidsAndPets k = kidsAndPetsService.findLastEntry(dbUser);
-                if (k != null) am = k.getAmount();
-                kidsAndPetsService.addKidsAndPets(new KidsAndPets(dbUser, damount, date, description, am + damount));
+                foreignCurrencies.setAmount(foreignCurrencies.getAmount()+damount);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             case "expenditure":
-                OtherCapitalOutlays o = otherCapitalOutlaysService.findLastEntry(dbUser);
-                if (o != null) am = o.getAmount();
-                otherCapitalOutlaysService.addOtherCapitalOutlays(new OtherCapitalOutlays(dbUser, damount, date, description, am + damount));
+                double amountAfterOperation = foreignCurrencies.getAmount()-damount;
+                if (amountAfterOperation < 0) {
+                    model.addAttribute("error_message", "operation is skipped, because of " +
+                            "expenditure amount is higher than your recorded amount, " +
+                            "please perform buying operation before");
+                    return "/input_error";
+                }
+                foreignCurrencies.setAmount(amountAfterOperation);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
-            default:
-                ;
+            //default:
+            //    ;
         }
+        return "";
     }
 */
+
     private Currencies getCurrency(String currency) {
         switch (currency) {
             case "usd":
