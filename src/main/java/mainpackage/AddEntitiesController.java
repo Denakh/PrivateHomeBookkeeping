@@ -289,8 +289,8 @@ public class AddEntitiesController {
 
     @RequestMapping("/communalpay_fixation_execute")
     public String communalpayFixationExecute(@RequestParam String amount,
-                                        @RequestParam String description,
-                                        Model model) {
+                                             @RequestParam String description,
+                                             Model model) {
         double damount;
         String errorStr;
         try {
@@ -325,10 +325,10 @@ public class AddEntitiesController {
 
     @RequestMapping("/foreign_currencies_execute")
     public String foreignCurrenciesExecute(@RequestParam String currency,
-                                         @RequestParam String type,
-                                         @RequestParam(defaultValue = "0") String amount,
-                                         @RequestParam(defaultValue = "0") String exchange_rate,
-                                         Model model) {
+                                           @RequestParam String type,
+                                           @RequestParam(defaultValue = "0") String amount,
+                                           @RequestParam(defaultValue = "0") String exchange_rate,
+                                           Model model) {
         double damount;
         double dexchange_rate;
         String errorStr = "";
@@ -536,13 +536,17 @@ public class AddEntitiesController {
     }
 
 /*
-    private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchange_rate,
-                                           ForeignCurrencies foreignCurrencies, Model model) {
+    private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchangeRate,
+                                             ForeignCurrencies foreignCurrencies, Model model) {
         switch (type) {
             case "buying":
-                Charity c = charityService.findLastEntry(dbUser);
-                if (c != null) am = c.getAmount();
-                charityService.addCharity(new Charity(dbUser, damount, date, description, am + damount));
+                double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
+                double initCurrencyValue = foreignCurrencies.getAmount();
+                double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /
+                        initCurrencyValue + damount;
+                foreignCurrencies.setAmount(initCurrencyValue + damount);
+                foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             case "selling":
                 Health h = healthService.findLastEntry(dbUser);
@@ -550,11 +554,11 @@ public class AddEntitiesController {
                 healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
                 break;
             case "income":
-                foreignCurrencies.setAmount(foreignCurrencies.getAmount()+damount);
+                foreignCurrencies.setAmount(foreignCurrencies.getAmount() + damount);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             case "expenditure":
-                double amountAfterOperation = foreignCurrencies.getAmount()-damount;
+                double amountAfterOperation = foreignCurrencies.getAmount() - damount;
                 if (amountAfterOperation < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
                             "expenditure amount is higher than your recorded amount, " +
