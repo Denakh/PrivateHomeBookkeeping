@@ -180,13 +180,13 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/allocation_of_profits_execute")
-    public String incomeFixationExecute(@RequestParam String charity_percent,
-                                        @RequestParam String health_percent,
-                                        @RequestParam String kids_and_pets_percent,
-                                        @RequestParam String other_capoutlays_percent,
-                                        @RequestParam String recreation_percent,
-                                        @RequestParam String reserve_percent,
-                                        Model model) {
+    public String allocationOfProfitsExecute(@RequestParam String charity_percent,
+                                             @RequestParam String health_percent,
+                                             @RequestParam String kids_and_pets_percent,
+                                             @RequestParam String other_capoutlays_percent,
+                                             @RequestParam String recreation_percent,
+                                             @RequestParam String reserve_percent,
+                                             Model model) {
         double dcharityPercent, dhealthPercent, dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent, percentSum;
         String errorStr = "";
         try {
@@ -257,12 +257,12 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/debt_fixation_execute")
-    public String incomeFixationExecute(@RequestParam(defaultValue = "0") String amount,
-                                        @RequestParam String description,
-                                        @RequestParam(defaultValue = "-101") String percent,
-                                        @RequestParam(defaultValue = "0") String purpose,
-                                        @RequestParam(defaultValue = "0") String id_for_change,
-                                        Model model) {
+    public String debtFixationExecute(@RequestParam(defaultValue = "0") String amount,
+                                      @RequestParam String description,
+                                      @RequestParam(defaultValue = "-101") String percent,
+                                      @RequestParam(defaultValue = "0") String purpose,
+                                      @RequestParam(defaultValue = "0") String id_for_change,
+                                      Model model) {
         double damount, dpercent;
         long idForChange;
         boolean percentForInitialAm = false;
@@ -538,10 +538,10 @@ public class AddEntitiesController {
 /*
     private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchangeRate,
                                              ForeignCurrencies foreignCurrencies, Model model) {
+        double initCurrencyValue = foreignCurrencies.getAmount();
+        double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
         switch (type) {
             case "buying":
-                double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
-                double initCurrencyValue = foreignCurrencies.getAmount();
                 double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /
                         initCurrencyValue + damount;
                 foreignCurrencies.setAmount(initCurrencyValue + damount);
@@ -549,23 +549,31 @@ public class AddEntitiesController {
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             case "selling":
-                Health h = healthService.findLastEntry(dbUser);
-                if (h != null) am = h.getAmount();
-                healthService.addHealth(new Health(dbUser, damount, date, description, am + damount));
+                double amountAfterOperationS = initCurrencyValue - damount;
+                if (amountAfterOperationS < 0) {
+                    model.addAttribute("error_message", "operation is skipped, because of " +
+                            "expenditure amount is higher than your recorded amount, " +
+                            "please perform selling operation before");
+                    return "/input_error";
+                }
+                foreignCurrencies.setAmount(amountAfterOperationS);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double rateDifferenceIncome = damount*(dexchangeRate - initExchangeRate);
+                if !!!!!
                 break;
             case "income":
                 foreignCurrencies.setAmount(foreignCurrencies.getAmount() + damount);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             case "expenditure":
-                double amountAfterOperation = foreignCurrencies.getAmount() - damount;
-                if (amountAfterOperation < 0) {
+                double amountAfterOperationE = initCurrencyValue - damount;
+                if (amountAfterOperationE < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
                             "expenditure amount is higher than your recorded amount, " +
                             "please perform buying operation before");
                     return "/input_error";
                 }
-                foreignCurrencies.setAmount(amountAfterOperation);
+                foreignCurrencies.setAmount(amountAfterOperationE);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 break;
             //default:
@@ -584,4 +592,20 @@ public class AddEntitiesController {
         }
         return Currencies.UAH;
     }
+
+     private void incomeExecute(double damount, String description, String purpose, CustomUser dbUser) {
+        Date date = new Date();
+        Income income = new Income(dbUser, damount, date, description, purpose);
+        if (purpose.equals("general")) this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
+        incomeService.addIncome(income);
+        double am = 0;
+        this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+    }
+
+    private void expenseExecute(double damount, String description, String purpose, CustomUser dbUser) {
+        Date date = new Date();
+        double am = 0;
+        this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+    }
+
 }
