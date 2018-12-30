@@ -37,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.font.TrueTypeFont;
 
 import java.util.*;
 
@@ -328,6 +329,8 @@ public class AddEntitiesController {
                                            @RequestParam String type,
                                            @RequestParam(defaultValue = "0") String amount,
                                            @RequestParam(defaultValue = "0") String exchange_rate,
+                                           @RequestParam String description,
+                                           @RequestParam(defaultValue = "0") String purpose,
                                            Model model) {
         double damount;
         double dexchange_rate;
@@ -537,7 +540,8 @@ public class AddEntitiesController {
 
 /*
     private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchangeRate,
-                                             ForeignCurrencies foreignCurrencies, Model model) {
+                                             String description, String purpose, ForeignCurrencies foreignCurrencies,
+                                             CustomUser dbUser, Model model) {
         double initCurrencyValue = foreignCurrencies.getAmount();
         double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
         switch (type) {
@@ -559,11 +563,17 @@ public class AddEntitiesController {
                 foreignCurrencies.setAmount(amountAfterOperationS);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
                 double rateDifferenceIncome = damount*(dexchangeRate - initExchangeRate);
-                if !!!!!
+                if (rateDifferenceIncome > 0) this.incomeExecute(rateDifferenceIncome,
+                        "Currency rate difference income", "general", dbUser);
+                if (rateDifferenceIncome < 0) this.expenseExecute(rateDifferenceIncome,
+                        "Currency rate difference expense", "other_capoutlays", dbUser);
                 break;
             case "income":
                 foreignCurrencies.setAmount(foreignCurrencies.getAmount() + damount);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double foreignCurrencyIncome = damount*initExchangeRate;
+                this.incomeExecute(foreignCurrencyIncome,
+                        "Foreign currency income (" + description + ")", purpose, dbUser);
                 break;
             case "expenditure":
                 double amountAfterOperationE = initCurrencyValue - damount;
@@ -575,6 +585,10 @@ public class AddEntitiesController {
                 }
                 foreignCurrencies.setAmount(amountAfterOperationE);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double foreignCurrencyExpense = -damount*initExchangeRate;
+                if (purpose.equals("general")) purpose = "other_capoutlays";
+                this.expenseExecute(foreignCurrencyExpense,
+                        "Foreign currency expense (" + description + ")", purpose, dbUser);
                 break;
             //default:
             //    ;
@@ -596,7 +610,10 @@ public class AddEntitiesController {
      private void incomeExecute(double damount, String description, String purpose, CustomUser dbUser) {
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
-        if (purpose.equals("general")) this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
+        if (purpose.equals("general")) {
+            this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
+            return;
+        }
         incomeService.addIncome(income);
         double am = 0;
         this.entitiesAdd(purpose, dbUser, damount, date, description, am);

@@ -63,6 +63,17 @@
     Amount: <input type="text" name="amount"><br>
     Exchange rate hrn/currency: <input type="text" name="exchange_rate"><br>
 
+    Additional information for income or expenditure:
+    Description: <input type="text" name="description"><br>
+    <h3>Purpose:</h3>
+    <input type="radio" name="purpose" value="general"/> general
+    <br/><input type="radio" name="purpose" value="charity"/> charity
+    <br/><input type="radio" name="purpose" value="health"/> health
+    <br/><input type="radio" name="purpose" value="kids_and_pets"/> kids and pats
+    <br/><input type="radio" name="purpose" value="other_capoutlays"/> other capital outlays
+    <br/><input type="radio" name="purpose" value="recreation"/> recreation
+    <br/><input type="radio" name="purpose" value="reserve"/> reserve
+
     <br/><input type="submit"/>
 </form>
 
