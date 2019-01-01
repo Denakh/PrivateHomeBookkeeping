@@ -308,25 +308,10 @@ public class AddEntitiesController {
         return "redirect:/";
     }
 
-/*
-    Currency:
-    <br/><input type="radio" name="currency" value="usd"/> USD
-            <br/><input type="radio" name="currency" value="eur"/> EUR
-            <br>
-    Operation type:
-    <br/><input type="radio" name="type" value="buying"/> buying
-            <br/><input type="radio" name="type" value="selling"/> selling
-            <br/><input type="radio" name="type" value="income"/> income
-            <br/><input type="radio" name="type" value="expenditure"/> expenditure
-            <br>
-    Amount: <input type="text" name="amount"><br>
-    Exchange rate hrn/currency: <input type="text" name="exchange_rate"><br>
-*/
-
 
     @RequestMapping("/foreign_currencies_execute")
-    public String foreignCurrenciesExecute(@RequestParam String currency,
-                                           @RequestParam String type,
+    public String foreignCurrenciesExecute(@RequestParam(defaultValue = "0") String currency,
+                                           @RequestParam(defaultValue = "0") String type,
                                            @RequestParam(defaultValue = "0") String amount,
                                            @RequestParam(defaultValue = "0") String exchange_rate,
                                            @RequestParam String description,
@@ -343,18 +328,13 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "/input_error";
         }
+        if (currency.equals("0") || type.equals("0")) return this.errorEmptyStr(model);
+        if (purpose.equals("0")) purpose = "general";
         CustomUser dbUser = this.getCurrentUser();
         Currencies currencyType = this.getCurrency(currency);
         ForeignCurrencies foreignCurrencies = foreignCurrenciesService.findEntryByCurrency(dbUser, currencyType);
-        /*
-        if (purpose.equals("0")) return this.errorEmptyStr(model);
-        CustomUser dbUser = this.getCurrentUser();
-        Date date = new Date();
-        double am = 0;
-        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
-        return this.returnResPage(res, model);
-        */
-        return "";
+        return this.foreignCurrenciesHandling(damount, type, dexchange_rate, description, purpose, foreignCurrencies,
+                dbUser, model);
     }
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
@@ -538,10 +518,10 @@ public class AddEntitiesController {
         return userService.getUserByLogin(login);
     }
 
-/*
-    private String foreignCurrenciesHandling(double damount, Currencies currency, String type, double dexchangeRate,
-                                             String description, String purpose, ForeignCurrencies foreignCurrencies,
-                                             CustomUser dbUser, Model model) {
+
+    private String foreignCurrenciesHandling(double damount, String type, double dexchangeRate, String description,
+                                             String purpose, ForeignCurrencies foreignCurrencies, CustomUser dbUser,
+                                             Model model) {
         double initCurrencyValue = foreignCurrencies.getAmount();
         double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
         switch (type) {
@@ -590,12 +570,22 @@ public class AddEntitiesController {
                 this.expenseExecute(foreignCurrencyExpense,
                         "Foreign currency expense (" + description + ")", purpose, dbUser);
                 break;
-            //default:
-            //    ;
+            case "recalculation":
+                foreignCurrencies.setConventionalExchangeRate(dexchangeRate);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double rateDifferenceIncomeRec = damount*(dexchangeRate - initExchangeRate);
+                if (rateDifferenceIncomeRec > 0) this.incomeExecute(rateDifferenceIncomeRec,
+                        "Currency rate difference income", "general", dbUser);
+                if (rateDifferenceIncomeRec < 0) this.expenseExecute(rateDifferenceIncomeRec,
+                        "Currency rate difference expense", "other_capoutlays", dbUser);
+                break;
+            default:
+                model.addAttribute("error_message", "no proper operation type");
+                return "/input_error";
         }
-        return "";
+        return "redirect:/";
     }
-*/
+
 
     private Currencies getCurrency(String currency) {
         switch (currency) {
