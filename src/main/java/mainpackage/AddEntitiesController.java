@@ -142,7 +142,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error for amount. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
@@ -170,7 +170,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
@@ -200,14 +200,14 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         percentSum = dcharityPercent + dhealthPercent + dkidsandpetsPercent + dothercapoutlaysPercent +
                 drecreationPercent + dreservePercent;
         if (percentSum != 100) {
             errorStr = "Percent sum isn't equal 100. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -248,7 +248,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -275,7 +275,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("initial_amount")) percentForInitialAm = true;
         CustomUser dbUser = this.getCurrentUser();
@@ -299,7 +299,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error in amount. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -326,7 +326,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error in amount or exchange rate. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (currency.equals("0") || type.equals("0")) return this.errorEmptyStr(model);
         if (purpose.equals("0")) purpose = "general";
@@ -468,7 +468,7 @@ public class AddEntitiesController {
         if (debtForChange == null) {
             String errorStr = "Error in debt id number";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (damount != 0) {
             double newRemSum = debtForChange.getRemainingSum() + damount;
@@ -492,7 +492,7 @@ public class AddEntitiesController {
         } else {
             String errorStr = "No debt changing has been detected, operation hasn't been implemented";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
     }
 
@@ -502,14 +502,14 @@ public class AddEntitiesController {
         else {
             errorStr = "Purpose error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
     }
 
     private String errorEmptyStr(Model model) {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
-        return "/input_error";
+        return "input_error";
     }
 
     private CustomUser getCurrentUser() {
@@ -538,7 +538,7 @@ public class AddEntitiesController {
                     model.addAttribute("error_message", "operation is skipped, because of " +
                             "expenditure amount is higher than your recorded amount, " +
                             "please perform selling operation before");
-                    return "/input_error";
+                    return "input_error";
                 }
                 foreignCurrencies.setAmount(amountAfterOperationS);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
@@ -561,7 +561,7 @@ public class AddEntitiesController {
                     model.addAttribute("error_message", "operation is skipped, because of " +
                             "expenditure amount is higher than your recorded amount, " +
                             "please perform buying operation before");
-                    return "/input_error";
+                    return "input_error";
                 }
                 foreignCurrencies.setAmount(amountAfterOperationE);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
@@ -581,7 +581,7 @@ public class AddEntitiesController {
                 break;
             default:
                 model.addAttribute("error_message", "no proper operation type");
-                return "/input_error";
+                return "input_error";
         }
         return "redirect:/";
     }
