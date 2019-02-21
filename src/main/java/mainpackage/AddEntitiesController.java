@@ -37,6 +37,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import sun.font.TrueTypeFont;
 
 import java.util.*;
 
@@ -139,9 +140,9 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "Number format error for amount. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
@@ -169,7 +170,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
@@ -180,13 +181,13 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/allocation_of_profits_execute")
-    public String incomeFixationExecute(@RequestParam String charity_percent,
-                                        @RequestParam String health_percent,
-                                        @RequestParam String kids_and_pets_percent,
-                                        @RequestParam String other_capoutlays_percent,
-                                        @RequestParam String recreation_percent,
-                                        @RequestParam String reserve_percent,
-                                        Model model) {
+    public String allocationOfProfitsExecute(@RequestParam String charity_percent,
+                                             @RequestParam String health_percent,
+                                             @RequestParam String kids_and_pets_percent,
+                                             @RequestParam String other_capoutlays_percent,
+                                             @RequestParam String recreation_percent,
+                                             @RequestParam String reserve_percent,
+                                             Model model) {
         double dcharityPercent, dhealthPercent, dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent, percentSum;
         String errorStr = "";
         try {
@@ -199,14 +200,14 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         percentSum = dcharityPercent + dhealthPercent + dkidsandpetsPercent + dothercapoutlaysPercent +
                 drecreationPercent + dreservePercent;
         if (percentSum != 100) {
             errorStr = "Percent sum isn't equal 100. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -247,7 +248,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -257,12 +258,12 @@ public class AddEntitiesController {
     }
 
     @RequestMapping("/debt_fixation_execute")
-    public String incomeFixationExecute(@RequestParam(defaultValue = "0") String amount,
-                                        @RequestParam String description,
-                                        @RequestParam(defaultValue = "-101") String percent,
-                                        @RequestParam(defaultValue = "0") String purpose,
-                                        @RequestParam(defaultValue = "0") String id_for_change,
-                                        Model model) {
+    public String debtFixationExecute(@RequestParam(defaultValue = "0") String amount,
+                                      @RequestParam String description,
+                                      @RequestParam(defaultValue = "-101") String percent,
+                                      @RequestParam(defaultValue = "0") String purpose,
+                                      @RequestParam(defaultValue = "0") String id_for_change,
+                                      Model model) {
         double damount, dpercent;
         long idForChange;
         boolean percentForInitialAm = false;
@@ -274,7 +275,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (purpose.equals("initial_amount")) percentForInitialAm = true;
         CustomUser dbUser = this.getCurrentUser();
@@ -289,8 +290,8 @@ public class AddEntitiesController {
 
     @RequestMapping("/communalpay_fixation_execute")
     public String communalpayFixationExecute(@RequestParam String amount,
-                                        @RequestParam String description,
-                                        Model model) {
+                                             @RequestParam String description,
+                                             Model model) {
         double damount;
         String errorStr;
         try {
@@ -298,7 +299,7 @@ public class AddEntitiesController {
         } catch (NumberFormatException e) {
             errorStr = "Number format error in amount. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -307,45 +308,33 @@ public class AddEntitiesController {
         return "redirect:/";
     }
 
-/*
-    Currency:
-    <br/><input type="radio" name="currency" value="usd"/> USD
-            <br/><input type="radio" name="currency" value="eur"/> EUR
-            <br>
-    Operation type:
-    <br/><input type="radio" name="type" value="buying"/> buying
-            <br/><input type="radio" name="type" value="selling"/> selling
-            <br/><input type="radio" name="type" value="income"/> income
-            <br/><input type="radio" name="type" value="expenditure"/> expenditure
-            <br>
-    Amount: <input type="text" name="amount"><br>
-    Exchange rate hrn/currency: <input type="text" name="exchange_rate"><br>
-*/
-
 
     @RequestMapping("/foreign_currencies_execute")
-    public String foreignCurrenciesExecute(@RequestParam String currency,
-                                         @RequestParam String type,
-                                         @RequestParam(defaultValue = "0") String amount,
-                                         Model model) {
-        /*
+    public String foreignCurrenciesExecute(@RequestParam(defaultValue = "0") String currency,
+                                           @RequestParam(defaultValue = "0") String type,
+                                           @RequestParam(defaultValue = "0") String amount,
+                                           @RequestParam(defaultValue = "0") String exchange_rate,
+                                           @RequestParam String description,
+                                           @RequestParam(defaultValue = "0") String purpose,
+                                           Model model) {
         double damount;
+        double dexchange_rate;
         String errorStr = "";
         try {
-            damount = -1 * Double.parseDouble(amount_change);
+            damount = Double.parseDouble(amount);
+            dexchange_rate = Double.parseDouble(exchange_rate);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "Number format error in amount or exchange rate. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
-        if (purpose.equals("0")) return this.errorEmptyStr(model);
+        if (currency.equals("0") || type.equals("0")) return this.errorEmptyStr(model);
+        if (purpose.equals("0")) purpose = "general";
         CustomUser dbUser = this.getCurrentUser();
-        Date date = new Date();
-        double am = 0;
-        boolean res = this.entitiesAdd(purpose, dbUser, damount, date, description, am);
-        return this.returnResPage(res, model);
-        */
-        return "";
+        Currencies currencyType = this.getCurrency(currency);
+        ForeignCurrencies foreignCurrencies = foreignCurrenciesService.findEntryByCurrency(dbUser, currencyType);
+        return this.foreignCurrenciesHandling(damount, type, dexchange_rate, description, purpose, foreignCurrencies,
+                dbUser, model);
     }
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
@@ -479,7 +468,7 @@ public class AddEntitiesController {
         if (debtForChange == null) {
             String errorStr = "Error in debt id number";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
         if (damount != 0) {
             double newRemSum = debtForChange.getRemainingSum() + damount;
@@ -503,7 +492,7 @@ public class AddEntitiesController {
         } else {
             String errorStr = "No debt changing has been detected, operation hasn't been implemented";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
     }
 
@@ -513,20 +502,117 @@ public class AddEntitiesController {
         else {
             errorStr = "Purpose error. Try again";
             model.addAttribute("error_message", errorStr);
-            return "/input_error";
+            return "input_error";
         }
     }
 
     private String errorEmptyStr(Model model) {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
-        return "/input_error";
+        return "input_error";
     }
 
     private CustomUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
         return userService.getUserByLogin(login);
+    }
+
+
+    private String foreignCurrenciesHandling(double damount, String type, double dexchangeRate, String description,
+                                             String purpose, ForeignCurrencies foreignCurrencies, CustomUser dbUser,
+                                             Model model) {
+        double initCurrencyValue = foreignCurrencies.getAmount();
+        double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
+        switch (type) {
+            case "buying":
+                double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /
+                        initCurrencyValue + damount;
+                foreignCurrencies.setAmount(initCurrencyValue + damount);
+                foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                break;
+            case "selling":
+                double amountAfterOperationS = initCurrencyValue - damount;
+                if (amountAfterOperationS < 0) {
+                    model.addAttribute("error_message", "operation is skipped, because of " +
+                            "expenditure amount is higher than your recorded amount, " +
+                            "please perform selling operation before");
+                    return "input_error";
+                }
+                foreignCurrencies.setAmount(amountAfterOperationS);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double rateDifferenceIncome = damount*(dexchangeRate - initExchangeRate);
+                if (rateDifferenceIncome > 0) this.incomeExecute(rateDifferenceIncome,
+                        "Currency rate difference income", "general", dbUser);
+                if (rateDifferenceIncome < 0) this.expenseExecute(rateDifferenceIncome,
+                        "Currency rate difference expense", "other_capoutlays", dbUser);
+                break;
+            case "income":
+                foreignCurrencies.setAmount(foreignCurrencies.getAmount() + damount);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double foreignCurrencyIncome = damount*initExchangeRate;
+                this.incomeExecute(foreignCurrencyIncome,
+                        "Foreign currency income (" + description + ")", purpose, dbUser);
+                break;
+            case "expenditure":
+                double amountAfterOperationE = initCurrencyValue - damount;
+                if (amountAfterOperationE < 0) {
+                    model.addAttribute("error_message", "operation is skipped, because of " +
+                            "expenditure amount is higher than your recorded amount, " +
+                            "please perform buying operation before");
+                    return "input_error";
+                }
+                foreignCurrencies.setAmount(amountAfterOperationE);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double foreignCurrencyExpense = -damount*initExchangeRate;
+                if (purpose.equals("general")) purpose = "other_capoutlays";
+                this.expenseExecute(foreignCurrencyExpense,
+                        "Foreign currency expense (" + description + ")", purpose, dbUser);
+                break;
+            case "recalculation":
+                foreignCurrencies.setConventionalExchangeRate(dexchangeRate);
+                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                double rateDifferenceIncomeRec = damount*(dexchangeRate - initExchangeRate);
+                if (rateDifferenceIncomeRec > 0) this.incomeExecute(rateDifferenceIncomeRec,
+                        "Currency rate difference income", "general", dbUser);
+                if (rateDifferenceIncomeRec < 0) this.expenseExecute(rateDifferenceIncomeRec,
+                        "Currency rate difference expense", "other_capoutlays", dbUser);
+                break;
+            default:
+                model.addAttribute("error_message", "no proper operation type");
+                return "input_error";
+        }
+        return "redirect:/";
+    }
+
+
+    private Currencies getCurrency(String currency) {
+        switch (currency) {
+            case "usd":
+                return Currencies.USD;
+            case "eur":
+                return Currencies.EUR;
+        }
+        return Currencies.UAH;
+    }
+
+     private void incomeExecute(double damount, String description, String purpose, CustomUser dbUser) {
+        Date date = new Date();
+        Income income = new Income(dbUser, damount, date, description, purpose);
+        if (purpose.equals("general")) {
+            this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
+            return;
+        }
+        incomeService.addIncome(income);
+        double am = 0;
+        this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+    }
+
+    private void expenseExecute(double damount, String description, String purpose, CustomUser dbUser) {
+        Date date = new Date();
+        double am = 0;
+        this.entitiesAdd(purpose, dbUser, damount, date, description, am);
     }
 
 }

@@ -43,14 +43,14 @@ public class Application {
                 currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(user, date, 8000, 8000, 8000, 8000,
                         7000, 6000, 6000, 6000, 6000, 6000, 7000, 8000));
                 debtService.addDebt(new Debt(user, 1000, date, "test", false, 10.1, 0));
-                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 5, 2018, 10000,
+                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 11, 2018, 10000,
                         10000, 1.0, 7000, 0.7, 3000,
                         13000, 0.23, 0, FinancialCondition.SATISFACTORY,
-                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 5, 2018));
-                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 6, 2018, 10000,
+                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 11, 2018));
+                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 12, 2018, 10000,
                         10000, 1.0, 7000, 0.7, 3000,
                         13000, 0.23, 0, FinancialCondition.SATISFACTORY,
-                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 6, 2018));
+                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 12, 2018));
             }
         };
     }
