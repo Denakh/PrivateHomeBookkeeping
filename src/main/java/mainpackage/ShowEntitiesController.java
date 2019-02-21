@@ -148,7 +148,7 @@ public class ShowEntitiesController {
     private String errorEmptyStr(Model model) {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
-        return "/input_error";
+        return "input_error";
     }
 
     private CustomUser getCurrentUser() {
