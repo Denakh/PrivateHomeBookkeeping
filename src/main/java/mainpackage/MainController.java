@@ -63,17 +63,16 @@ public class MainController {
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(@RequestParam(required = false) String email, @RequestParam(required = false) String phone) {
+    public String update(@RequestParam(required = false) String email, @RequestParam(required = false) String phone,
+                         Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String login = user.getUsername();
-
         CustomUser dbUser = userService.getUserByLogin(login);
         dbUser.setEmail(email);
         dbUser.setPhone(phone);
-
         userService.updateUser(dbUser);
-
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
     @RequestMapping(value = "/newuser", method = RequestMethod.POST)
@@ -86,13 +85,10 @@ public class MainController {
             model.addAttribute("exists", true);
             return "register";
         }
-
         ShaPasswordEncoder encoder = new ShaPasswordEncoder();
         String passHash = encoder.encodePassword(password, null);
-
         CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);
         userService.addUser(dbUser);
-
         return "redirect:/";
     }
 

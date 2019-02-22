@@ -150,7 +150,8 @@ public class AddEntitiesController {
         Income income = new Income(dbUser, damount, date, description, purpose);
         if (purpose.equals("general")) {
             this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
-            return "redirect:/";
+            model.addAttribute("notification", "Last operation is successful");
+            return "index";
         }
         incomeService.addIncome(income);
         double am = 0;
@@ -213,7 +214,8 @@ public class AddEntitiesController {
         Date date = new Date();
         allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(dbUser, date, dcharityPercent, dhealthPercent,
                 dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent));
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
     @RequestMapping("/current_expenses_rate_execute")
@@ -254,7 +256,8 @@ public class AddEntitiesController {
         Date date = new Date();
         currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(dbUser, date, damount1, damount2, damount3,
                 damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12));
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
     @RequestMapping("/debt_fixation_execute")
@@ -285,7 +288,8 @@ public class AddEntitiesController {
         if (purpose.equals("0")) return this.errorEmptyStr(model);
         if (dpercent == -101) dpercent = 0;
         debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, damount));
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
     @RequestMapping("/communalpay_fixation_execute")
@@ -305,7 +309,8 @@ public class AddEntitiesController {
         Date date = new Date();
         CommunalPayStatistics communalPayStatistics = new CommunalPayStatistics(dbUser, damount, date, description);
         communalPayStatisticsService.addCommunalPayStatistics(communalPayStatistics);
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
 
@@ -488,7 +493,8 @@ public class AddEntitiesController {
             if (dpercent == -101) dpercent = 0;
             debtService.updateDebt(debtForChange);
             debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, debtId));
-            return "redirect:/";
+            model.addAttribute("notification", "Last operation is successful");
+            return "index";
         } else {
             String errorStr = "No debt changing has been detected, operation hasn't been implemented";
             model.addAttribute("error_message", errorStr);
@@ -498,7 +504,10 @@ public class AddEntitiesController {
 
     private String returnResPage(boolean res, Model model) {
         String errorStr;
-        if (res) return "redirect:/";
+        if (res) {
+            model.addAttribute("notification", "Last operation is successful");
+            return "index";
+        }
         else {
             errorStr = "Purpose error. Try again";
             model.addAttribute("error_message", errorStr);
@@ -583,7 +592,8 @@ public class AddEntitiesController {
                 model.addAttribute("error_message", "no proper operation type");
                 return "input_error";
         }
-        return "redirect:/";
+        model.addAttribute("notification", "Last operation is successful");
+        return "index";
     }
 
 
