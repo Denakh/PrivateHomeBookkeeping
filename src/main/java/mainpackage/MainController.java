@@ -72,7 +72,7 @@ public class MainController {
         dbUser.setPhone(phone);
         userService.updateUser(dbUser);
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
     @RequestMapping(value = "/newuser", method = RequestMethod.POST)
@@ -89,7 +89,6 @@ public class MainController {
         String passHash = encoder.encodePassword(password, null);
         CustomUser dbUser = new CustomUser(login, passHash, UserRole.USER, email, phone);
         userService.addUser(dbUser);
-        model.addAttribute("notification", "Last operation is successful");
         return "redirect:/";
     }
 

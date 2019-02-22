@@ -151,7 +151,7 @@ public class AddEntitiesController {
         if (purpose.equals("general")) {
             this.entitiesAddFromGeneral(dbUser, damount, date, description, income);
             model.addAttribute("notification", "Last operation is successful");
-            return "redirect:/";
+            return "index";
         }
         incomeService.addIncome(income);
         double am = 0;
@@ -215,7 +215,7 @@ public class AddEntitiesController {
         allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(dbUser, date, dcharityPercent, dhealthPercent,
                 dkidsandpetsPercent, dothercapoutlaysPercent, drecreationPercent, dreservePercent));
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
     @RequestMapping("/current_expenses_rate_execute")
@@ -257,7 +257,7 @@ public class AddEntitiesController {
         currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(dbUser, date, damount1, damount2, damount3,
                 damount4, damount5, damount6, damount7, damount8, damount9, damount10, damount11, damount12));
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
     @RequestMapping("/debt_fixation_execute")
@@ -289,7 +289,7 @@ public class AddEntitiesController {
         if (dpercent == -101) dpercent = 0;
         debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, damount));
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
     @RequestMapping("/communalpay_fixation_execute")
@@ -310,7 +310,7 @@ public class AddEntitiesController {
         CommunalPayStatistics communalPayStatistics = new CommunalPayStatistics(dbUser, damount, date, description);
         communalPayStatisticsService.addCommunalPayStatistics(communalPayStatistics);
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
 
@@ -494,7 +494,7 @@ public class AddEntitiesController {
             debtService.updateDebt(debtForChange);
             debtService.addDebt(new Debt(dbUser, damount, date, description, percentForInitialAm, dpercent, debtId));
             model.addAttribute("notification", "Last operation is successful");
-            return "redirect:/";
+            return "index";
         } else {
             String errorStr = "No debt changing has been detected, operation hasn't been implemented";
             model.addAttribute("error_message", errorStr);
@@ -506,7 +506,7 @@ public class AddEntitiesController {
         String errorStr;
         if (res) {
             model.addAttribute("notification", "Last operation is successful");
-            return "redirect:/";
+            return "index";
         }
         else {
             errorStr = "Purpose error. Try again";
@@ -593,7 +593,7 @@ public class AddEntitiesController {
                 return "input_error";
         }
         model.addAttribute("notification", "Last operation is successful");
-        return "redirect:/";
+        return "index";
     }
 
 
