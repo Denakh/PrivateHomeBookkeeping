@@ -333,13 +333,13 @@ public class AddEntitiesController {
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
-        if (currency.equals("0") || type.equals("0")) return this.errorEmptyStr(model);
+        if (currency.equals("0") || type.equals("0") || dexchange_rate == 0) return this.errorEmptyStr(model);
         if (purpose.equals("0")) purpose = "general";
         CustomUser dbUser = this.getCurrentUser();
         Currencies currencyType = this.getCurrency(currency);
         ForeignCurrencies foreignCurrencies = foreignCurrenciesService.findEntryByCurrency(dbUser, currencyType);
         return this.foreignCurrenciesHandling(damount, type, dexchange_rate, description, purpose, foreignCurrencies,
-                dbUser, model);
+                currencyType, dbUser, model);
     }
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
@@ -529,10 +529,17 @@ public class AddEntitiesController {
 
 
     private String foreignCurrenciesHandling(double damount, String type, double dexchangeRate, String description,
-                                             String purpose, ForeignCurrencies foreignCurrencies, CustomUser dbUser,
-                                             Model model) {
-        double initCurrencyValue = foreignCurrencies.getAmount();
-        double initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
+                                             String purpose, ForeignCurrencies foreignCurrencies,
+                                             Currencies currencyType, CustomUser dbUser, Model model) {
+        double initCurrencyValue = 0;
+        double initExchangeRate = dexchangeRate;
+        try {
+        initCurrencyValue = foreignCurrencies.getAmount();
+        initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
+        } catch (NullPointerException e) {
+            foreignCurrencies = new ForeignCurrencies(dbUser, new Date(), currencyType, initCurrencyValue,
+                    initExchangeRate);
+        }
         switch (type) {
             case "buying":
                 double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /

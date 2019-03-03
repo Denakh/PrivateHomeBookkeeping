@@ -50,19 +50,19 @@
 </div>
 
 <form action="/foreign_currencies_execute" method="POST">
-    Currency:
+    Currency *:
     <br/><input type="radio" name="currency" value="usd"/> USD
     <br/><input type="radio" name="currency" value="eur"/> EUR
     <br>
-    Operation type:
+    Operation type *:
     <br/><input type="radio" name="type" value="buying"/> buying
     <br/><input type="radio" name="type" value="selling"/> selling
     <br/><input type="radio" name="type" value="income"/> income
     <br/><input type="radio" name="type" value="expenditure"/> expenditure
     <br/><input type="radio" name="type" value="recalculation"/> recalculation (amount value isn't used)
     <br>
-    Amount: <input type="text" name="amount"><br>
-    Exchange rate hrn/currency: <input type="text" name="exchange_rate"><br>
+    Amount *: <input type="text" name="amount"><br>
+    Exchange rate hrn/currency *: <input type="text" name="exchange_rate"><br>
 
     Additional information for income or expenditure:
     Description: <input type="text" name="description"><br>
@@ -74,6 +74,8 @@
     <br/><input type="radio" name="purpose" value="other_capoutlays"/> other capital outlays
     <br/><input type="radio" name="purpose" value="recreation"/> recreation
     <br/><input type="radio" name="purpose" value="reserve"/> reserve
+
+    * Required
 
     <br/><input type="submit"/>
 </form>

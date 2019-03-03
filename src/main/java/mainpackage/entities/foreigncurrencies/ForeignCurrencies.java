@@ -30,6 +30,15 @@ public class ForeignCurrencies {
     public ForeignCurrencies() {
     }
 
+    public ForeignCurrencies(CustomUser user, Date date, Currencies currency, double amount,
+                             double conventionalExchangeRate) {
+        this.user = user;
+        this.date = date;
+        this.currency = currency;
+        this.amount = amount;
+        this.conventionalExchangeRate = conventionalExchangeRate;
+    }
+
     public long getId() {
         return id;
     }
