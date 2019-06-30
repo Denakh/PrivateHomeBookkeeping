@@ -59,6 +59,10 @@
     </form>
 </div>
 
+<div class="hrefs3 dget">
+    <h3><p><a href="/allocation_of_profits_show">Show history of allocation values (last year)</a></p></h3>
+</div>
+
 <div class="hrefs4">
     <h3><p><a href="/">Main menu</a></p></h3>
 </div>

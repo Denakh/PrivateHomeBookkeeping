@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class AllocationOfProfitsServiceImpl implements AllocationOfProfitsService {
     @Autowired
@@ -32,6 +35,12 @@ public class AllocationOfProfitsServiceImpl implements AllocationOfProfitsServic
     @Transactional
     public AllocationOfProfits findLastEntry(CustomUser user) {
         return allocationOfProfitsRepository.findLastEntry(user);
+    }
+
+    @Override
+    @Transactional
+    public List<AllocationOfProfits> findEntriesFromDate(CustomUser user, Date date) {
+        return allocationOfProfitsRepository.findEntriesFromDate(user, date);
     }
 
 }
