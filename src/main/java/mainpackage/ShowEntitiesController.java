@@ -133,12 +133,18 @@ public class ShowEntitiesController {
         return "users_show";
     }
 
-    /*
     @RequestMapping("/allocation_of_profits_show")
-    public String allocationOfProfitsShow() {
+    public String allocationOfProfitsShow(Model model) {
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        long curTime = date.getTime();
+        long period = getPeriod("year");
+        Date dateFrom = new Date(curTime - period);
+        model.addAttribute("allocationOfProfitsList", allocationOfProfitsService.findEntriesFromDate(dbUser, dateFrom));
         return "allocation_of_profits_table";
     }
 
+    /*
     @RequestMapping("/communalpay_statistic_show")
     public String communalPayStatisticShow() {
         return "communalpay_statistic_table";
