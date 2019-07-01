@@ -2,6 +2,7 @@ package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
@@ -49,11 +50,11 @@ public class ShowEntitiesController {
     @Autowired
     private AllocationOfProfitsService allocationOfProfitsService;
     @Autowired
-    private CurrentExpensesRateService currentExpensesRateService;
-    @Autowired
     private DebtService debtService;
     @Autowired
     private CurrentExpensesService currentExpensesService;
+    @Autowired
+    private CommunalPayStatisticsService communalPayStatisticsService;
 
     @RequestMapping("/data_getting")
     public String dataGetting() {
