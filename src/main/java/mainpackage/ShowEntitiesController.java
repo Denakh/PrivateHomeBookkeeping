@@ -2,6 +2,7 @@ package mainpackage;
 
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.CharityService;
+import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
@@ -49,11 +50,11 @@ public class ShowEntitiesController {
     @Autowired
     private AllocationOfProfitsService allocationOfProfitsService;
     @Autowired
-    private CurrentExpensesRateService currentExpensesRateService;
-    @Autowired
     private DebtService debtService;
     @Autowired
     private CurrentExpensesService currentExpensesService;
+    @Autowired
+    private CommunalPayStatisticsService communalPayStatisticsService;
 
     @RequestMapping("/data_getting")
     public String dataGetting() {
@@ -134,22 +135,30 @@ public class ShowEntitiesController {
     }
 
     @RequestMapping("/allocation_of_profits_show")
-    public String allocationOfProfitsShow(Model model) {
+    public String allocationOfProfitsGettingExe(Model model) {
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
         long curTime = date.getTime();
         long period = getPeriod("year");
         Date dateFrom = new Date(curTime - period);
         model.addAttribute("allocationOfProfitsList", allocationOfProfitsService.findEntriesFromDate(dbUser, dateFrom));
-        return "allocation_of_profits_table";
+        return "allocation_of_profits_show";
     }
 
-    /*
     @RequestMapping("/communalpay_statistic_show")
-    public String communalPayStatisticShow() {
-        return "communalpay_statistic_table";
+    public String communalPayStatisticGettingExe(@RequestParam(defaultValue = "0") String per,
+                                           Model model) {
+        if (per.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(per);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        this.communalPayStatisticShow(dbUser, dateFrom, model);
+        return "communalpay_statistic_show";
     }
-    */
 
     private String errorEmptyStr(Model model) {
         String errorStr = "Not choose variant in list. Try again";
@@ -198,6 +207,10 @@ public class ShowEntitiesController {
 
     private void debtsShow(CustomUser dbUser, Date date, Model model) {
         model.addAttribute("debtEntityList", debtService.findEntriesFromDate(dbUser, date));
+    }
+
+    private void communalPayStatisticShow(CustomUser dbUser, Date date, Model model) {
+        model.addAttribute("communalPayStatisticEntityList", communalPayStatisticsService.findEntriesFromDate(dbUser, date));
     }
 
     private void incomsShow(CustomUser dbUser, Date date, Model model) {
