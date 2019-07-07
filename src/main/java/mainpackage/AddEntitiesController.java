@@ -543,7 +543,7 @@ public class AddEntitiesController {
         switch (type) {
             case "buying":
                 double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /
-                        initCurrencyValue + damount;
+                        (initCurrencyValue + damount);
                 foreignCurrencies.setAmount(initCurrencyValue + damount);
                 foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
