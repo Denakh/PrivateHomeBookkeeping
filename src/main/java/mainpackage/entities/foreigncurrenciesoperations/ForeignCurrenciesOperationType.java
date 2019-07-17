@@ -1,6 +1,6 @@
 package mainpackage.entities.foreigncurrenciesoperations;
 
-public enum ForeignCurrenciesOperationTypes {
+public enum ForeignCurrenciesOperationType {
 
     BUYING, SELLING, INCOME, EXPENDITURE, RECALCULATION;
 

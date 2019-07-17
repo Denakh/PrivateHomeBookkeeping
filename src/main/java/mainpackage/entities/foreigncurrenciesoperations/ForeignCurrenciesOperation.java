@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class ForeignCurrenciesOperations {
+public class ForeignCurrenciesOperation {
 
     @Id
     @GeneratedValue
@@ -25,7 +25,7 @@ public class ForeignCurrenciesOperations {
     private Currencies currency;
 
     @Enumerated(EnumType.STRING)
-    private ForeignCurrenciesOperationTypes operationName;
+    private ForeignCurrenciesOperationType operationName;
 
     private double amountChangeDuringOperation;
 
@@ -33,12 +33,12 @@ public class ForeignCurrenciesOperations {
 
     private double newAmount;
 
-    public ForeignCurrenciesOperations() {
+    public ForeignCurrenciesOperation() {
     }
 
-    public ForeignCurrenciesOperations(CustomUser user, Date date, Currencies currency,
-                                       ForeignCurrenciesOperationTypes operationName, double amountChangeDuringOperation,
-                                       double operationExchangeRate, double newAmount) {
+    public ForeignCurrenciesOperation(CustomUser user, Date date, Currencies currency,
+                                      ForeignCurrenciesOperationType operationName, double amountChangeDuringOperation,
+                                      double operationExchangeRate, double newAmount) {
         this.user = user;
         this.date = date;
         this.currency = currency;
@@ -80,11 +80,11 @@ public class ForeignCurrenciesOperations {
         this.currency = currency;
     }
 
-    public ForeignCurrenciesOperationTypes getOperationName() {
+    public ForeignCurrenciesOperationType getOperationName() {
         return operationName;
     }
 
-    public void setOperationName(ForeignCurrenciesOperationTypes operationName) {
+    public void setOperationName(ForeignCurrenciesOperationType operationName) {
         this.operationName = operationName;
     }
 

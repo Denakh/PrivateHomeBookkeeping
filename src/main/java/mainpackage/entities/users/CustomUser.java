@@ -10,7 +10,7 @@ import mainpackage.entities.deferrals.Deferrals;
 import mainpackage.entities.exchangetransactions.ExchangeTransactions;
 import mainpackage.entities.expensesfinancestatistics.ExpensesFinanceStatistics;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
-import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperations;
+import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperation;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.income.GeneralIncome;
 import mainpackage.entities.income.Income;
@@ -75,7 +75,7 @@ public class CustomUser {
     private List<ForeignCurrencies> foreignCurrencies = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<ForeignCurrenciesOperations> foreignCurrenciesOperations = new ArrayList<>();
+    private List<ForeignCurrenciesOperation> foreignCurrenciesOperations = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Health> health = new ArrayList<>();
@@ -258,11 +258,11 @@ public class CustomUser {
         this.foreignCurrencies = foreignCurrencies;
     }
 
-    public List<ForeignCurrenciesOperations> getForeignCurrenciesOperations() {
+    public List<ForeignCurrenciesOperation> getForeignCurrenciesOperations() {
         return foreignCurrenciesOperations;
     }
 
-    public void setForeignCurrenciesOperations(List<ForeignCurrenciesOperations> foreignCurrenciesOperations) {
+    public void setForeignCurrenciesOperations(List<ForeignCurrenciesOperation> foreignCurrenciesOperations) {
         this.foreignCurrenciesOperations = foreignCurrenciesOperations;
     }
 
