@@ -59,7 +59,8 @@
     <br/><input type="radio" name="type" value="selling"/> selling
     <br/><input type="radio" name="type" value="income"/> income
     <br/><input type="radio" name="type" value="expenditure"/> expenditure
-    <br/><input type="radio" name="type" value="recalculation"/> recalculation (amount value isn't used)
+    <br/><input type="radio" name="type" value="recalculation"/> recalculation (amount value isn't used,
+    set any not negative value)
     <br>
     Amount *: <input type="text" name="amount"><br>
     Exchange rate hrn/currency *: <input type="text" name="exchange_rate"><br>
