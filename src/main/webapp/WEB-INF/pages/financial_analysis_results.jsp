@@ -98,7 +98,7 @@
 </div>
 
 <div class="hrefs3 dget2">
-    <h3><p><a href="/financial_analysis">Previously menu</a></p></h3>
+    <h3><p><a href="/financial_analysis">Previous menu</a></p></h3>
 </div>
 
 <div class="hrefs3">

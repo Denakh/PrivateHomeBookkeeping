@@ -27,7 +27,7 @@
 </div>
 
 <div class="hrefs3 dget">
-    <h3><p><a href="/data_getting">Previously menu</a></p></h3>
+    <h3><p><a href="/data_getting">Previous menu</a></p></h3>
 </div>
 
 <div class="hrefs3">

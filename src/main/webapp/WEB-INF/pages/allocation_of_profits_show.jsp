@@ -48,7 +48,7 @@
 </div>
 
 <div class="hrefs3 dget2">
-    <h3><p><a href="/allocation_of_profits">Previously menu</a></p></h3>
+    <h3><p><a href="/allocation_of_profits">Previous menu</a></p></h3>
 </div>
 
 <div class="hrefs4">

@@ -82,8 +82,8 @@
 </form>
 
 
-Show exchange transactions statistic:
-<form action="/exchange_transactions" method="POST">
+Show foreign currencies transactions statistic:
+<form action="/foreign_currencies_transactions" method="POST">
     Last period:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
     <br/><input type="radio" name="per" value="2_months"/> 2 months
