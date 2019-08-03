@@ -40,7 +40,7 @@
 </div>
 
 <div class="hrefs3 dget2">
-    <h3><p><a href="/communal_pays_fixation">Previously menu</a></p></h3>
+    <h3><p><a href="/communal_pays_fixation">Previous menu</a></p></h3>
 </div>
 
 <div class="hrefs3">

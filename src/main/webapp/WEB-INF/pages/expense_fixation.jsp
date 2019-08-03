@@ -12,9 +12,9 @@
 <div class="new_data efe">
     <h2> Expense fixation </h2>
     <form action="/expense_fixation_execute" method="POST">
-        Amount change: <input type="text" name="amount_change"><br>
-        <br/>Description : <input type="text" name="description"><br>
-        <h3>Expanse type:</h3>
+        Amount change *: <input type="text" name="amount_change"><br>
+        <br/>Description: <input type="text" name="description"><br>
+        <h3>Expanse type *:</h3>
         <input type="radio" name="purpose" value="charity"/> charity
         <br/><input type="radio" name="purpose" value="health"/> health
         <br/><input type="radio" name="purpose" value="kids_and_pets"/> kids and pats

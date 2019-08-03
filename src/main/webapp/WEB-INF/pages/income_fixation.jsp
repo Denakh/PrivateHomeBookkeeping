@@ -12,9 +12,9 @@
 <div class="in_fix_exe">
     <h2> Income fixation </h2>
     <form action="/income_fixation_execute" method="POST">
-        Amount: <input type="text" name="amount"><br>
+        Amount *: <input type="text" name="amount"><br>
         Description: <input type="text" name="description"><br>
-        <h3>Purpose:</h3>
+        <h3>Purpose *:</h3>
         <input type="radio" name="purpose" value="general"/> general
         <br/><input type="radio" name="purpose" value="charity"/> charity
         <br/><input type="radio" name="purpose" value="health"/> health
@@ -30,7 +30,7 @@
 <div class="inc_sh">
     <h2>Show income statistic</h2>
     <form action="/income_show" method="POST">
-        <h3>Last period:</h3>
+        <h3>Last period *:</h3>
         <input type="radio" name="per" value="1_month"/> 1 month
         <br/><input type="radio" name="per" value="2_months"/> 2 months
         <br/><input type="radio" name="per" value="3_months"/> 3 months

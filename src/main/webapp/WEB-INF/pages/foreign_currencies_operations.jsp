@@ -13,12 +13,13 @@
 <div align="center">
 
     <div class="tables-fw celist">
-        <h2 class="h2-al"> Current expenses list </h2>
+        <h2 class="h2-al"> Foreign currencies amount </h2>
         <table border="1" class="h2-al">
             <thead>
             <tr>
                 <td><b>Currency</b></td>
                 <td><b>Amount</b></td>
+                <td><b>Conventional exchange rate</b></td>
             </tr>
             </thead>
             <c:choose>
@@ -28,18 +29,25 @@
                             <td>${foreignCurrency.currency}</td>
                             <td><fmt:formatNumber value="${foreignCurrency.amount}" pattern="###.00"
                                                   minIntegerDigits="1"/></td>
+                            <td><fmt:formatNumber value="${foreignCurrency.conventionalExchangeRate}" pattern="###.00"
+                                                  minIntegerDigits="1"/></td>
                         </tr>
                     </c:forEach>
                 </c:when>
                 <c:otherwise>
                     <tr>
-                        <td colspan="2">There is no amount in foreign currencies</td>
+                        <td colspan="3">There is no amount in foreign currencies</td>
                     </tr>
                 </c:otherwise>
             </c:choose>
             <tr>
-                <td colspan="2">Current currencies rate: USD(bid, ask): ${USDBidRate}, ${USDAskRate};
-                    EUR(bid, ask):${EURBidRate}, ${EURAskRate};</td>
+                <td colspan="3">Current currencies rate: USD(bid, ask):
+                    <fmt:formatNumber value="${USDBidRate}" pattern="###.000" minIntegerDigits="1"/>,
+                    <fmt:formatNumber value="${USDAskRate}" pattern="###.000" minIntegerDigits="1"/>;
+                    EUR(bid, ask):
+                    <fmt:formatNumber value="${EURBidRate}" pattern="###.000" minIntegerDigits="1"/>,
+                    <fmt:formatNumber value="${EURAskRate}" pattern="###.000" minIntegerDigits="1"/>;
+                </td>
             </tr>
         </table>
     </div>
@@ -59,13 +67,14 @@
     <br/><input type="radio" name="type" value="selling"/> selling
     <br/><input type="radio" name="type" value="income"/> income
     <br/><input type="radio" name="type" value="expenditure"/> expenditure
-    <br/><input type="radio" name="type" value="recalculation"/> recalculation (amount value isn't used)
+    <br/><input type="radio" name="type" value="recalculation"/> recalculation (amount value isn't used,
+    set any not negative amount value)
     <br>
     Amount *: <input type="text" name="amount"><br>
     Exchange rate hrn/currency *: <input type="text" name="exchange_rate"><br>
 
     Additional information for income or expenditure:
-    Description: <input type="text" name="description"><br>
+    <input type="text" name="description"><br>
     <h3>Purpose:</h3>
     <input type="radio" name="purpose" value="general"/> general
     <br/><input type="radio" name="purpose" value="charity"/> charity
@@ -75,15 +84,13 @@
     <br/><input type="radio" name="purpose" value="recreation"/> recreation
     <br/><input type="radio" name="purpose" value="reserve"/> reserve
 
-    * Required
-
     <br/><input type="submit"/>
 </form>
 
 
-Show exchange transactions statistic:
-<form action="/exchange_transactions" method="POST">
-    Last period:
+Show foreign currencies transactions statistic:
+<form action="/foreign_currencies_transactions" method="POST">
+    Last period *:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
     <br/><input type="radio" name="per" value="2_months"/> 2 months
     <br/><input type="radio" name="per" value="3_months"/> 3 months

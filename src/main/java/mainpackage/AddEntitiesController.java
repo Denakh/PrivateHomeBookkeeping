@@ -14,6 +14,9 @@ import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.foreigncurrencies.Currencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrenciesService;
+import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperation;
+import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperationService;
+import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperationType;
 import mainpackage.entities.health.Health;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncome;
@@ -37,7 +40,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import sun.font.TrueTypeFont;
 
 import java.util.*;
 
@@ -74,6 +76,8 @@ public class AddEntitiesController {
     private GetCurrentCurrenciesInfo getCurrentCurrenciesInfo;
     @Autowired
     private ForeignCurrenciesService foreignCurrenciesService;
+    @Autowired
+    private ForeignCurrenciesOperationService foreignCurrenciesOperationService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -140,7 +144,7 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error for amount. Try again";
+            errorStr = "A number format error for amount. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -169,7 +173,7 @@ public class AddEntitiesController {
         try {
             damount = -1 * Double.parseDouble(amount_change);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -199,7 +203,7 @@ public class AddEntitiesController {
             drecreationPercent = Double.parseDouble(recreation_percent);
             dreservePercent = Double.parseDouble(reserve_percent);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -248,7 +252,7 @@ public class AddEntitiesController {
             damount11 = Double.parseDouble(amount11);
             damount12 = Double.parseDouble(amount12);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -301,7 +305,7 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error in amount. Try again";
+            errorStr = "A number format error in amount. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -516,7 +520,7 @@ public class AddEntitiesController {
     }
 
     private String errorEmptyStr(Model model) {
-        String errorStr = "Not choose variant in list. Try again";
+        String errorStr = "Please choose(set) required data (marked *) for the latest operation";
         model.addAttribute("error_message", errorStr);
         return "input_error";
     }
@@ -542,22 +546,25 @@ public class AddEntitiesController {
         }
         switch (type) {
             case "buying":
-                double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) /
-                        initCurrencyValue + damount;
-                foreignCurrencies.setAmount(initCurrencyValue + damount);
+                double buyingResultAmount = initCurrencyValue + damount;
+                double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) / buyingResultAmount;
+                foreignCurrencies.setAmount(buyingResultAmount);
                 foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                        currencyType, ForeignCurrenciesOperationType.BUYING, damount, dexchangeRate, buyingResultAmount));
                 break;
             case "selling":
                 double amountAfterOperationS = initCurrencyValue - damount;
                 if (amountAfterOperationS < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded amount, " +
-                            "please perform selling operation before");
+                            "expenditure amount is higher than your recorded(existing) amount, ");
                     return "input_error";
                 }
                 foreignCurrencies.setAmount(amountAfterOperationS);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                        currencyType, ForeignCurrenciesOperationType.SELLING, damount, dexchangeRate, amountAfterOperationS));
                 double rateDifferenceIncome = damount*(dexchangeRate - initExchangeRate);
                 if (rateDifferenceIncome > 0) this.incomeExecute(rateDifferenceIncome,
                         "Currency rate difference income", "general", dbUser);
@@ -565,31 +572,38 @@ public class AddEntitiesController {
                         "Currency rate difference expense", "other_capoutlays", dbUser);
                 break;
             case "income":
-                foreignCurrencies.setAmount(foreignCurrencies.getAmount() + damount);
+                double incomeResultAmount = foreignCurrencies.getAmount() + damount;
+                foreignCurrencies.setAmount(incomeResultAmount);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                        currencyType, ForeignCurrenciesOperationType.INCOME, damount, dexchangeRate, incomeResultAmount));
                 double foreignCurrencyIncome = damount*initExchangeRate;
                 this.incomeExecute(foreignCurrencyIncome,
                         "Foreign currency income (" + description + ")", purpose, dbUser);
                 break;
             case "expenditure":
-                double amountAfterOperationE = initCurrencyValue - damount;
-                if (amountAfterOperationE < 0) {
+                double amountAfterExpenditure = initCurrencyValue - damount;
+                if (amountAfterExpenditure < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded amount, " +
-                            "please perform buying operation before");
+                            "expenditure amount is higher than your recorded(existing) amount, ");
                     return "input_error";
                 }
-                foreignCurrencies.setAmount(amountAfterOperationE);
+                foreignCurrencies.setAmount(amountAfterExpenditure);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                        currencyType, ForeignCurrenciesOperationType.EXPENDITURE, damount, dexchangeRate, amountAfterExpenditure));
                 double foreignCurrencyExpense = -damount*initExchangeRate;
                 if (purpose.equals("general")) purpose = "other_capoutlays";
                 this.expenseExecute(foreignCurrencyExpense,
                         "Foreign currency expense (" + description + ")", purpose, dbUser);
                 break;
             case "recalculation":
+                damount = 0;
                 foreignCurrencies.setConventionalExchangeRate(dexchangeRate);
                 foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                double rateDifferenceIncomeRec = damount*(dexchangeRate - initExchangeRate);
+                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                        currencyType, ForeignCurrenciesOperationType.RECALCULATION, damount, dexchangeRate, foreignCurrencies.getAmount()));
+                double rateDifferenceIncomeRec = foreignCurrencies.getAmount()*(dexchangeRate - initExchangeRate);
                 if (rateDifferenceIncomeRec > 0) this.incomeExecute(rateDifferenceIncomeRec,
                         "Currency rate difference income", "general", dbUser);
                 if (rateDifferenceIncomeRec < 0) this.expenseExecute(rateDifferenceIncomeRec,

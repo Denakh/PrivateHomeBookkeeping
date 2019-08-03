@@ -6,6 +6,7 @@ import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
+import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperationService;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.income.IncomeService;
@@ -55,6 +56,8 @@ public class ShowEntitiesController {
     private CurrentExpensesService currentExpensesService;
     @Autowired
     private CommunalPayStatisticsService communalPayStatisticsService;
+    @Autowired
+    private ForeignCurrenciesOperationService foreignCurrenciesOperationService;
 
     @RequestMapping("/data_getting")
     public String dataGetting() {
@@ -160,6 +163,21 @@ public class ShowEntitiesController {
         return "communalpay_statistic_show";
     }
 
+    @RequestMapping("/foreign_currencies_transactions")
+    public String foreignCurrenciesTransactionsGettingExe(@RequestParam(defaultValue = "0") String per,
+                                                          Model model) {
+        if (per.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(per);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        this.foreignCurrenciesTransactionsShow(dbUser, dateFrom, model);
+        return "foreign_currencies_transactions_show";
+    }
+
     private String errorEmptyStr(Model model) {
         String errorStr = "Not choose variant in list. Try again";
         model.addAttribute("error_message", errorStr);
@@ -217,6 +235,11 @@ public class ShowEntitiesController {
         model.addAttribute("incomeEntityList", incomeService.findEntriesFromDate(dbUser, date));
         model.addAttribute("gIncomeEntityList", generalIncomeService.findEntriesFromDate(dbUser, date));
     }
+
+    private void foreignCurrenciesTransactionsShow(CustomUser dbUser, Date date, Model model) {
+        model.addAttribute("foreignCurrenciesTransactionsList", foreignCurrenciesOperationService.findEntriesFromDate(dbUser, date));
+    }
+
 
     private long getPeriod(String per) {
         long period = -1;
