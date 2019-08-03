@@ -10,9 +10,9 @@
 <body>
 
 <form action="/deferral_fixation_execute" method="POST">
-    Amount: <input type="text" name="amount"><br>
+    Amount *: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
-    Source:
+    Source *:
     <br/><input type="radio" name="source" value="current_expenses"/> current expenses
     <br/><input type="radio" name="source" value="charity"/> charity
     <br/><input type="radio" name="source" value="health"/> health
@@ -21,7 +21,7 @@
     <br/><input type="radio" name="source" value="recreation"/> recreation
     <br/><input type="radio" name="source" value="reserve"/> reserve
     <br>
-    Last period:
+    Last period *:
     <br/><input type="radio" name="per" value="once"/> once
     <br/><input type="radio" name="per" value="2_months"/> 2 months
     <br/><input type="radio" name="per" value="3_months"/> 3 months
@@ -36,7 +36,7 @@
 
 Show deferral statistic:
 <form action="/deferral_show" method="POST">
-    Last period:
+    Last period *:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
     <br/><input type="radio" name="per" value="2_months"/> 2 months
     <br/><input type="radio" name="per" value="3_months"/> 3 months

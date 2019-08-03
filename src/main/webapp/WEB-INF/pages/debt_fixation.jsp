@@ -13,22 +13,21 @@
 <div class="new_data debt_fix">
     <h2 class="h2-al"> Debt fixation or params changing </h2>
     <form action="/debt_fixation_execute" method="POST">
-        Amount: <input type="text" name="amount"><br>
+        Amount *: <input type="text" name="amount"><br>
         Description: <input type="text" name="description"><br>
-        Percent: <input type="text" name="percent"><br>
-        Percent for:
+        Percent *: <input type="text" name="percent"><br>
+        Percent * for:
         <br/><input type="radio" name="purpose" value="initial_amount"/> initial amount
         <br/><input type="radio" name="purpose" value="residual_amount"/> residual amount
-        <br>Existing debt Id for change : <input type="text" name="id_for_change"><br>
+        <br>Existing debt Id for change *: <input type="text" name="id_for_change"><br>
 
         <p class="t-l">* For fixation of existing debt params changing (paying back, existing debt growth, percent
             params changing):</p>
         <ul class="t-l">
             <li> amount has to be with sign "-" for paying back;</li>
-            <li> new percent params can be specified in case of need;</li>
+            <li> new percent params can be specified if it needs;</li>
             <li> id of existing debt in the list under has to be specified (for new debt fixation don't input any value
-                in
-                the line);
+                 in the line);
             </li>
         </ul>
         <input type="submit"/>
@@ -76,7 +75,7 @@
 <div class="show_data_ds">
     <h2> Show debt statistic </h2>
     <form action="/debt_show" method="POST">
-        <h3> Last period: </h3>
+        <h3> Last period *: </h3>
         <input type="radio" name="per" value="1_month"/> 1 month
         <br/><input type="radio" name="per" value="2_months"/> 2 months
         <br/><input type="radio" name="per" value="3_months"/> 3 months

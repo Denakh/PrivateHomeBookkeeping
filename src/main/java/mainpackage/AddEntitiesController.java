@@ -144,7 +144,7 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error for amount. Try again";
+            errorStr = "A number format error for amount. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -173,7 +173,7 @@ public class AddEntitiesController {
         try {
             damount = -1 * Double.parseDouble(amount_change);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -203,7 +203,7 @@ public class AddEntitiesController {
             drecreationPercent = Double.parseDouble(recreation_percent);
             dreservePercent = Double.parseDouble(reserve_percent);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -252,7 +252,7 @@ public class AddEntitiesController {
             damount11 = Double.parseDouble(amount11);
             damount12 = Double.parseDouble(amount12);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error. Try again";
+            errorStr = "A number format error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -305,7 +305,7 @@ public class AddEntitiesController {
         try {
             damount = Double.parseDouble(amount);
         } catch (NumberFormatException e) {
-            errorStr = "Number format error in amount. Try again";
+            errorStr = "A number format error in amount. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
         }
@@ -520,7 +520,7 @@ public class AddEntitiesController {
     }
 
     private String errorEmptyStr(Model model) {
-        String errorStr = "Not choose variant in list. Try again";
+        String errorStr = "Please choose(set) required data (marked *) for the latest operation";
         model.addAttribute("error_message", errorStr);
         return "input_error";
     }
@@ -558,8 +558,7 @@ public class AddEntitiesController {
                 double amountAfterOperationS = initCurrencyValue - damount;
                 if (amountAfterOperationS < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded amount, " +
-                            "please perform selling operation before");
+                            "expenditure amount is higher than your recorded(existing) amount, ");
                     return "input_error";
                 }
                 foreignCurrencies.setAmount(amountAfterOperationS);
@@ -586,8 +585,7 @@ public class AddEntitiesController {
                 double amountAfterExpenditure = initCurrencyValue - damount;
                 if (amountAfterExpenditure < 0) {
                     model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded amount, " +
-                            "please perform buying operation before");
+                            "expenditure amount is higher than your recorded(existing) amount, ");
                     return "input_error";
                 }
                 foreignCurrencies.setAmount(amountAfterExpenditure);
