@@ -15,7 +15,7 @@
     <table border="1" class="h2-al">
         <thead>
         <tr>
-            <td><b>Amount</b></td>
+            <td><b>Amount, HRN</b></td>
             <td><b>Description</b></td>
             <td><b>Entry date</b></td>
         </tr>

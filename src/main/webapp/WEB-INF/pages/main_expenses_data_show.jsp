@@ -15,10 +15,10 @@
     <table border="1">
         <thead>
         <tr>
-            <td><b>Amount change</b></td>
+            <td><b>Amount change, HRN</b></td>
             <td><b>Entry date</b></td>
             <td><b>Description</b></td>
-            <td><b>Amount</b></td>
+            <td><b>Amount, HRN</b></td>
         </tr>
         </thead>
         <c:choose>

@@ -15,7 +15,7 @@
     <table border="1">
         <thead>
         <tr>
-            <td><b>Amount</b></td>
+            <td><b>Amount, HRN</b></td>
             <td><b>Entry date</b></td>
             <td><b>Purpose</b></td>
             <td><b>Description</b></td>
@@ -42,7 +42,7 @@
 </div>
 
 <div class="tables-fw incsht_r">
-    <h2> General purpose incomes list </h2>
+    <h2> General purpose incomes list (currency - HRN) </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>

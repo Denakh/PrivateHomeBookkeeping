@@ -13,7 +13,7 @@
 <div class="new_data debt_fix">
     <h2 class="h2-al"> Debt fixation or params changing </h2>
     <form action="/debt_fixation_execute" method="POST">
-        Amount *: <input type="text" name="amount"><br>
+        Amount, HRN *: <input type="text" name="amount"><br>
         Description: <input type="text" name="description"><br>
         Percent *: <input type="text" name="percent"><br>
         Percent * for:
@@ -40,13 +40,13 @@
         <thead>
         <tr>
             <td><b>Debt id</b></td>
-            <td><b>Initial amount</b></td>
+            <td><b>Initial amount, HRN</b></td>
             <td><b>Entry date</b></td>
             <td><b>Description</b></td>
             <td><b>Percent</b></td>
             <td><b>Percent for initial (true)
                 or remaining amount</b></td>
-            <td><b>Remaining sum</b></td>
+            <td><b>Remaining sum, HRN</b></td>
         </tr>
         </thead>
         <c:choose>
