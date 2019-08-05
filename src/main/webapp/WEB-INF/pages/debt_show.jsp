@@ -16,13 +16,13 @@
         <thead>
         <tr>
             <td><b>Debt id</b></td>
-            <td><b>Initial amount</b></td>
+            <td><b>Initial amount, HRN</b></td>
             <td><b>Entry date</b></td>
             <td><b>Description</b></td>
             <td><b>Percent</b></td>
             <td><b>Percent for initial (true)
                 or remaining amount</b></td>
-            <td><b>Remaining sum</b></td>
+            <td><b>Remaining sum, HRN</b></td>
             <td><b>Debt id for change (if need)</b></td>
         </tr>
         </thead>

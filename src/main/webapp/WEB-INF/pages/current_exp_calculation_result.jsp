@@ -12,7 +12,7 @@
 
 <h3>
     <div class="new_data_fw">
-        Total current expenses for previous month:
+        Total current expenses for previous month, HRN:
         <fmt:formatNumber value="${calculation_result}" pattern="###.00" minIntegerDigits="1"/>
     </div>
 </h3>
@@ -20,7 +20,7 @@
 <h3>
     <div class="new_data_fw">
         Difference between calculated total current expenses
-        and standard rate for previous month: <fmt:formatNumber value="${difference}" pattern="###.00"
+        and standard rate for previous month, HRN: <fmt:formatNumber value="${difference}" pattern="###.00"
                                                                 minIntegerDigits="1"/>
     </div>
 </h3>

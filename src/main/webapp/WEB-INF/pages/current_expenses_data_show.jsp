@@ -11,7 +11,7 @@
 <body>
 
 <div class="tables-fw celist">
-    <h2 class="h2-al"> Current expenses list </h2>
+    <h2 class="h2-al"> Current expenses list (currency - HRN) </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>

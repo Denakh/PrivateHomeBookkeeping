@@ -11,7 +11,7 @@
 <body>
 
 <div class="tables-fw fae">
-    <h2> Main financial characteristics list </h2>
+    <h2> Main financial characteristics list (currency - HRN) </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>
@@ -67,7 +67,7 @@
 </div>
 
 <div class="tables-fw fae">
-    <h2> Current financial condition </h2>
+    <h2> Current financial condition (currency - HRN) </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>

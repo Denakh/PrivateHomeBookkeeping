@@ -12,7 +12,7 @@
 <div class="in_fix_exe">
     <h2> Income fixation </h2>
     <form action="/income_fixation_execute" method="POST">
-        Amount *: <input type="text" name="amount"><br>
+        Amount, HRN *: <input type="text" name="amount"><br>
         Description: <input type="text" name="description"><br>
         <h3>Purpose *:</h3>
         <input type="radio" name="purpose" value="general"/> general

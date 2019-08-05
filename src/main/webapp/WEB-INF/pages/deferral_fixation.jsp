@@ -10,7 +10,7 @@
 <body>
 
 <form action="/deferral_fixation_execute" method="POST">
-    Amount *: <input type="text" name="amount"><br>
+    Amount, HRN *: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
     Source *:
     <br/><input type="radio" name="source" value="current_expenses"/> current expenses
