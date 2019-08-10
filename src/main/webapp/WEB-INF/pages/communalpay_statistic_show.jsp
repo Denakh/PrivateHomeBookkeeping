@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="tables-fw dfs">
+<div class="tables-fw cps_table">
     <h2 class="h2-al"> Communal pay statistic </h2>
     <table border="1" class="h2-al">
         <thead>

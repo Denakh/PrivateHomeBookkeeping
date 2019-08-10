@@ -10,8 +10,8 @@
 </head>
 <body>
 
-<div class="tables">
-    <h2> Current percent(%) for allocation of profits </h2>
+<div class="tables height_eq6 cpfap_table">
+    <h2 class="h2-al"> Current percent(%) for allocation of profits </h2>
     <table border="1" class="h2-al">
         <thead>
         <tr>
@@ -45,7 +45,7 @@
     </table>
 </div>
 
-<div class="new_data">
+<div class="new_data height_eq6">
     <h2> New allocation of profits values </h2>
     <form action="/allocation_of_profits_execute" method="POST">
         Percent for charity: <input type="text" name="charity_percent"><br>
@@ -63,7 +63,7 @@
     <h3><p><a href="/allocation_of_profits_show">Show history of allocation values (last year)</a></p></h3>
 </div>
 
-<div class="hrefs4">
+<div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>
 </div>
 

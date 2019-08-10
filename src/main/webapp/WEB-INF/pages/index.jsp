@@ -28,10 +28,9 @@
 </h3>
 <div class="alerts">
     <h2 class="h2-al">Notifications:</h2>
-    <br/>
     <c:choose>
         <c:when test="${notification ne null}">
-            ${notification}
+            <h3 class="h2-al">${notification}</h3>
         </c:when>
         <c:otherwise>
             <h3 class="h2-al">No special notifications</h3>

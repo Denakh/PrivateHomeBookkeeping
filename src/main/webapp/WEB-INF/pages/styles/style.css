@@ -4,7 +4,7 @@
     text-align: center;
     padding: 1%;
     width: 97.7%;
-    float: left;
+    float: right;
 }
 
 .alerts {
@@ -15,7 +15,7 @@
     width: 48%;
     float: right;
     font-weight: bold;
-/ / clear: both;
+    clear: right;
 }
 
 .h2-al {
@@ -31,8 +31,7 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: left;
-    width: 48%;
-    float: left;
+    width: 48.1%;
     padding-left: 2%;
 }
 
@@ -40,8 +39,8 @@
     border: 2px solid #cccccc;
     background-color: #62cccb;
     text-align: center;
-    width: 50%;
-    float: left;
+    width: 50.1%;
+    margin-top: -19px;
 }
 
 .hrefs3 {
@@ -121,14 +120,9 @@
     background-color: #a9c9cc;
     text-align: left;
     padding-left: 5%;
-    width: 30%;
-    float: right;
+    width: 59.43%;
+    float: left;
     font-weight: bold;
-    clear: both;
-}
-
-.add_cer {
-    padding-bottom: 18%;
 }
 
 .dge {
@@ -136,6 +130,7 @@
     width: 44.7%;
     padding-left: 5%;
     font-weight: bold;
+    float: left;
 }
 
 .cdge {
@@ -182,7 +177,7 @@
 .mmd {
     width: 35%;
     float: right;
-    clear: both;
+    //clear: both;
 }
 
 .dfs {
@@ -244,8 +239,8 @@
     border: 2px solid #cccccc;
     background-color: #a9c9cc;
     text-align: left;
-    padding-left: 16.04%;
-    width: 33.4%;
+    padding-left: 13%;
+    width: 36.44%;
     float: left;
     font-weight: bold;
 }
@@ -254,9 +249,9 @@
     border: 2px solid #cccccc;
     background-color: #a9c9cc;
     text-align: left;
-    padding-left: 19%;
-    padding-bottom: 2.85%;
-    width: 31%;
+    padding-left: 16.5%;
+    //padding-bottom: 2.85%;
+    width: 33.5%;
     float: right;
     font-weight: bold;
 }
@@ -284,4 +279,63 @@
     width: 40%;
     padding-left: 30%;
     padding-right: 29.7%;
+}
+
+.fc_rb {
+    padding-left: 9%;
+    width: 40.9%;
+    float: right;
+}
+
+.height_eq1 {
+    height: 50%;
+}
+
+.height_eq2 {
+    height: 64%;
+}
+
+.height_eq3 {
+    height: 40%;
+}
+
+.height_eq4 {
+    height: 51%;
+    padding-bottom: 0%;
+}
+
+.height_eq5 {
+    height: 79%;
+    padding-bottom: 0%;
+}
+
+.height_eq6 {
+    height: 35%;
+    padding-bottom: 0%;
+}
+
+.cpfap_table {
+    width: 52.4%;
+    padding-left: 7%;
+}
+
+.hap_history_table {
+    padding-left: 23%;
+    padding-right: 26%;
+    width: 50.7%;
+    text-align: center;
+}
+
+.cps_table {
+    padding-left: 37%;
+    padding-right: 37%;
+    width: 25.7%;
+    text-align: center;
+}
+
+.users_table {
+    padding-left: 37%;
+    padding-right: 42%;
+    width: 20.7%;
+    text-align: center;
 }
