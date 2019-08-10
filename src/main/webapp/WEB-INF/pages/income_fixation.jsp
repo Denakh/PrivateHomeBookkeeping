@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="in_fix_exe">
+<div class="in_fix_exe height_eq1">
     <h2> Income fixation </h2>
     <form action="/income_fixation_execute" method="POST">
         Amount, HRN *: <input type="text" name="amount"><br>
@@ -27,7 +27,7 @@
     </form>
 </div>
 
-<div class="inc_sh">
+<div class="inc_sh height_eq1">
     <h2>Show income statistic</h2>
     <form action="/income_show" method="POST">
         <h3>Last period *:</h3>

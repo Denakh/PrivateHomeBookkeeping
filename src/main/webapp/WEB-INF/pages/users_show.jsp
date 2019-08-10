@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="tables-fw users">
+<div class="tables-fw users_table">
     <h2> Users list </h2>
     <table border="1" class="h2-al">
         <thead>

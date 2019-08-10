@@ -9,15 +9,18 @@
 </head>
 <body>
 
+<div class="in_fix_exe height_eq3">
+    <h2> Communal payment fixation </h2>
 <form action="/communalpay_fixation_execute" method="POST">
     Amount *, hrn: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
 
     <br/><input type="submit"/>
 </form>
+</div>
 
-Show communal pay statistic:
-
+<div class="inc_sh height_eq3">
+    <h2>Show communal pay statistic:</h2>
 <form action="/communalpay_statistic_show" method="POST">
     Last period *:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
@@ -31,10 +34,11 @@ Show communal pay statistic:
 
     <br/><input type="submit"/>
 </form>
+</div>
 
-
+<div class="hrefs3">
 <h3><p><a href="/">Main menu</a></p></h3>
-
+</div>
 
 </body>
 </html>

@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="tables">
+<div class="tables-fw hap_history_table">
     <h2> History for allocation of profits (%)</h2>
     <table border="1" class="h2-al">
         <thead>
@@ -51,7 +51,7 @@
     <h3><p><a href="/allocation_of_profits">Previous menu</a></p></h3>
 </div>
 
-<div class="hrefs4">
+<div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>
 </div>
 

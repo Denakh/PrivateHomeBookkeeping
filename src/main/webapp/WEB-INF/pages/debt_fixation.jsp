@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="new_data debt_fix">
+<div class="new_data debt_fix height_3">
     <h2 class="h2-al"> Debt fixation or params changing </h2>
     <form action="/debt_fixation_execute" method="POST">
         Amount, HRN *: <input type="text" name="amount"><br>

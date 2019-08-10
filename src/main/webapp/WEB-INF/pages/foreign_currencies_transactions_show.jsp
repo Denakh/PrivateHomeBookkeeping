@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<div class="tables-fw incsht_l">
+<div class="tables-fw cps_table">
     <h2> Foreign currencies transactions list </h2>
     <table border="1">
         <thead>

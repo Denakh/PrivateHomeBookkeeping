@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<div class="in_fix_exe height_eq2">
+    <h2> Deferral fixation </h2>
 <form action="/deferral_fixation_execute" method="POST">
     Amount, HRN *: <input type="text" name="amount"><br>
     Description: <input type="text" name="description"><br>
@@ -32,9 +34,10 @@
 
     <br/><input type="submit"/>
 </form>
+</div>
 
-
-Show deferral statistic:
+<div class="inc_sh height_eq2">
+    <h2>Show deferral statistic:</h2>
 <form action="/deferral_show" method="POST">
     Last period *:
     <br/><input type="radio" name="per" value="1_month"/> 1 month
@@ -48,7 +51,7 @@ Show deferral statistic:
 
     <br/><input type="submit"/>
 </form>
-
+</div>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>

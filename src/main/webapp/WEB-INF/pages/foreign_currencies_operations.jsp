@@ -52,11 +52,10 @@
         </table>
     </div>
 
-    <div class="hrefs3">
-        <h3><p><a href="/">Main menu</a></p></h3>
-    </div>
 </div>
 
+<div class="in_fix_exe height_eq5">
+    <h2> Foreign currencies transaction </h2>
 <form action="/foreign_currencies_execute" method="POST">
     Currency *:
     <br/><input type="radio" name="currency" value="usd"/> USD
@@ -86,8 +85,10 @@
 
     <br/><input type="submit"/>
 </form>
+</div>
 
-
+<div class="inc_sh fc_rb height_eq5">
+    <h2>Show foreign currencies transactions statistic:</h2>
 Show foreign currencies transactions statistic:
 <form action="/foreign_currencies_transactions" method="POST">
     Last period *:
@@ -102,7 +103,7 @@ Show foreign currencies transactions statistic:
 
     <br/><input type="submit"/>
 </form>
-
+</div>
 
 <div class="hrefs3">
     <h3><p><a href="/">Main menu</a></p></h3>

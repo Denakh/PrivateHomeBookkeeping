@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<div class="tables add_cer">
+<div class="tables height_eq4">
     <h2> Actual current expenses rate(%) for month number </h2>
     <table border="1" class="h2-al">
         <thead>
@@ -56,7 +56,7 @@
     </table>
 </div>
 
-<div class="new_data">
+<div class="new_data height_eq4">
     <h2> New current expenses rate values </h2>
     <form action="/current_expenses_rate_execute" method="POST">
         Percent for month 1: <input type="text" name="amount1"><br>
