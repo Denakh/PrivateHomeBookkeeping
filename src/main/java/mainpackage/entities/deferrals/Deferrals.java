@@ -26,9 +26,18 @@ public class Deferrals {
 
     private String description;
 
-    private int monthNumber;
+    private String period;
 
     public Deferrals() {
+    }
+
+    public Deferrals(CustomUser user, double amount, Date date, String source, String description, String period) {
+        this.user = user;
+        this.amount = amount;
+        this.date = date;
+        this.source = source;
+        this.description = description;
+        this.period = period;
     }
 
     public long getId() {
@@ -79,11 +88,11 @@ public class Deferrals {
         this.description = description;
     }
 
-    public int getMonthNumber() {
-        return monthNumber;
+    public String getPeriod() {
+        return period;
     }
 
-    public void setMonthNumber(int monthNumber) {
-        this.monthNumber = monthNumber;
+    public void setPeriod(String period) {
+        this.period = period;
     }
 }

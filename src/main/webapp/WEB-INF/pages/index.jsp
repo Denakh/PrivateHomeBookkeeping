@@ -70,7 +70,7 @@
         <p><a href="/income_fixation">Income fixation</a></p>
         <p><a href="/expense_fixation">Expense fixation (not current)</a></p>
         <p><a href="/debt_fixation">Debt fixation (in or out)</a></p>
-        <p><a href="/deferral_fixation">Deferrals (expenses) fixation</a></p>
+        <p><a href="/deferrals_fixation">Deferrals (expenses) fixation</a></p>
         <p><a href="/communal_pays_fixation">Communal pays fixation</a></p>
         <p><a href="/data_getting">Main data getting</a></p>
         <p><a href="/current_expenses_rate">Current expenses rate</a></p>

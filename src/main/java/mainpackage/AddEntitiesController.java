@@ -96,9 +96,9 @@ public class AddEntitiesController {
         return "debt_fixation";
     }
 
-    @RequestMapping("/deferral_fixation")
+    @RequestMapping("/deferrals_fixation")
     public String deferralsFixation() {
-        return "deferral_fixation";
+        return "deferrals_fixation";
     }
 
     @RequestMapping("/communal_pays_fixation")

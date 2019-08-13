@@ -6,6 +6,7 @@ import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
+import mainpackage.entities.deferrals.DeferralsService;
 import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperationService;
 import mainpackage.entities.health.HealthService;
 import mainpackage.entities.income.GeneralIncomeService;
@@ -56,6 +57,8 @@ public class ShowEntitiesController {
     private CurrentExpensesService currentExpensesService;
     @Autowired
     private CommunalPayStatisticsService communalPayStatisticsService;
+    @Autowired
+    private DeferralsService deferralsService;
     @Autowired
     private ForeignCurrenciesOperationService foreignCurrenciesOperationService;
 
@@ -163,6 +166,21 @@ public class ShowEntitiesController {
         return "communalpay_statistic_show";
     }
 
+    @RequestMapping("/deferrals_show")
+    public String deferralsGettingExe(@RequestParam(defaultValue = "0") String per,
+                                 Model model) {
+        if (per.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        Date dateFrom;
+        long curTime = date.getTime();
+        long period = getPeriod(per);
+        if (period == -1) dateFrom = new Date(0);
+        else dateFrom = new Date(curTime - period);
+        this.deferralsShow(dbUser, dateFrom, model);
+        return "deferrals_show";
+    }
+
     @RequestMapping("/foreign_currencies_transactions")
     public String foreignCurrenciesTransactionsGettingExe(@RequestParam(defaultValue = "0") String per,
                                                           Model model) {
@@ -234,6 +252,10 @@ public class ShowEntitiesController {
     private void incomsShow(CustomUser dbUser, Date date, Model model) {
         model.addAttribute("incomeEntityList", incomeService.findEntriesFromDate(dbUser, date));
         model.addAttribute("gIncomeEntityList", generalIncomeService.findEntriesFromDate(dbUser, date));
+    }
+
+    private void deferralsShow(CustomUser dbUser, Date date, Model model) {
+        model.addAttribute("deferralsEntityList",deferralsService.findEntriesFromDate(dbUser, date));
     }
 
     private void foreignCurrenciesTransactionsShow(CustomUser dbUser, Date date, Model model) {
