@@ -11,6 +11,8 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
+import mainpackage.entities.deferrals.Deferrals;
+import mainpackage.entities.deferrals.DeferralsService;
 import mainpackage.entities.foreigncurrencies.Currencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrencies;
 import mainpackage.entities.foreigncurrencies.ForeignCurrenciesService;
@@ -78,6 +80,8 @@ public class AddEntitiesController {
     private ForeignCurrenciesService foreignCurrenciesService;
     @Autowired
     private ForeignCurrenciesOperationService foreignCurrenciesOperationService;
+    @Autowired
+    private DeferralsService deferralsService;
 
     @RequestMapping("/income_fixation")
     public String incomeFixation() {
@@ -344,6 +348,34 @@ public class AddEntitiesController {
         ForeignCurrencies foreignCurrencies = foreignCurrenciesService.findEntryByCurrency(dbUser, currencyType);
         return this.foreignCurrenciesHandling(damount, type, dexchange_rate, description, purpose, foreignCurrencies,
                 currencyType, dbUser, model);
+    }
+
+    @RequestMapping("/deferrals_fixation_execute")
+    public String deferralFixationExecute(@RequestParam String amount,
+                                         @RequestParam String description,
+                                         @RequestParam(defaultValue = "0") String source,
+                                         @RequestParam(defaultValue = "0") String per,
+                                         Model model) {
+        double damount;
+        String errorStr = "";
+        try {
+            damount = Double.parseDouble(amount);
+        } catch (NumberFormatException e) {
+            errorStr = "A number format error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "input_error";
+        }
+        if (source.equals("0") || per.equals("0")) return this.errorEmptyStr(model);
+        CustomUser dbUser = this.getCurrentUser();
+        Date date = new Date();
+        try {
+            deferralsService.addDeferrals(new Deferrals(dbUser, damount, date, source, description, per));
+            return this.returnResPage(true, model);
+        } catch (Exception e) {
+            errorStr = "Deferrals entry addition error. Try again";
+            model.addAttribute("error_message", errorStr);
+            return "input_error";
+        }
     }
 
     private boolean entitiesAdd(String purpose, CustomUser dbUser, double damount, Date date, String description, double am) {
