@@ -29,9 +29,12 @@
                     <tr>
                         <td>${foreignCurrenciesTransaction.currency}</td>
                         <td>${foreignCurrenciesTransaction.operationName}</td>
-                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.amountChangeDuringOperation}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.newAmount}" pattern="###.00" minIntegerDigits="1"/></td>
-                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.operationExchangeRate}" pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.amountChangeDuringOperation}"
+                                              pattern="###.00" minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.newAmount}" pattern="###.00"
+                                              minIntegerDigits="1"/></td>
+                        <td><fmt:formatNumber value="${foreignCurrenciesTransaction.operationExchangeRate}"
+                                              pattern="###.00" minIntegerDigits="1"/></td>
                         <td>${foreignCurrenciesTransaction.date}</td>
                     </tr>
                 </c:forEach>

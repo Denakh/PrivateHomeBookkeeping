@@ -6,7 +6,6 @@ import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
-import mainpackage.entities.income.GeneralIncomeService;
 import mainpackage.entities.mainfinancestatistic.FinancialCondition;
 import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.mainfinancestatistic.MainFinanceStatisticService;

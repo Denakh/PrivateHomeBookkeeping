@@ -21,7 +21,7 @@
     <div class="new_data_fw">
         Difference between calculated total current expenses
         and standard rate for previous month, HRN: <fmt:formatNumber value="${difference}" pattern="###.00"
-                                                                minIntegerDigits="1"/>
+                                                                     minIntegerDigits="1"/>
     </div>
 </h3>
 
