@@ -1,6 +1,5 @@
 package mainpackage.entities.deferrals;
 
-import mainpackage.entities.income.Income;
 import mainpackage.entities.users.CustomUser;
 
 import java.util.Date;

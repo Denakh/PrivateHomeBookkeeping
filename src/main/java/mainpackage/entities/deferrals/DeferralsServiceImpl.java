@@ -1,6 +1,5 @@
 package mainpackage.entities.deferrals;
 
-import mainpackage.entities.income.Income;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

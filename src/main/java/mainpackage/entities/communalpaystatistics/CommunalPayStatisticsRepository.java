@@ -1,6 +1,5 @@
 package mainpackage.entities.communalpaystatistics;
 
-import mainpackage.entities.currentexpenses.CurrentExpenses;
 import mainpackage.entities.users.CustomUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

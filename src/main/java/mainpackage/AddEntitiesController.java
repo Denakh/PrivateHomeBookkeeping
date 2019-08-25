@@ -352,10 +352,10 @@ public class AddEntitiesController {
 
     @RequestMapping("/deferrals_fixation_execute")
     public String deferralFixationExecute(@RequestParam String amount,
-                                         @RequestParam String description,
-                                         @RequestParam(defaultValue = "0") String source,
-                                         @RequestParam(defaultValue = "0") String per,
-                                         Model model) {
+                                          @RequestParam String description,
+                                          @RequestParam(defaultValue = "0") String source,
+                                          @RequestParam(defaultValue = "0") String per,
+                                          Model model) {
         double damount;
         String errorStr = "";
         try {
@@ -543,8 +543,7 @@ public class AddEntitiesController {
         if (res) {
             model.addAttribute("notification", "Last operation is successful");
             return "index";
-        }
-        else {
+        } else {
             errorStr = "Purpose error. Try again";
             model.addAttribute("error_message", errorStr);
             return "input_error";
@@ -570,76 +569,35 @@ public class AddEntitiesController {
         double initCurrencyValue = 0;
         double initExchangeRate = dexchangeRate;
         try {
-        initCurrencyValue = foreignCurrencies.getAmount();
-        initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
+            initCurrencyValue = foreignCurrencies.getAmount();
+            initExchangeRate = foreignCurrencies.getConventionalExchangeRate();
         } catch (NullPointerException e) {
             foreignCurrencies = new ForeignCurrencies(dbUser, new Date(), currencyType, initCurrencyValue,
                     initExchangeRate);
         }
         switch (type) {
             case "buying":
-                double buyingResultAmount = initCurrencyValue + damount;
-                double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) / buyingResultAmount;
-                foreignCurrencies.setAmount(buyingResultAmount);
-                foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
-                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
-                        currencyType, ForeignCurrenciesOperationType.BUYING, damount, dexchangeRate, buyingResultAmount));
+                this.foreignCurrenciesBuying(foreignCurrencies, initCurrencyValue, dbUser, currencyType, damount,
+                        dexchangeRate, initExchangeRate);
                 break;
             case "selling":
                 double amountAfterOperationS = initCurrencyValue - damount;
-                if (amountAfterOperationS < 0) {
-                    model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded(existing) amount, ");
-                    return "input_error";
-                }
-                foreignCurrencies.setAmount(amountAfterOperationS);
-                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
-                        currencyType, ForeignCurrenciesOperationType.SELLING, damount, dexchangeRate, amountAfterOperationS));
-                double rateDifferenceIncome = damount*(dexchangeRate - initExchangeRate);
-                if (rateDifferenceIncome > 0) this.incomeExecute(rateDifferenceIncome,
-                        "Currency rate difference income", "general", dbUser);
-                if (rateDifferenceIncome < 0) this.expenseExecute(rateDifferenceIncome,
-                        "Currency rate difference expense", "other_capoutlays", dbUser);
+                if (amountAfterOperationS < 0) return this.showErrorMessage(model, damount, initCurrencyValue);
+                this.foreignCurrenciesSelling(foreignCurrencies, amountAfterOperationS, dbUser, currencyType, damount,
+                        dexchangeRate, initExchangeRate);
                 break;
             case "income":
-                double incomeResultAmount = foreignCurrencies.getAmount() + damount;
-                foreignCurrencies.setAmount(incomeResultAmount);
-                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
-                        currencyType, ForeignCurrenciesOperationType.INCOME, damount, dexchangeRate, incomeResultAmount));
-                double foreignCurrencyIncome = damount*initExchangeRate;
-                this.incomeExecute(foreignCurrencyIncome,
-                        "Foreign currency income (" + description + ")", purpose, dbUser);
+                foreignCurrenciesIncome(foreignCurrencies, dbUser, currencyType, damount, dexchangeRate, initExchangeRate,
+                        description, purpose);
                 break;
             case "expenditure":
                 double amountAfterExpenditure = initCurrencyValue - damount;
-                if (amountAfterExpenditure < 0) {
-                    model.addAttribute("error_message", "operation is skipped, because of " +
-                            "expenditure amount is higher than your recorded(existing) amount, ");
-                    return "input_error";
-                }
-                foreignCurrencies.setAmount(amountAfterExpenditure);
-                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
-                        currencyType, ForeignCurrenciesOperationType.EXPENDITURE, damount, dexchangeRate, amountAfterExpenditure));
-                double foreignCurrencyExpense = -damount*initExchangeRate;
-                if (purpose.equals("general")) purpose = "other_capoutlays";
-                this.expenseExecute(foreignCurrencyExpense,
-                        "Foreign currency expense (" + description + ")", purpose, dbUser);
+                if (amountAfterExpenditure < 0) return this.showErrorMessage(model, damount, initCurrencyValue);
+                foreignCurrenciesExpenditure(foreignCurrencies, amountAfterExpenditure, dbUser, currencyType, damount,
+                        dexchangeRate, initExchangeRate, purpose, description);
                 break;
             case "recalculation":
-                damount = 0;
-                foreignCurrencies.setConventionalExchangeRate(dexchangeRate);
-                foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
-                foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
-                        currencyType, ForeignCurrenciesOperationType.RECALCULATION, damount, dexchangeRate, foreignCurrencies.getAmount()));
-                double rateDifferenceIncomeRec = foreignCurrencies.getAmount()*(dexchangeRate - initExchangeRate);
-                if (rateDifferenceIncomeRec > 0) this.incomeExecute(rateDifferenceIncomeRec,
-                        "Currency rate difference income", "general", dbUser);
-                if (rateDifferenceIncomeRec < 0) this.expenseExecute(rateDifferenceIncomeRec,
-                        "Currency rate difference expense", "other_capoutlays", dbUser);
+                foreignCurrenciesRecalculation(foreignCurrencies, dbUser, currencyType, dexchangeRate, initExchangeRate);
                 break;
             default:
                 model.addAttribute("error_message", "no proper operation type");
@@ -649,6 +607,68 @@ public class AddEntitiesController {
         return "index";
     }
 
+    private void foreignCurrenciesBuying(ForeignCurrencies foreignCurrencies, double initCurrencyValue, CustomUser dbUser,
+                                         Currencies currencyType, double damount, double dexchangeRate, double initExchangeRate) {
+        double buyingResultAmount = initCurrencyValue + damount;
+        double newExchangeRate = (initExchangeRate * initCurrencyValue + dexchangeRate * damount) / buyingResultAmount;
+        foreignCurrencies.setAmount(buyingResultAmount);
+        foreignCurrencies.setConventionalExchangeRate(newExchangeRate);
+        foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+        foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                currencyType, ForeignCurrenciesOperationType.BUYING, damount, dexchangeRate, buyingResultAmount));
+    }
+
+    private void foreignCurrenciesSelling(ForeignCurrencies foreignCurrencies, double amountAfterOperationS, CustomUser dbUser,
+                                          Currencies currencyType, double damount, double dexchangeRate, double initExchangeRate) {
+        foreignCurrencies.setAmount(amountAfterOperationS);
+        foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+        foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                currencyType, ForeignCurrenciesOperationType.SELLING, damount, dexchangeRate, amountAfterOperationS));
+        double rateDifferenceIncome = damount * (dexchangeRate - initExchangeRate);
+        if (rateDifferenceIncome > 0) this.incomeExecute(rateDifferenceIncome,
+                "Currency rate difference income", "general", dbUser);
+        if (rateDifferenceIncome < 0) this.expenseExecute(rateDifferenceIncome,
+                "Currency rate difference expense", "other_capoutlays", dbUser);
+    }
+
+    private void foreignCurrenciesIncome(ForeignCurrencies foreignCurrencies, CustomUser dbUser, Currencies currencyType,
+                                         double damount, double dexchangeRate, double initExchangeRate, String description, String purpose) {
+        double incomeResultAmount = foreignCurrencies.getAmount() + damount;
+        foreignCurrencies.setAmount(incomeResultAmount);
+        foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+        foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                currencyType, ForeignCurrenciesOperationType.INCOME, damount, dexchangeRate, incomeResultAmount));
+        double foreignCurrencyIncome = damount * initExchangeRate;
+        this.incomeExecute(foreignCurrencyIncome,
+                "Foreign currency income (" + description + ")", purpose, dbUser);
+    }
+
+    private void foreignCurrenciesExpenditure(ForeignCurrencies foreignCurrencies, double amountAfterExpenditure, CustomUser dbUser,
+                                              Currencies currencyType, double damount, double dexchangeRate, double initExchangeRate,
+                                              String purpose, String description) {
+        foreignCurrencies.setAmount(amountAfterExpenditure);
+        foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+        foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                currencyType, ForeignCurrenciesOperationType.EXPENDITURE, damount, dexchangeRate, amountAfterExpenditure));
+        double foreignCurrencyExpense = -damount * initExchangeRate;
+        if (purpose.equals("general")) purpose = "other_capoutlays";
+        this.expenseExecute(foreignCurrencyExpense,
+                "Foreign currency expense (" + description + ")", purpose, dbUser);
+    }
+
+    private void foreignCurrenciesRecalculation(ForeignCurrencies foreignCurrencies, CustomUser dbUser, Currencies currencyType,
+                                                double dexchangeRate, double initExchangeRate) {
+        double damount = 0;
+        foreignCurrencies.setConventionalExchangeRate(dexchangeRate);
+        foreignCurrenciesService.updateForeignCurrencies(foreignCurrencies);
+        foreignCurrenciesOperationService.addForeignCurrenciesOperation(new ForeignCurrenciesOperation(dbUser, new Date(),
+                currencyType, ForeignCurrenciesOperationType.RECALCULATION, damount, dexchangeRate, foreignCurrencies.getAmount()));
+        double rateDifferenceIncomeRec = foreignCurrencies.getAmount() * (dexchangeRate - initExchangeRate);
+        if (rateDifferenceIncomeRec > 0) this.incomeExecute(rateDifferenceIncomeRec,
+                "Currency rate difference income", "general", dbUser);
+        if (rateDifferenceIncomeRec < 0) this.expenseExecute(rateDifferenceIncomeRec,
+                "Currency rate difference expense", "other_capoutlays", dbUser);
+    }
 
     private Currencies getCurrency(String currency) {
         switch (currency) {
@@ -660,7 +680,7 @@ public class AddEntitiesController {
         return Currencies.UAH;
     }
 
-     private void incomeExecute(double damount, String description, String purpose, CustomUser dbUser) {
+    private void incomeExecute(double damount, String description, String purpose, CustomUser dbUser) {
         Date date = new Date();
         Income income = new Income(dbUser, damount, date, description, purpose);
         if (purpose.equals("general")) {
@@ -676,6 +696,12 @@ public class AddEntitiesController {
         Date date = new Date();
         double am = 0;
         this.entitiesAdd(purpose, dbUser, damount, date, description, am);
+    }
+
+    private String showErrorMessage(Model model, double expenditureAmount, double initAmount) {
+        model.addAttribute("error_message", "Operation is skipped, because of " +
+                "expenditure amount (" + expenditureAmount + ") is higher than your recorded(existing) amount (" + initAmount + ")");
+        return "input_error";
     }
 
 }

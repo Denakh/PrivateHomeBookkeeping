@@ -27,7 +27,7 @@
             <li> amount has to be with sign "-" for paying back;</li>
             <li> new percent params can be specified if it needs;</li>
             <li> id of existing debt in the list under has to be specified (for new debt fixation don't input any value
-                 in the line);
+                in the line);
             </li>
         </ul>
         <input type="submit"/>

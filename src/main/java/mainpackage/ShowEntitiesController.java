@@ -4,7 +4,6 @@ import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
 import mainpackage.entities.charity.CharityService;
 import mainpackage.entities.communalpaystatistics.CommunalPayStatisticsService;
 import mainpackage.entities.currentexpenses.CurrentExpensesService;
-import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
 import mainpackage.entities.debt.DebtService;
 import mainpackage.entities.deferrals.DeferralsService;
 import mainpackage.entities.foreigncurrenciesoperations.ForeignCurrenciesOperationService;
@@ -153,7 +152,7 @@ public class ShowEntitiesController {
 
     @RequestMapping("/communalpay_statistic_show")
     public String communalPayStatisticGettingExe(@RequestParam(defaultValue = "0") String per,
-                                           Model model) {
+                                                 Model model) {
         if (per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -168,7 +167,7 @@ public class ShowEntitiesController {
 
     @RequestMapping("/deferrals_show")
     public String deferralsGettingExe(@RequestParam(defaultValue = "0") String per,
-                                 Model model) {
+                                      Model model) {
         if (per.equals("0")) return this.errorEmptyStr(model);
         CustomUser dbUser = this.getCurrentUser();
         Date date = new Date();
@@ -255,7 +254,7 @@ public class ShowEntitiesController {
     }
 
     private void deferralsShow(CustomUser dbUser, Date date, Model model) {
-        model.addAttribute("deferralsEntityList",deferralsService.findEntriesFromDate(dbUser, date));
+        model.addAttribute("deferralsEntityList", deferralsService.findEntriesFromDate(dbUser, date));
     }
 
     private void foreignCurrenciesTransactionsShow(CustomUser dbUser, Date date, Model model) {
