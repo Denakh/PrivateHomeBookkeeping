@@ -1,13 +1,8 @@
 package mainpackage;
 
-import mainpackage.entities.allocationofprofits.AllocationOfProfits;
 import mainpackage.entities.allocationofprofits.AllocationOfProfitsService;
-import mainpackage.entities.currentexpensesrate.CurrentExpensesRate;
 import mainpackage.entities.currentexpensesrate.CurrentExpensesRateService;
-import mainpackage.entities.debt.Debt;
 import mainpackage.entities.debt.DebtService;
-import mainpackage.entities.mainfinancestatistic.FinancialCondition;
-import mainpackage.entities.mainfinancestatistic.MainFinanceStatistic;
 import mainpackage.entities.mainfinancestatistic.MainFinanceStatisticService;
 import mainpackage.entities.users.CustomUser;
 import mainpackage.entities.users.UserRole;
@@ -25,7 +20,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner demo(final UserService userService, final MainFinanceStatisticService mainFinanceStatisticService,
                                   final AllocationOfProfitsService allocationOfProfitsService,
                                   final CurrentExpensesRateService currentExpensesRateService,
