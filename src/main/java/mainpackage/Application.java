@@ -34,22 +34,9 @@ public class Application {
             @Override
             public void run(String... strings) throws Exception {
                 Date date = new Date();
-                CustomUser user = new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER);
-                userService.addUser(new CustomUser("admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
+                CustomUser user = new CustomUser("user", "3ca48ee9cd5fb6d0fe5137c4576213cea9749115", UserRole.USER);
+                userService.addUser(new CustomUser("admin", "28e1090f163cbc5a648a08a4c93934fe23312e17", UserRole.ADMIN));
                 userService.addUser(user);
-                allocationOfProfitsService.addAllocationOfProfits(new AllocationOfProfits(user, date, 10.0, 10.0, 30.0,
-                        30.0, 10.0, 10.0));
-                currentExpensesRateService.addCurrentExpensesRate(new CurrentExpensesRate(user, date, 8000, 8000, 8000, 8000,
-                        7000, 6000, 6000, 6000, 6000, 6000, 7000, 8000));
-                debtService.addDebt(new Debt(user, 1000, date, "test", false, 10.1, 0));
-                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 11, 2018, 10000,
-                        10000, 1.0, 7000, 0.7, 3000,
-                        13000, 0.23, 0, FinancialCondition.SATISFACTORY,
-                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 11, 2018));
-                mainFinanceStatisticService.addMainFinanceStatistic(new MainFinanceStatistic(user, (byte) 12, 2018, 10000,
-                        10000, 1.0, 7000, 0.7, 3000,
-                        13000, 0.23, 0, FinancialCondition.SATISFACTORY,
-                        FinancialCondition.SATISFACTORY, FinancialCondition.SATISFACTORY, (byte) 12, 2018));
             }
         };
     }
