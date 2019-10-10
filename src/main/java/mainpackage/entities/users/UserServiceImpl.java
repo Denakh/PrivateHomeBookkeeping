@@ -8,6 +8,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -15,6 +16,12 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public CustomUser getUserByLogin(String login) {
         return userRepository.findByLogin(login);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public CustomUser getUserByRole(UserRole role) {
+        return userRepository.findByRole(role);
     }
 
     @Override

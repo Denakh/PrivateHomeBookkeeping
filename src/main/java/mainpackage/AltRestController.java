@@ -16,13 +16,13 @@ public class AltRestController {
     private UserService userService;
 
     @RequestMapping(value = "/add_user", method = RequestMethod.POST)
-    public ResponseEntity<Void> add(@RequestBody CustomUser user) {
+    public ResponseEntity<Void> addUser(@RequestBody CustomUser user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/get_users")
-    public List<CustomUser> get() {
+    public List<CustomUser> getUsersList() {
         List<CustomUser> users = userService.getUsers();
         return users;
     }
