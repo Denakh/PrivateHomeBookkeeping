@@ -1,12 +1,14 @@
 package mainpackage;
 
 import mainpackage.entities.users.CustomUser;
+import mainpackage.entities.users.UserRole;
 import mainpackage.entities.users.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,15 +25,20 @@ public class AltRestController {
 
     @RequestMapping(value = "/get_users")
     public List<CustomUser> getUsersList() {
-        List<CustomUser> users = userService.getUsers();
-        return users;
+        return userService.getUsers();
     }
 
 
     @RequestMapping(value = "/get_users/{role}")
     public List<CustomUser> get(@PathVariable("role") String role) {
-        List<CustomUser> users = userService.getUsers();
-        return users;
+        UserRole userRole;
+        try {
+            userRole = UserRole.valueOf(role);
+        } catch (EnumConstantNotPresentException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+        return userService.getUserByRole(userRole);
     }
 
 }
