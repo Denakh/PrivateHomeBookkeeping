@@ -12,7 +12,7 @@ public interface UserService {
 
     void updateUser(CustomUser customUser);
 
-    List<CustomUser> getUserByRole(UserRole role);
+    List<CustomUser> getUsersByRole(UserRole role);
 
     List<CustomUser> getUsers();
 

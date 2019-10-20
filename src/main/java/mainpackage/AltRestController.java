@@ -17,28 +17,28 @@ public class AltRestController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/add_user", method = RequestMethod.POST)
+    @RequestMapping(value = "/add_user_rest", method = RequestMethod.POST)
     public ResponseEntity<Void> addUser(@RequestBody CustomUser user) {
         userService.addUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/get_users")
+    @RequestMapping(value = "/get_users_rest")
     public List<CustomUser> getUsersList() {
         return userService.getUsers();
     }
 
 
-    @RequestMapping(value = "/get_users/{role}")
+    @RequestMapping(value = "/get_users_rest/{role}")
     public List<CustomUser> get(@PathVariable("role") String role) {
         UserRole userRole;
         try {
             userRole = UserRole.valueOf(role);
-        } catch (EnumConstantNotPresentException e) {
+        } catch (EnumConstantNotPresentException | IllegalArgumentException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
-        return userService.getUserByRole(userRole);
+        return userService.getUsersByRole(userRole);
     }
 
 }

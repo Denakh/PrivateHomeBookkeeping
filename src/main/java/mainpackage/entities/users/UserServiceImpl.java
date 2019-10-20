@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public CustomUser getUserByRole(UserRole role) {
+    public List<CustomUser> getUsersByRole(UserRole role) {
         return userRepository.findByRole(role);
     }
 
