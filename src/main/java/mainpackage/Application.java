@@ -20,7 +20,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @Bean
+    //@Bean
     public CommandLineRunner demo(final UserService userService, final MainFinanceStatisticService mainFinanceStatisticService,
                                   final AllocationOfProfitsService allocationOfProfitsService,
                                   final CurrentExpensesRateService currentExpensesRateService,
@@ -29,7 +29,6 @@ public class Application {
             @Override
             public void run(String... strings) throws Exception {
                 userService.addUser(new CustomUser("admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
-                userService.addUser(new CustomUser("admin2", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
                 userService.addUser(new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER));
             }
         };
