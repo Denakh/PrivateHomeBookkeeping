@@ -3,6 +3,7 @@ package mainpackage.entities.users;
 import java.util.List;
 
 public interface UserService {
+
     CustomUser getUserByLogin(String login);
 
     boolean existsByLogin(String login);
@@ -11,5 +12,8 @@ public interface UserService {
 
     void updateUser(CustomUser customUser);
 
-    public List<CustomUser> getUsers();
+    List<CustomUser> getUsersByRole(UserRole role);
+
+    List<CustomUser> getUsers();
+
 }
