@@ -28,10 +28,9 @@ public class Application {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
-                Date date = new Date();
-                CustomUser user = new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER);
                 userService.addUser(new CustomUser("admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
-                userService.addUser(user);
+                userService.addUser(new CustomUser("admin2", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
+                userService.addUser(new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER));
             }
         };
     }
