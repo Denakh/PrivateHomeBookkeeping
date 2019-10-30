@@ -20,7 +20,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    //@Bean
+    @Bean
     public CommandLineRunner demo(final UserService userService, final MainFinanceStatisticService mainFinanceStatisticService,
                                   final AllocationOfProfitsService allocationOfProfitsService,
                                   final CurrentExpensesRateService currentExpensesRateService,
@@ -29,8 +29,8 @@ public class Application {
             @Override
             public void run(String... strings) throws Exception {
                 Date date = new Date();
-                CustomUser user = new CustomUser("user", "3ca48ee9cd5fb6d0fe5137c4576213cea9749115", UserRole.USER);
-                userService.addUser(new CustomUser("admin", "28e1090f163cbc5a648a08a4c93934fe23312e17", UserRole.ADMIN));
+                CustomUser user = new CustomUser("user", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.USER);
+                userService.addUser(new CustomUser("admin", "5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8", UserRole.ADMIN));
                 userService.addUser(user);
             }
         };
